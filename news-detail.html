@@ -17,6 +17,7 @@
             }
         }
     </script>
+    <script src="js/news-data.js"></script>
     <style>
         .navbar {
             position: fixed;
@@ -88,215 +89,6 @@
     </footer>
 
     <script>
-        const newsItems = {
-            'youth-award-2026': {
-                title: '【拓泰动态】礼遇青年骨干，赋能新锐绽风华',
-                category: '拓泰人文',
-                date: '2026-04-29',
-                image: 'https://picsum.photos/seed/youth/800/400',
-                summary: '拓泰青年律师王瑞，凭借过硬的专业素养、务实的工作作风与优异的业务成果，在青年律师队伍中崭露头角、脱颖而出。为表彰实干担当，嘉奖优秀实绩，树立青年成长标杆，进一步激发青年人才干事活力，其所在团队予以专项激励，为王瑞律师配置专属独立办公室。今日，律所首席合伙人尹冬生，主任吴苛政，执行主任李孟松等亲临现场致以祝贺，主任吴苛政亲自向王瑞律师交付办公室钥匙，传递期许与鼓励。本次办公空间升级，既是律所对王瑞律师个人专业能力与执业业绩的充分认可，也彰显了拓泰律所重视青年人才培养、完善青年律师成长赋能机制的发展理念，持续为青年律师搭建良好执业平台，助力人才成长与律所发展双向共进。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/W1zKCsGu-xO37nA6HvdL1g'
-            },
-            'legal-aid-2026': {
-                title: '【拓泰动态】千里赴援 助力孤老交通事故纠纷',
-                category: '业务活动',
-                date: '2026-04-24',
-                image: 'https://picsum.photos/seed/legal-aid/800/400',
-                summary: '近日，我所王馨媛律师积极响应法律援助号召，主动接受法律援助中心指派，为一位75岁高龄、无儿无女、无固定住所、双腿粉碎性骨折的孤寡老人提供交通事故责任纠纷案件的法律援助。在接受指派当日，王律师迅速行动，与老人所在社区的工作人员取得联系，详细了解老人的生活及事故情况。次日清晨，王律师从城西出发，跨越半座城市，奔赴城东与老人现场见面，面对面倾听老人的诉求，全面掌握案情细节。这一系列行动，展现出了公益法律人的责任担当与专业素养。"律师办理公益案件，不仅有助于化解社会矛盾、维护社会稳定，让群众安心，也让律师自身在奉献中获得内心的满足。"王律师表示，未来将继续积极参与公益法律案件办理，用实际行动践行法律人的社会责任。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/_rNwFlzSIZMCT5lO5FCbtA'
-            },
-            'thailand-forum-2026': {
-                title: '【拓泰动态】我所联合国力公证处与泰国机构座谈 推进中泰法律协作',
-                category: '业务活动',
-                date: '2026-04-15',
-                image: 'https://picsum.photos/seed/thailand/800/400',
-                summary: '2026年4月14日，我所守创团队与泰国博海翻译咨询有限公司举行交流座谈会。该公司董事总经理李海、业务总监赵颖一行到访，旨在响应"一带一路"倡议，加强川渝地区与泰国的法律及商事合作，促进中泰双向投资与经贸往来。我所执行主任、守创团队负责人李孟松，守创团队涉外负责人钟雨谓，以及四川省成都市国力公证处涉外事务中心主任何波共同参与交流。泰国博海翻译咨询有限公司董事总经理李海介绍了公司核心业务，包括专业笔译、口译，会议落地服务，以及近年重点发展的中泰企业商务考察、泰国本地工商代办及商务咨询等服务。此次座谈会的成功举办，既巩固了我所与泰国商务服务机构的友好关系，也为川渝地区企业"走出去"和泰国企业"引进来"提供了更为坚实的法律服务支撑。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/cOyVKJgopQibbZY1-hE1GQ'
-            },
-            'taoyuan-lawyer-2026': {
-                title: '【拓泰动态】拓泰·桃园团律师受聘担任国企外部董事',
-                category: '业务活动',
-                date: '2026-04-10',
-                image: 'https://picsum.photos/seed/taoyuan/800/400',
-                summary: '近日，我所高级合伙人、执委会委员、桃园律师团创始人——黄礼律师，正式受聘为眉山某国企兼职外部董事。拓泰·桃园团自成立以来，专注服务于成都都市圈国资国企，迄今已为数十家地方国资国企单位提供法律服务，赢得了良好口碑。秉持"重大事项，总有不同方案"的理念，桃园团将以本次担任外部董事为契机，进一步融入地方国企实务，为企业发展助力。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/jR48gC1FXFDLs7-faI3ueQ'
-            },
-            'yanjun-team-2026': {
-                title: '【拓泰动态】热烈欢迎严俊律师团队加盟 共谱拓泰律所发展新篇章',
-                category: '业务活动',
-                date: '2026-04-03',
-                image: 'https://picsum.photos/seed/yanjun/800/400',
-                summary: '近日，拓泰律所成功引进资深律师严俊团队，此举为律所持续推进规模化、专业化发展战略筑牢人才根基，也为吸引更多优秀法律人才加盟增添强劲动力。2026年4月2日，我所隆重举行严俊律师团队加盟欢迎会。严俊律师深耕法律领域三十余载，行业资历深厚、专业成果卓著，现任四川省收藏家协会副主席、法制委员会会长，曾获评成都市优秀律师、四川省优秀律师等多项荣誉。严俊律师自1995年正式执业，职业履历丰富且专业积淀深厚。此次严俊律师团队加盟拓泰，将为律所深耕航空产业、文创产业、刑事辩护等法律服务领域注入全新活力。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/IRD3VNLSkJlbPO6vQNsoiw'
-            },
-            'thailand-consul-2026': {
-                title: '【拓泰动态】专业宣讲促中泰交流，我所涉外法律服务获泰领馆高度评价',
-                category: '业务活动',
-                date: '2026-03-25',
-                image: 'https://picsum.photos/seed/thailand-consul/800/400',
-                summary: '近日，我所收到来自泰王国驻成都总领事馆的正式感谢信。信中，泰领馆对我所此前受邀参加其组织的"地方性法律法规知识宣讲会"所作出的专业贡献与大力支持表示诚挚感谢，对活动成效给予了充分肯定。本次宣讲会由泰领馆组织，旨在帮助在川泰国公民了解中国地方性法律法规。我所守创团队两名律师参与：钟雨谓担任主讲人，结合案例讲解了外籍人士在华生活相关的法规政策；罗云担任答疑嘉宾，负责解答现场及线上提出的法律问题。泰领馆表示，讲座的顺利开展得益于律所的大力支持，体现了"中泰一家亲"的理念。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/Mhg4zYTKeFgOUPAuKKgnVw'
-            },
-            'life-seven-part2': {
-                title: '【拓泰生活】七分（二）',
-                category: '拓泰人文',
-                date: '2026-04-23',
-                image: 'https://picsum.photos/seed/life7-2/800/400',
-                summary: '岁月含情，一念温柔。撕去岁末最后一张日历，七分一家迎来了新的一年，这一年有两件大事：一件是他们终于在城里有了自己的房子，他们不再是"漂泊者"；另一件是家里添了新成员，七分多了一个儿子。自从在城里站稳脚跟，生活条件好了，七分便多次提出要接父母到城里同住，好好享享福。可是老人舍不得他们那一亩三分地，更是不习惯城市的车水马龙，邻里的疏远冷漠，每次接来城里待不到两周便嚷嚷着要回去。七分不敢忤逆父母的决定，每当老人收拾行李他便默默去把车开来，装上行李、特产，顺从地把老人送回400多公里外的家乡。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/_2ZhGbrfEx8PYMYWFkUr4Q'
-            },
-            'life-seven-part1': { title: '【拓泰生活】七分（一）', category: '拓泰人文', date: '2026-04-17', image: 'https://picsum.photos/seed/life7-1/800/400', summary: '七分出生在一个贫困的年代，在家排行老三。他上面有两个哥哥、一个姐姐，下面有一个妹妹、一个弟弟。听说原本还有一个姐姐，四岁那年掉进后院的井里溺亡了。七分命苦，刚出生就得了破伤风。那个年代医疗条件极差，面对整整三天吃不进奶水、连哭声都没了、胸口几乎没有起伏的婴儿，父母只能叹气摇头。还在月子里的母亲看孩子这般痛苦，觉得怕是养不活了，一狠心让丈夫把孩子抱去河里扔掉。河边芦苇丛生，几只水鸟扑腾着翅膀受惊飞起。盛夏的中午，四周一片寂静。七分爸把篮子轻轻放到水面上，默默地看着。不知是干草垫得太厚、篮子沉不下去，还是婴儿身子太轻，那篮子始终漂在水上，不肯下沉。七分爸心有不忍，对着篮子喊道："你若命中是我的儿子，你就动一下。"话音刚落，篮子里原本气若游丝、命悬一线的婴儿突然手舞足蹈，"哇"的一声哭了出来。', wechatUrl: 'https://mp.weixin.qq.com/s/hXU5f8d29yu4OBba5vLL_w' },
-            'peach-plum-tree': { title: '【拓泰生活】难忘故乡桃李树', category: '拓泰人文', date: '2026-02-26', image: 'https://picsum.photos/seed/peach-plum/800/400', summary: '少小离家，不知不觉离开故乡已有三十余年，由于离开太久了，对于故乡的记忆已开始变得模糊。但时不时冒出的家乡话，从小习惯的家乡味，脑海里刻着的家乡景，却时时提醒着我"故乡"的含义。又到了春风拂面的季节，城市街道两旁高大的樱花树花团锦簇，一阵风吹来下起阵阵花瓣雨。行走在花瓣铺就的道路上，伴随着浪漫樱花的清香，我的思绪飘回了那遥远的故乡。外婆从桃树和李树上分别摘下一个花蒂放在我手上，温柔地告诉我："看，这是花蕊，花蕊会慢慢形成果核，果核慢慢发育，不多久就会成熟为果实。"如今外婆已离世多年，土屋外的桃树在外婆离世的第二年因为雷击也随外婆去了。李树却成长得越发苍劲了，果实也一年比一年结得多。', wechatUrl: 'https://mp.weixin.qq.com/s/R2LIWeKBxyXNmcAMkyGtww' },
-            'annual-meeting-2026': { title: '【拓泰动态】四川拓泰律师事务所2025年度总结暨2026年新春年会活动圆满落幕', category: '拓泰人文', date: '2026-02-01', image: 'https://picsum.photos/seed/meeting/800/400', summary: '2026年1月31日至2月1日，律所同仁齐聚成都安仁福朋喜来登酒店，参加"2025年度总结暨2026新春年会"。大会伊始，吴苛政主任作年会致辞，总结2025年律所在业务成效、人才发展、专业化建设、品牌化建设等方面的成绩及存在的不足，共绘2026年发展蓝图。会议举行了优秀成员表彰仪式，对过去一年表现卓越、敢于担当的先进个人与优秀团队进行了隆重表彰。联欢紧凑热烈，笑声、掌声、音乐声不断。同仁们在游戏中放松身心，在表演中展示才华，在抽奖中收获喜悦。', wechatUrl: 'https://mp.weixin.qq.com/s/GskCKKGaDGESR4R7IoZybA' },
-            '13th-anniversary-2025': {
-                title: '【拓泰动态】四川拓泰律师事务所隆重举办十三周年庆典活动',
-                category: '拓泰人文',
-                date: '2025-07-14',
-                image: 'https://picsum.photos/seed/anniversary/800/400',
-                summary: '十三年栉风沐雨，十三年春华秋实。为庆祝成立十三周年，四川拓泰律师事务所全体成员于2025年7月12日齐聚环境优美的云凌草堂酒店，举办了以"筑梦十三载，一路趣前行"为主题的周年庆典活动。庆典包括团建破冰游戏、新入职成员授所徽仪式、新晋执业律师授律师袍仪式、优秀法律文书评选颁奖以及自由交流和晚餐环节。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/a6YSxy3z12V7YRj_fCJ4iA'
-            },
-            'deyang-training-visit-2025': {
-                title: '【拓泰动态】以关怀促成长，以实践励英才|四川拓泰律师事务所主任及监委会主任赴德阳培训基地慰问并指导实习律师',
-                category: '拓泰人文',
-                date: '2025-04-18',
-                image: 'https://picsum.photos/seed/deyang/800/400',
-                summary: '青年律师是律所发展的生力军。2025年4月17日，四川拓泰律师事务所主任吴苛政与监委会主任张东前往位于德阳市的四川司法警官职业学院，慰问正在参加执业培训的7名实习律师。两位主任对学员们的学习成果与积极态度予以高度肯定，并勉励他们以专业能力为基石、以责任担当为底色，在职业道路上与律所共同成长。针对实习律师即将面临的执业面试考核，张东主任凭借多年担任执业律师面试官的经验，通过模拟真实考场场景、讲解案例答辩技巧、点评学员表现及解答疑问等方式，为几位学员进行了一场"面试专项辅导"。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/KqvygRBl8LaYr7-zfxKNRQ'
-            },
-            'public-welfare-honor-2025': { title: '【拓泰动态】践行公益初心｜拓泰律所再获履职表彰', category: '拓泰荣誉', date: '2025-12-30', image: 'https://picsum.photos/seed/public-welfare/800/400', summary: '2025年，金沙街道人大工委持续推进"1代表2助手"选民接待工作。作为公益法律服务专业机构，拓泰律所积极响应，持续承担"法务助手"职责，组建专业团队深耕基层，为人大代表履职注入坚实法律动能。因在"法务助手"岗位上的专业履职与公益担当，我所再次获得金沙街道人大工委的表彰。这份荣誉，既是对律所工作与专业能力的高度认可，也是对公益法律服务价值的生动彰显。', wechatUrl: 'https://mp.weixin.qq.com/s/oM_G7oNhmMuQ4rV8RpTkZw' },
-            'chengdu-lawyer-association-2024': { title: '【拓泰喜讯】我所主任当选成都市律师协会专业委员会副主任、多位律师当选委员', category: '拓泰荣誉', date: '2024-12-26', image: 'https://picsum.photos/seed/lawyer-assoc/800/400', summary: '成都市律师协会公布第八届成都市律师协会专业委员会成员名单，我所主任吴苛政成功当选为成都市律师协会公司法专业委员会副主任，首席合伙人尹冬生当选为行政法专业委员会委员，执行主任李孟松当选为执行与不良资产处置专业委员会委员，副主任聂巧当选为知识产权专业委员会委员，尹茂生律师当选为低空经济专业委员会委员，郭义靖律师当选为乡村振兴专业委员会委员，刘小燕律师当选为建设工程专业委员会委员，罗云律师当选为企业合规与内控专业委员会委员。', wechatUrl: 'https://mp.weixin.qq.com/s/8ovCyfBJJte8-5cDAjWLxA' },
-            'xiong-yi-honor-2025': { title: '【拓泰喜报】我所高级合伙人熊艺律师荣获"四川省律师行业优秀共产党员"称号', category: '拓泰荣誉', date: '2025-07-03', image: 'https://picsum.photos/seed/xiongyi/800/400', summary: '中共四川省律师行业委员会发布《关于表扬四川省律师行业先进基层党组织、优秀共产党员、优秀党务工作者的通报》。我所熊艺律师凭借其坚定的政治立场、精湛的专业能力、突出的执业贡献以及在党建工作中的积极表现，荣获"四川省律师行业优秀共产党员"称号。这份荣誉不仅是对熊艺律师个人政治素养、专业精神和服务贡献的充分肯定，也是对我所党建工作成效和整体专业实力的高度认可。', wechatUrl: 'https://mp.weixin.qq.com/s/O6zb4EjK_l3TS5M2vXxrVA' },
-            'wang-xinyuan-honor-2025': { title: '【拓泰喜报】祝贺王馨媛律师荣获"蓉城先锋・律动微光"第二届青年律师演讲比赛三等奖', category: '拓泰荣誉', date: '2025-04-28', image: 'https://picsum.photos/seed/wangxinyuan/800/400', summary: '成都市律师协会主办"蓉城先锋・律动微光"第二届青年律师演讲比赛，我所王馨媛律师在演讲中深情讲述了她帮助一位受伤致残外卖员维权的真实案例，生动阐述了公益律师在维护社会公平正义、保障弱势群体权益方面所发挥的重要作用。王馨媛律师以真挚的情感、质朴的语言和深刻的见解赢得了评委与观众的广泛认可与高度赞誉，荣获三等奖。', wechatUrl: 'https://mp.weixin.qq.com/s/Y8pavcWrdot4L78-MtlcRA' },
-            'sichuan-police-college-2025': {
-                title: '【拓泰动态】我所党支部书记、主任吴苛政参与四川警察学院法学"校外实践教学基地"建设研讨会暨签约授牌仪式',
-                category: '拓泰荣誉',
-                date: '2025-04-28',
-                image: 'https://picsum.photos/seed/police-college/800/400',
-                summary: '2025年4月25日，四川警察学院举行"校院（所）合作协同育人法学\'校外实践教学基地\'"建设研讨会暨签约授牌仪式。我所党支部书记、主任吴苛政受邀出席并作为代表发言，我所吴苛政主任、钱亮律师、郭义靖律师被聘为该校法学专业的校外导师。此次合作是律所服务法治人才培养的重要举措。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/9AsdGYAtufctheicawPY1w'
-            },
-            'cdut-cooperation-2025': {
-                title: '【拓泰动态】成都理工大学文法学院与拓泰律所举行院所合作共建签约仪式',
-                category: '业务活动',
-                date: '2025-12-24',
-                image: 'https://picsum.photos/seed/cdut/800/400',
-                summary: '2025年12月23日下午，成都理工大学文法学院（纪检监察学院）党委副书记、纪委书记刘人嘉一行莅临我所调研交流并举行院所合作共建签约仪式。执行主任李孟松代表拓泰律所对刘人嘉书记一行的到访表示热烈欢迎，并陪同参观了律所的办公环境，详细介绍了律所的发展历程和基本情况，提出希望通过与成都理工大学文法学院合作共建，实现法学教育与法律实务的紧密结合。刘人嘉书记与李孟松主任分别代表双方共同签署了《合作共建协议》，接下来双方将在实践教学、师资共享、就业促进、科研合作、捐资助学、党建协同等方面加强合作共建。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/6qeti-zgjJNenfUbvFN4dA'
-            },
-            'seminar-2025': {
-                title: '诚邀精英，共筑法途 | 拓泰律所期待您的加入',
-                category: '业务活动',
-                date: '2026-03-18',
-                image: 'https://picsum.photos/seed/news1/800/400',
-                summary: '在拓泰，我们始终相信：一个真正优秀的执业平台，不仅要让律师"接得了案子"，更要让律师"待得舒服、办得高效、成长得踏实"。律所秉持专业化、团队化的发展理念，致力于为律师提供优质的执业平台与发展空间，诚邀志同道合的法律英才加盟，共创未来。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/-BqTyj-V2ty7gr8Cf6veqg'
-            },
-            'visit-guide-2026': {
-                title: '【到访指引】四川拓泰律师事务所访客路线指引',
-                category: '业务活动',
-                date: '2026-03-11',
-                image: 'https://picsum.photos/seed/visit-guide/800/400',
-                summary: '律所地址位于成都市青羊区光华南四路186号航空国创中心E4栋8层。自驾可从光华南四路或光华南巷进入停车场，停放E4区域后乘坐电梯至1楼大厅，再换乘低层电梯至8层。公共交通方面，4号线蔡桥地铁站B2出口步行可达，13号线万家湾地铁站B出口骑行约6分钟。到达后请于大厅前台登记，如需帮助可致电028-85078618。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/y7Gfi2Lk7IGBzFwPDTAdKw'
-            },
-            'limengsong-2026': {
-                title: '【拓泰动态】执行主任李孟松履职再创佳绩，两件建议入选2026年区人大督办建议',
-                category: '业务活动',
-                date: '2026-03-18',
-                image: 'https://picsum.photos/seed/limengsong/800/400',
-                summary: '近日，从青羊区人大传来消息，我所执行主任李孟松律师在区第八届人民代表大会第五次会议上提交的《关于进一步规范和深化法律援助工作的建议》和《关于灵活有效开展财产保全及保全置换工作，进一步优化营商环境的建议》，凭借其前瞻的法治视角与深厚的民生关切，双双被青羊区人大常委会评为2026年重点督办建议。2026年青羊区人大评出的政法政务类督办建议共计4件，李孟松主任提出的建议独占2件，占比高达50%。自担任人大代表以来，李孟松主任已连续三年获评"优秀人大代表建议"，连续两年入选"重点督办建议"。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/InWVc9bMWU9ITn-gQ9P5Ig'
-            },
-            'party-building-honor-2026': {
-                title: '【拓泰党建】我所党建工作入选四川省律师行业党建工作典型案例',
-                category: '拓泰荣誉',
-                date: '2026-03-26',
-                image: 'https://picsum.photos/seed/party-honor/800/400',
-                summary: '3月25日，四川省律师协会发布了四川省律师行业党建工作典型案例，四川拓泰律师事务所申报的《以"十个标准化"为引领 推动党建与业务同频共振》案例成功入选。我所始终将党建工作摆在重要位置，通过扎实推进"十个标准化"体系建设，不断提升党建工作规范化水平，着力推动党建与业务深度融合、同频共振。此次入选，既是对我所党建工作成效的充分肯定，也是对全体党员同志辛勤付出的积极回应。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/IVLh2Yap977UHTMcDDEs0A'
-            },
-            'award-2025': {
-                title: '我所荣获年度优秀律师事务所',
-                category: '荣誉奖项',
-                date: '2025-04-15',
-                image: 'https://picsum.photos/seed/award/800/400',
-                summary: '在2025年度法律服务行业评选中，我所荣获"年度优秀律师事务所"称号。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/example2'
-            },
-            'company-law-category-2024': {
-                title: '【拓泰研究】公司法新规—类别股',
-                category: '拓泰研究',
-                date: '2024-10-15',
-                image: 'https://picsum.photos/seed/company-law/800/400',
-                summary: '2023年《公司法》在第144、145、146条正式引入了类别股制度，本文详细解析了类别股的定义、发展历程和主要类型。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/nXXZqrY05Bu5nKny1Qyspg'
-            },
-            'chengdu-lawyer-congress-2024': { title: '【拓泰喜报】成都市第八次律师代表大会召开，我所执行主任吴苛政律师当选第八届理事会理事', category: '拓泰荣誉', date: '2024-09-30', image: 'https://picsum.photos/seed/lawyer-congress/800/400', summary: '成都市第八次律师代表大会胜利召开，会议选举产生了成都市律师协会第八届理事会理事，我所执行主任吴苛政律师当选第八届理事会理事。', wechatUrl: 'https://mp.weixin.qq.com/s/UwPc1TzjBlyRgYyeljsavg' },
-            'securities-dispute-2024': { title: '【拓泰研究】证券虚假陈述责任纠纷实务争议焦点', category: '拓泰研究', date: '2024-09-25', image: 'https://picsum.photos/seed/securities/800/400', summary: '本文通过对相关案例的筛选总结，探讨实务中证券虚假陈述责任纠纷案件的争议焦点。', wechatUrl: 'https://mp.weixin.qq.com/s/gpzRE1S8d71rSBli4fdlWA' },
-            'party-building-honor-2024': { title: '【拓泰党建】四川拓泰律师事务所党支部荣获"四川省律师行业先进基层党组织"称号', category: '拓泰荣誉', date: '2024-07-02', image: 'https://picsum.photos/seed/party-honor/800/400', summary: '热烈祝贺四川拓泰律师事务所党支部再次被授予"四川省律师行业先进基层党组织"的荣誉称号。四川拓泰律师事务所党支部自2017年成立以来，始终坚持扎实推进各项党史学习教育，努力夯实党组织基层建设，深入群众开展形式多样的社区法律咨询、普法宣传活动。', wechatUrl: 'https://mp.weixin.qq.com/s/61nbunUEx9KJMXWyioq-RA' },
-            'xiong-yi-guo-honor-2023': { title: '【拓泰喜报】祝贺！拓泰律所党员律师荣获省、市表彰', category: '拓泰荣誉', date: '2023-07-03', image: 'https://picsum.photos/seed/xiong-guo-honor/800/400', summary: '成都市律师行业党委表扬我所高级合伙人熊艺律师为"成都市律师行业2023年度优秀共产党员"，一级合伙人郭小林律师被评选为"四川省律师行业优秀共产党员"。获评"优秀共产党员"，既是荣誉，更是责任。', wechatUrl: 'https://mp.weixin.qq.com/s/XbBsBu9l884iGupYAYWSzw' },
-            'book-compliance': { title: '《企业合规管理实务指南》正式出版', category: '学术文章', date: '2025-03-20', image: 'https://picsum.photos/seed/book/800/400', summary: '我所律师团队编著的《企业合规管理实务指南》正式出版发行。', wechatUrl: 'https://mp.weixin.qq.com/s/example3' },
-            'forum-compliance': {
-                title: '我所主办企业合规管理论坛',
-                category: '行业活动',
-                date: '2025-03-15',
-                image: 'https://picsum.photos/seed/event/800/400',
-                summary: '由我所主办的企业合规管理论坛在成都成功举办，汇聚众多企业代表。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/example4'
-            },
-            '315-consumer': {
-                title: '我所开展315消费者权益保护普法活动',
-                category: '新闻资讯',
-                date: '2025-03-08',
-                image: 'https://picsum.photos/seed/news2/800/400',
-                summary: '在3·15消费者权益日，我所律师走进社区开展普法宣传活动。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/example5'
-            },
-            'lawyer-award': {
-                title: '多名律师获评省级优秀律师',
-                category: '荣誉奖项',
-                date: '2025-02-28',
-                image: 'https://picsum.photos/seed/award2/800/400',
-                summary: '我所三名律师在省级律师评选中获评"优秀律师"荣誉称号。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/example6'
-            },
-            'book-civil-law': {
-                title: '《民法典解读与实务应用》专著发布',
-                category: '学术文章',
-                date: '2025-02-15',
-                image: 'https://picsum.photos/seed/book2/800/400',
-                summary: '我所律师团队编写的《民法典解读与实务应用》一书正式发布。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/example7'
-            },
-            'forum-chengdu-chongqing': {
-                title: '我所协办成渝地区双城经济圈法律服务论坛',
-                category: '行业活动',
-                date: '2025-01-20',
-                image: 'https://picsum.photos/seed/event2/800/400',
-                summary: '我所协办的成渝地区双城经济圈法律服务论坛在成都圆满召开。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/example8'
-            },
-            'annual-meeting-2024': {
-                title: '我所召开2024年度工作总结大会',
-                category: '新闻资讯',
-                date: '2025-01-10',
-                image: 'https://picsum.photos/seed/news3/800/400',
-                summary: '我所召开2024年度工作总结大会，总结成绩，表彰先进，规划未来发展。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/example9'
-            },
-            'ethics-training': {
-                title: '我所举办律师职业道德专题培训',
-                category: '行业活动',
-                date: '2024-12-28',
-                image: 'https://picsum.photos/seed/training/800/400',
-                summary: '为提升律师职业素养，我所举办律师职业道德与执业纪律专题培训。',
-                wechatUrl: 'https://mp.weixin.qq.com/s/example10'
-            }
-        };
-
-        const newsIds = Object.keys(newsItems);
-
         function getNewsIdFromUrl() {
             const params = new URLSearchParams(window.location.search);
             return params.get('news') || 'seminar-2025';
@@ -304,7 +96,7 @@
 
         function loadNewsDetail() {
             const newsId = getNewsIdFromUrl();
-            const news = newsItems[newsId];
+            const news = getNewsById(newsId);
 
             if (!news) {
                 document.getElementById('news-title').textContent = '资讯未找到';
@@ -329,12 +121,11 @@
             document.title = news.title + ' - 四川拓泰律师事务所';
 
             const relatedGrid = document.getElementById('related-grid');
-            const otherNews = newsIds.filter(id => id !== newsId).slice(0, 3);
+            const otherNews = newsData.filter(n => n.id !== newsId).slice(0, 3);
             
-            relatedGrid.innerHTML = otherNews.map(id => {
-                const n = newsItems[id];
+            relatedGrid.innerHTML = otherNews.map(n => {
                 return `
-                    <a href="news-detail.html?news=${id}" class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary/30 overflow-hidden block">
+                    <a href="news-detail.html?news=${n.id}" class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary/30 overflow-hidden block">
                         <img src="${n.image}" alt="${n.title}" class="w-full h-32 object-cover">
                         <div class="p-4">
                             <span class="text-xs text-primary font-medium px-2 py-1 bg-primary/10 rounded">${n.category}</span>
@@ -344,14 +135,7 @@
                     </a>
                 `;
             }).join('');
-        }'your-new-article-id': {
-    title: '【拓泰动态】您的文章标题',
-    category: '业务活动',  // 或：拓泰荣誉、拓泰研究、拓泰人文
-    date: '2026-05-04',
-    image: 'https://picsum.photos/seed/yourid/800/400',
-    summary: '文章摘要内容...',
-    wechatUrl: 'https://mp.weixin.qq.com/s/...'
-},
+        }
 
         document.addEventListener('DOMContentLoaded', loadNewsDetail);
     </script>
