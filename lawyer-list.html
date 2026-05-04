@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专业律师 - 四川拓泰律师事务所</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3a5f',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <nav class="navbar py-4 px-6">
+        <div class="container mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-red-700 to-red-800 rounded-lg flex items-center justify-center relative overflow-hidden">
+                    <span class="text-white font-bold text-sm relative z-10">拓泰</span>
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/20 via-transparent to-transparent transform -skew-x-12 translate-x-[-30%]"></div>
+                    <div class="absolute top-0 left-0 w-2 h-2 bg-white/40 rounded-full top-1 left-1"></div>
+                </div>
+                <span class="text-xl font-bold text-red-700 hidden md:inline">四川拓泰律师事务所</span>
+            </a>
+            <a href="index.html#team" class="text-sm text-gray-600 hover:text-primary transition-colors flex items-center space-x-2">
+                <i class="fa fa-arrow-left"></i>
+                <span>返回首页</span>
+            </a>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-12 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="text-sm font-bold uppercase tracking-wider text-primary">我们的团队</span>
+                <h1 class="text-3xl md:text-4xl font-bold mt-2 mb-6">专业律师</h1>
+                <div class="w-16 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    我们拥有一支经验丰富、专业素养高的律师团队，致力于为客户提供最优质的法律服务。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div id="lawyer-grid" class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-primary text-white">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-white/80">四川拓泰律师事务所</p>
+            <p class="text-white/60 mt-2 text-sm">地址：成都市青羊区航空国创中心E4栋8层</p>
+        </div>
+    </footer>
+
+    <script>
+        const lawyers = {};
+
+        const lastNames = ['张', '李', '王', '刘', '陈', '杨', '赵', '黄', '周', '吴', '徐', '孙', '胡', '朱', '高', '林', '何', '郭', '马', '罗', '梁', '宋', '郑', '谢', '韩', '唐', '冯', '于', '董', '萧', '程', '曹', '袁', '邓', '许', '傅', '沈', '曾', '彭', '吕', '苏', '卢', '蒋', '蔡', '贾', '丁', '魏', '薛', '叶', '阎', '余', '潘', '杜', '戴', '夏', '钟', '汪', '田', '任', '姜', '范', '方', '石', '姚', '谭', '廖', '邹', '熊', '金', '陆', '郝', '孔', '白', '崔', '康', '毛', '邱', '秦', '江', '史', '顾', '侯', '邵', '孟', '龙', '万', '段', '漕', '钱', '汤', '尹', '黎', '易', '常', '武', '乔', '贺', '赖', '龚', '文'];
+        const firstNames = ['明', '华', '强', '丽', '伟', '芳', '娜', '敏', '静', '敏', '磊', '军', '洋', '勇', '艳', '杰', '涛', '超', '秀英', '霞', '平', '刚', '桂英', '建华', '建国', '建军', '志明', '志强', '志远', '志刚', '志伟', '秀兰', '秀珍', '凤英', '金花', '银花', '玉兰', '玉珍', '玉英', '桂花', '兰花', '梅花', '菊花', '莲花', '荷花', '牡丹', '芙蓉', '杜鹃', '蔷薇', '茉莉', '桂花', '桃花', '杏花', '梨花', '海棠', '丁香', '玫瑰', '紫薇', '冬梅', '夏荷', '秋菊', '春兰'];
+        const titles = ['主任律师', '高级合伙人', '合伙人', '资深律师', '律师', '高级律师', '初级律师'];
+        const specialties = [
+            ['企业法律服务', '公司法务', '股权纠纷'],
+            ['知识产权', '专利申请', '商标注册'],
+            ['刑事辩护', '刑事风险防控', '刑事申诉'],
+            ['民事诉讼', '婚姻家庭', '继承纠纷'],
+            ['房地产与建筑工程', '土地征收', '房屋拆迁'],
+            ['金融证券', '投融资', '并购重组'],
+            ['劳动争议', '劳动合同', '工伤赔偿'],
+            ['行政法律', '行政复议', '行政诉讼'],
+            ['合规内控', '企业合规', '风险评估'],
+            ['国际贸易', '跨境投资', '涉外法律']
+        ];
+
+        for (let i = 0; i < 80; i++) {
+            const lastName = lastNames[i % lastNames.length];
+            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const name = lastName + firstName;
+            const title = titles[Math.floor(Math.random() * titles.length)];
+            const specialty = specialties[Math.floor(Math.random() * specialties.length)];
+            const seed = 1000 + i;
+            
+            lawyers['lawyer-' + (i + 1)] = {
+                name: name,
+                title: title,
+                image: `https://picsum.photos/seed/${seed}/400/500`,
+                tags: specialty,
+                intro: `${name}律师，四川拓泰律师事务所${title}。毕业于国内知名法学院，从业${5 + Math.floor(Math.random() * 20)}年以上，在${specialty[0]}等领域具有丰富的实践经验。`
+            };
+        }
+
+        function loadLawyerList() {
+            const grid = document.getElementById('lawyer-grid');
+            const lawyerIds = Object.keys(lawyers);
+
+            grid.innerHTML = lawyerIds.map(id => {
+                const lawyer = lawyers[id];
+                return `
+                    <a href="lawyer-detail.html?lawyer=${id}" class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary/30 overflow-hidden block">
+                        <div class="h-64 overflow-hidden">
+                            <img src="${lawyer.image}" alt="${lawyer.name}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">${lawyer.name}</h3>
+                            <p class="text-primary text-sm mb-4">${lawyer.title}</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                ${lawyer.tags.map(tag => `<span class="text-xs text-gray-600 px-2 py-1 bg-gray-100 rounded">${tag}</span>`).join('')}
+                            </div>
+                            <p class="text-gray-600 text-sm line-clamp-3">${lawyer.intro}</p>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadLawyerList);
+    </script>
+</body>
+</html>

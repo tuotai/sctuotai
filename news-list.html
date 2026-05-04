@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拓泰资讯 - 四川拓泰律师事务所</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3a5f',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        section[id] {
+            scroll-margin-top: 80px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <nav class="navbar py-4 px-6">
+        <div class="container mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-red-700 to-red-800 rounded-lg flex items-center justify-center relative overflow-hidden">
+                    <span class="text-white font-bold text-sm relative z-10">拓泰</span>
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/20 via-transparent to-transparent transform -skew-x-12 translate-x-[-30%]"></div>
+                    <div class="absolute top-0 left-0 w-2 h-2 bg-white/40 rounded-full top-1 left-1"></div>
+                </div>
+                <span class="text-xl font-bold text-red-700 hidden md:inline">四川拓泰律师事务所</span>
+            </a>
+            <a href="index.html#news" class="text-sm text-gray-600 hover:text-primary transition-colors flex items-center space-x-2">
+                <i class="fa fa-arrow-left"></i>
+                <span>返回首页</span>
+            </a>
+        </div>
+    </nav>
+
+    <section id="hero" class="pt-32 pb-12 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">拓泰资讯</h1>
+                <p class="text-gray-600">了解四川拓泰律师事务所的最新动态和行业资讯</p>
+                <div class="w-24 h-1 bg-primary mx-auto mt-8"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="bg-gradient-to-r from-primary to-primary/80 text-white px-6 py-4">
+                        <h3 class="text-xl font-bold"><i class="fa fa-briefcase mr-2"></i>业务活动</h3>
+                    </div>
+                    <div id="news-activities" class="p-4 space-y-4">
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-6 py-4">
+                        <h3 class="text-xl font-bold"><i class="fa fa-trophy mr-2"></i>拓泰荣誉</h3>
+                    </div>
+                    <div id="news-honors" class="p-4 space-y-4">
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-4">
+                        <h3 class="text-xl font-bold"><i class="fa fa-book mr-2"></i>拓泰研究</h3>
+                    </div>
+                    <div id="news-research" class="p-4 space-y-4">
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-4">
+                        <h3 class="text-xl font-bold"><i class="fa fa-users mr-2"></i>拓泰人文</h3>
+                    </div>
+                    <div id="news-culture" class="p-4 space-y-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-primary text-white">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-white/80">四川拓泰律师事务所</p>
+            <p class="text-white/60 mt-2 text-sm">地址：成都市青羊区航空国创中心E4栋8层</p>
+        </div>
+    </footer>
+
+    <script>
+        const newsItems = {
+            'youth-award-2026': {
+                title: '【拓泰动态】礼遇青年骨干，赋能新锐绽风华',
+                category: '拓泰人文',
+                date: '2026-04-29',
+                image: 'https://picsum.photos/seed/youth/800/400',
+                summary: '拓泰青年律师王瑞，凭借过硬的专业素养、务实的工作作风与优异的业务成果，荣获律所专项激励，配置专属独立办公室。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/W1zKCsGu-xO37nA6HvdL1g'
+            },
+            'legal-aid-2026': {
+                title: '【拓泰动态】千里赴援 助力孤老交通事故纠纷',
+                category: '业务活动',
+                date: '2026-04-24',
+                image: 'https://picsum.photos/seed/legal-aid/800/400',
+                summary: '近日，我所王馨媛律师积极响应法律援助号召，为一位75岁高龄、无儿无女、无固定住所、双腿粉碎性骨折的孤寡老人提供交通事故责任纠纷案件的法律援助。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/_rNwFlzSIZMCT5lO5FCbtA'
+            },
+            'thailand-forum-2026': {
+                title: '【拓泰动态】我所联合国力公证处与泰国机构座谈 推进中泰法律协作',
+                category: '业务活动',
+                date: '2026-04-15',
+                image: 'https://picsum.photos/seed/thailand/800/400',
+                summary: '2026年4月14日，我所守创团队与泰国博海翻译咨询有限公司举行交流座谈会，旨在响应"一带一路"倡议，加强川渝地区与泰国的法律及商事合作。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/cOyVKJgopQibbZY1-hE1GQ'
+            },
+            'taoyuan-lawyer-2026': {
+                title: '【拓泰动态】拓泰·桃园团律师受聘担任国企外部董事',
+                category: '业务活动',
+                date: '2026-04-10',
+                image: 'https://picsum.photos/seed/taoyuan/800/400',
+                summary: '近日，我所高级合伙人、执委会委员、桃园律师团创始人——黄礼律师，正式受聘为眉山某国企兼职外部董事。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/jR48gC1FXFDLs7-faI3ueQ'
+            },
+            'yanjun-team-2026': {
+                title: '【拓泰动态】热烈欢迎严俊律师团队加盟 共谱拓泰律所发展新篇章',
+                category: '业务活动',
+                date: '2026-04-03',
+                image: 'https://picsum.photos/seed/yanjun/800/400',
+                summary: '近日，拓泰律所成功引进资深律师严俊团队，此举为律所持续推进规模化、专业化发展战略筑牢人才根基。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/IRD3VNLSkJlbPO6vQNsoiw'
+            },
+            'thailand-consul-2026': {
+                title: '【拓泰动态】专业宣讲促中泰交流，我所涉外法律服务获泰领馆高度评价',
+                category: '业务活动',
+                date: '2026-03-25',
+                image: 'https://picsum.photos/seed/thailand-consul/800/400',
+                summary: '近日，我所收到来自泰王国驻成都总领事馆的正式感谢信，对我所此前受邀参加其组织的"地方性法律法规知识宣讲会"所作出的专业贡献与大力支持表示诚挚感谢。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/Mhg4zYTKeFgOUPAuKKgnVw'
+            },
+            'life-seven-part2': {
+                title: '【拓泰生活】七分（二）',
+                category: '拓泰人文',
+                date: '2026-04-23',
+                image: 'https://picsum.photos/seed/life7-2/800/400',
+                summary: '岁月含情，一念温柔。七分一家迎来了新的一年，这一年有两件大事：他们终于在城里有了自己的房子，不再是"漂泊者"；家里添了新成员。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/_2ZhGbrfEx8PYMYWFkUr4Q'
+            },
+            'life-seven-part1': {
+                title: '【拓泰生活】七分（一）',
+                category: '拓泰人文',
+                date: '2026-04-17',
+                image: 'https://picsum.photos/seed/life7-1/800/400',
+                summary: '七分出生在一个贫困的年代，在家排行老三。他上面有两个哥哥、一个姐姐，下面有一个妹妹、一个弟弟。听说原本还有一个姐姐，四岁那年掉进后院的井里溺亡了。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/hXU5f8d29yu4OBba5vLL_w'
+            },
+            'peach-plum-tree': {
+                title: '【拓泰生活】难忘故乡桃李树',
+                category: '拓泰人文',
+                date: '2026-02-26',
+                image: 'https://picsum.photos/seed/peach-plum/800/400',
+                summary: '少小离家，不知不觉离开故乡已有三十余年。又到了春风拂面的季节，城市街道两旁的樱花树花团锦簇，我的思绪飘回了那遥远的故乡。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/R2LIWeKBxyXNmcAMkyGtww'
+            },
+            'annual-meeting-2026': {
+                title: '【拓泰动态】四川拓泰律师事务所2025年度总结暨2026年新春年会活动圆满落幕',
+                category: '拓泰人文',
+                date: '2026-02-01',
+                image: 'https://picsum.photos/seed/meeting/800/400',
+                summary: '2026年1月31日至2月1日，律所同仁齐聚成都安仁福朋喜来登酒店，参加"2025年度总结暨2026新春年会"。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/GskCKKGaDGESR4R7IoZybA'
+            },
+            '13th-anniversary-2025': {
+                title: '【拓泰动态】四川拓泰律师事务所隆重举办十三周年庆典活动',
+                category: '拓泰人文',
+                date: '2025-07-14',
+                image: 'https://picsum.photos/seed/anniversary/800/400',
+                summary: '十三年栉风沐雨，十三年春华秋实。为庆祝成立十三周年，四川拓泰律师事务所全体成员齐聚云凌草堂酒店，举办了以"筑梦十三载，一路趣前行"为主题的周年庆典活动。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/a6YSxy3z12V7YRj_fCJ4iA'
+            },
+            'deyang-training-visit-2025': {
+                title: '【拓泰动态】以关怀促成长，以实践励英才|四川拓泰律师事务所主任及监委会主任赴德阳培训基地慰问并指导实习律师',
+                category: '拓泰人文',
+                date: '2025-04-18',
+                image: 'https://picsum.photos/seed/deyang/800/400',
+                summary: '2025年4月17日，四川拓泰律师事务所主任吴苛政与监委会主任张东前往德阳市的四川司法警官职业学院，慰问正在参加执业培训的7名实习律师，并进行面试专项辅导。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/KqvygRBl8LaYr7-zfxKNRQ'
+            },
+            'public-welfare-honor-2025': {
+                title: '【拓泰动态】践行公益初心｜拓泰律所再获履职表彰',
+                category: '拓泰荣誉',
+                date: '2025-12-30',
+                image: 'https://picsum.photos/seed/public-welfare/800/400',
+                summary: '因在"法务助手"岗位上的专业履职与公益担当，拓泰律所再次获得金沙街道人大工委的表彰。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/oM_G7oNhmMuQ4rV8RpTkZw'
+            },
+            'chengdu-lawyer-association-2024': {
+                title: '【拓泰喜讯】我所主任当选成都市律师协会专业委员会副主任、多位律师当选委员',
+                category: '拓泰荣誉',
+                date: '2024-12-26',
+                image: 'https://picsum.photos/seed/lawyer-assoc/800/400',
+                summary: '成都市律师协会公布第八届成都市律师协会专业委员会成员名单，我所吴苛政主任当选公司法专业委员会副主任，多位律师当选各专业委员会委员。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/8ovCyfBJJte8-5cDAjWLxA'
+            },
+            'xiong-yi-honor-2025': {
+                title: '【拓泰喜报】我所高级合伙人熊艺律师荣获"四川省律师行业优秀共产党员"称号',
+                category: '拓泰荣誉',
+                date: '2025-07-03',
+                image: 'https://picsum.photos/seed/xiongyi/800/400',
+                summary: '我所熊艺律师荣获"四川省律师行业优秀共产党员"称号，这份荣誉是对其个人政治素养、专业精神和服务贡献的充分肯定。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/O6zb4EjK_l3TS5M2vXxrVA'
+            },
+            'wang-xinyuan-honor-2025': {
+                title: '【拓泰喜报】祝贺王馨媛律师荣获"蓉城先锋・律动微光"第二届青年律师演讲比赛三等奖',
+                category: '拓泰荣誉',
+                date: '2025-04-28',
+                image: 'https://picsum.photos/seed/wangxinyuan/800/400',
+                summary: '成都市律师协会主办的"蓉城先锋・律动微光"第二届青年律师演讲比赛圆满落幕，我所王馨媛律师荣获三等奖。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/Y8pavcWrdot4L78-MtlcRA'
+            },
+            'sichuan-police-college-2025': {
+                title: '【拓泰动态】我所党支部书记、主任吴苛政参与四川警察学院法学"校外实践教学基地"建设研讨会暨签约授牌仪式',
+                category: '拓泰荣誉',
+                date: '2025-04-28',
+                image: 'https://picsum.photos/seed/police-college/800/400',
+                summary: '四川警察学院举行"校院（所）合作协同育人法学\'校外实践教学基地\'建设研讨会暨签约授牌仪式，我所吴苛政主任等三位律师被聘为校外导师。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/9AsdGYAtufctheicawPY1w'
+            },
+            'cdut-cooperation-2025': {
+                title: '【拓泰动态】成都理工大学文法学院与拓泰律所举行院所合作共建签约仪式',
+                category: '业务活动',
+                date: '2025-12-24',
+                image: 'https://picsum.photos/seed/cdut/800/400',
+                summary: '2025年12月23日下午，成都理工大学文法学院与拓泰律所举行院所合作共建签约仪式，推进法学教育与实践的深度融合。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/6qeti-zgjJNenfUbvFN4dA'
+            },
+            'seminar-2025': {
+                title: '诚邀精英，共筑法途 | 拓泰律所期待您的加入',
+                category: '业务活动',
+                date: '2026-03-18',
+                image: 'https://picsum.photos/seed/news1/800/400',
+                summary: '在拓泰，我们始终相信：一个真正优秀的执业平台，不仅要让律师"接得了案子"，更要让律师"待得舒服、办得高效、成长得踏实"。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/-BqTyj-V2ty7gr8Cf6veqg'
+            },
+            'visit-guide-2026': {
+                title: '【到访指引】四川拓泰律师事务所访客路线指引',
+                category: '业务活动',
+                date: '2026-03-11',
+                image: 'https://picsum.photos/seed/visit-guide/800/400',
+                summary: '律所地址位于成都市青羊区光华南四路186号航空国创中心E4栋8层，提供自驾路线、地铁公交交通指引及电梯乘坐说明。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/y7Gfi2Lk7IGBzFwPDTAdKw'
+            },
+            'limengsong-2026': {
+                title: '【拓泰动态】执行主任李孟松履职再创佳绩，两件建议入选2026年区人大督办建议',
+                category: '业务活动',
+                date: '2026-03-18',
+                image: 'https://picsum.photos/seed/limengsong/800/400',
+                summary: '我所执行主任李孟松律师在区第八届人民代表大会第五次会议上提交的两件建议，双双被青羊区人大常委会评为2026年重点督办建议。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/InWVc9bMWU9ITn-gQ9P5Ig'
+            },
+            'party-building-honor-2026': {
+                title: '【拓泰党建】我所党建工作入选四川省律师行业党建工作典型案例',
+                category: '拓泰荣誉',
+                date: '2026-03-26',
+                image: 'https://picsum.photos/seed/party-honor/800/400',
+                summary: '3月25日，四川省律师协会发布了四川省律师行业党建工作典型案例，四川拓泰律师事务所申报的案例成功入选。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/IVLh2Yap977UHTMcDDEs0A'
+            },
+            'award-2025': {
+                title: '我所荣获年度优秀律师事务所',
+                category: '拓泰荣誉',
+                date: '2025-04-15',
+                image: 'https://picsum.photos/seed/award/800/400',
+                summary: '在2025年度法律服务行业评选中获奖',
+                wechatUrl: 'https://mp.weixin.qq.com/s/example2'
+            },
+            'company-law-category-2024': {
+                title: '【拓泰研究】公司法新规—类别股',
+                category: '拓泰研究',
+                date: '2024-10-15',
+                image: 'https://picsum.photos/seed/company-law/800/400',
+                summary: '2023年《公司法》在第144、145、146条正式引入了类别股制度，本文详细解析了类别股的定义、发展历程和主要类型。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/nXXZqrY05Bu5nKny1Qyspg'
+            },
+            'chengdu-lawyer-congress-2024': {
+                title: '【拓泰喜报】成都市第八次律师代表大会召开，我所执行主任吴苛政律师当选第八届理事会理事',
+                category: '拓泰荣誉',
+                date: '2024-09-30',
+                image: 'https://picsum.photos/seed/lawyer-congress/800/400',
+                summary: '成都市第八次律师代表大会胜利召开，会议选举产生了成都市律师协会第八届理事会理事，我所执行主任吴苛政律师当选第八届理事会理事。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/UwPc1TzjBlyRgYyeljsavg'
+            },
+            'securities-dispute-2024': {
+                title: '【拓泰研究】证券虚假陈述责任纠纷实务争议焦点',
+                category: '拓泰研究',
+                date: '2024-09-25',
+                image: 'https://picsum.photos/seed/securities/800/400',
+                summary: '本文通过对相关案例的筛选总结，探讨实务中证券虚假陈述责任纠纷案件的争议焦点。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/gpzRE1S8d71rSBli4fdlWA'
+            },
+            'party-building-honor-2024': {
+                title: '【拓泰党建】四川拓泰律师事务所党支部荣获"四川省律师行业先进基层党组织"称号',
+                category: '拓泰荣誉',
+                date: '2024-07-02',
+                image: 'https://picsum.photos/seed/party-honor/800/400',
+                summary: '热烈祝贺四川拓泰律师事务所党支部再次被授予"四川省律师行业先进基层党组织"的荣誉称号。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/61nbunUEx9KJMXWyioq-RA'
+            },
+            'xiong-yi-guo-honor-2023': {
+                title: '【拓泰喜报】祝贺！拓泰律所党员律师荣获省、市表彰',
+                category: '拓泰荣誉',
+                date: '2023-07-03',
+                image: 'https://picsum.photos/seed/xiong-guo-honor/800/400',
+                summary: '成都市律师行业党委表扬我所高级合伙人熊艺律师为"成都市律师行业2023年度优秀共产党员"，一级合伙人郭小林律师被评选为"四川省律师行业优秀共产党员"。',
+                wechatUrl: 'https://mp.weixin.qq.com/s/XbBsBu9l884iGupYAYWSzw'
+            },
+            'book-compliance': {
+                title: '《企业合规管理实务指南》正式出版',
+                category: '拓泰研究',
+                date: '2025-03-20',
+                image: 'https://picsum.photos/seed/book/800/400',
+                summary: '我所律师团队编著的实务指南正式出版',
+                wechatUrl: 'https://mp.weixin.qq.com/s/example3'
+            },
+            'forum-compliance': {
+                title: '我所主办企业合规管理论坛',
+                category: '业务活动',
+                date: '2025-03-15',
+                image: 'https://picsum.photos/seed/event/800/400',
+                summary: '企业合规管理论坛在成都成功举办',
+                wechatUrl: 'https://mp.weixin.qq.com/s/example4'
+            },
+            'lawyer-award': {
+                title: '多名律师获评省级优秀律师',
+                category: '拓泰荣誉',
+                date: '2025-02-28',
+                image: 'https://picsum.photos/seed/award2/800/400',
+                summary: '我所三名律师获评优秀律师称号',
+                wechatUrl: 'https://mp.weixin.qq.com/s/example6'
+            },
+            'book-civil-law': {
+                title: '《民法典解读与实务应用》专著发布',
+                category: '拓泰研究',
+                date: '2025-02-15',
+                image: 'https://picsum.photos/seed/book2/800/400',
+                summary: '民法典解读与实务应用专著正式发布',
+                wechatUrl: 'https://mp.weixin.qq.com/s/example7'
+            },
+            'forum-chengdu-chongqing': {
+                title: '我所协办成渝地区双城经济圈法律服务论坛',
+                category: '业务活动',
+                date: '2025-01-20',
+                image: 'https://picsum.photos/seed/event2/800/400',
+                summary: '成渝地区双城经济圈法律服务论坛召开',
+                wechatUrl: 'https://mp.weixin.qq.com/s/example8'
+            },
+        };
+
+        const newsIds = Object.keys(newsItems);
+
+        const activities = newsIds.filter(id => newsItems[id].category === '业务活动');
+        const honors = newsIds.filter(id => newsItems[id].category === '拓泰荣誉');
+        const research = newsIds.filter(id => newsItems[id].category === '拓泰研究');
+        const culture = newsIds.filter(id => newsItems[id].category === '拓泰人文');
+
+        const displayLimit = 8;
+
+        function renderList(containerId, items, categoryKey) {
+            const container = document.getElementById(containerId);
+            const visibleItems = items.slice(0, displayLimit);
+            const hasMore = items.length > displayLimit;
+
+            container.innerHTML = visibleItems.map(id => {
+                const item = newsItems[id];
+                return `
+                    <a href="${item.wechatUrl}" target="_blank" class="flex items-start space-x-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer group">
+                        <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden">
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-medium text-gray-800 group-hover:text-primary truncate">${item.title}</h4>
+                            <p class="text-sm text-gray-500 mt-1">${item.date}</p>
+                        </div>
+                        <i class="fa fa-external-link text-gray-400 group-hover:text-primary transition-colors flex-shrink-0 mt-2"></i>
+                    </a>
+                `;
+            }).join('');
+
+            if (hasMore) {
+                container.innerHTML += `
+                    <div class="text-center pt-2">
+                        <button onclick="loadMore('${categoryKey}', '${containerId}', ${displayLimit})" class="text-primary hover:text-primary/80 text-sm font-medium cursor-pointer">
+                            查看更多 <i class="fa fa-chevron-down ml-1"></i>
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        window.currentPage = {
+            'activities': 1,
+            'honors': 1,
+            'research': 1,
+            'culture': 1
+        };
+
+        window.loadMore = function(categoryKey, containerId, displayLimit) {
+            const categoryItems = categoryKey === 'activities' ? activities :
+                                  categoryKey === 'honors' ? honors :
+                                  categoryKey === 'research' ? research : culture;
+
+            const container = document.getElementById(containerId);
+            window.currentPage[categoryKey]++;
+            const currentPage = window.currentPage[categoryKey];
+            const startIndex = (currentPage - 1) * displayLimit;
+            const endIndex = startIndex + displayLimit;
+            const newItems = categoryItems.slice(startIndex, endIndex);
+
+            let itemsHtml = '';
+            const itemsToShow = categoryItems.slice(0, endIndex);
+            itemsToShow.forEach(id => {
+                const item = newsItems[id];
+                itemsHtml += `
+                    <a href="${item.wechatUrl}" target="_blank" class="flex items-start space-x-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer group">
+                        <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden">
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-medium text-gray-800 group-hover:text-primary truncate">${item.title}</h4>
+                            <p class="text-sm text-gray-500 mt-1">${item.date}</p>
+                        </div>
+                        <i class="fa fa-external-link text-gray-400 group-hover:text-primary transition-colors flex-shrink-0 mt-2"></i>
+                    </a>
+                `;
+            });
+
+            const btnHtml = endIndex < categoryItems.length ? `
+                <div class="text-center pt-2">
+                    <button onclick="loadMore('${categoryKey}', '${containerId}', ${displayLimit})" class="text-primary hover:text-primary/80 text-sm font-medium cursor-pointer">
+                        查看更多 <i class="fa fa-chevron-down ml-1"></i>
+                    </button>
+                </div>
+            ` : `
+                <div class="text-center pt-2">
+                    <button onclick="showLess('${categoryKey}', '${containerId}', ${displayLimit})" class="text-gray-500 hover:text-gray-700 text-sm font-medium cursor-pointer">
+                        收起 <i class="fa fa-chevron-up ml-1"></i>
+                    </button>
+                </div>
+            `;
+
+            container.innerHTML = itemsHtml + btnHtml;
+        };
+
+        window.showLess = function(categoryKey, containerId, displayLimit) {
+            window.currentPage[categoryKey] = 1;
+            const categoryItems = categoryKey === 'activities' ? activities :
+                                  categoryKey === 'honors' ? honors :
+                                  categoryKey === 'research' ? research : culture;
+            renderList(containerId, categoryItems, categoryKey);
+        };
+
+        renderList('news-activities', activities, 'activities');
+        renderList('news-honors', honors, 'honors');
+        renderList('news-research', research, 'research');
+        renderList('news-culture', culture, 'culture');
+    </script>
+</body>
+</html>

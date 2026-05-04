@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>律师详情 - 四川拓泰律师事务所</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3a5f',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <nav class="navbar py-4 px-6">
+        <div class="container mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-red-700 to-red-800 rounded-lg flex items-center justify-center relative overflow-hidden">
+                    <span class="text-white font-bold text-sm relative z-10">拓泰</span>
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/20 via-transparent to-transparent transform -skew-x-12 translate-x-[-30%]"></div>
+                    <div class="absolute top-0 left-0 w-2 h-2 bg-white/40 rounded-full top-1 left-1"></div>
+                </div>
+                <span class="text-xl font-bold text-red-700 hidden md:inline">四川拓泰律师事务所</span>
+            </a>
+            <a href="lawyer-list.html" class="text-sm text-gray-600 hover:text-primary transition-colors flex items-center space-x-2">
+                <i class="fa fa-arrow-left"></i>
+                <span>返回专业律师</span>
+            </a>
+        </div>
+    </nav>
+
+    <section id="lawyer-profile" class="pt-32 pb-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                    <div class="w-64 h-80 flex-shrink-0 rounded-2xl overflow-hidden shadow-xl">
+                        <img id="lawyer-image" src="" alt="" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <h1 id="lawyer-name" class="text-3xl md:text-4xl font-bold mb-2"></h1>
+                        <p id="lawyer-title" class="text-xl text-primary mb-4"></p>
+                        <div id="lawyer-tags" class="flex flex-wrap gap-2 justify-center md:justify-start mb-6">
+                        </div>
+                        <p id="lawyer-intro" class="text-gray-600 leading-relaxed mb-6"></p>
+                        <div class="space-y-3 justify-center md:justify-start">
+                            <div class="text-gray-600"><i class="fa fa-envelope mr-2"></i><input type="email" id="lawyer-email" class="border-none bg-transparent focus:outline-none focus:ring-0 text-primary underline" value=""></div>
+                            <div class="text-gray-600"><i class="fa fa-phone mr-2"></i><input type="tel" id="lawyer-phone" class="border-none bg-transparent focus:outline-none focus:ring-0 text-primary underline" value=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="lawyer-details" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                    <h2 class="text-2xl font-bold mb-6 text-primary">专业领域</h2>
+                    <div id="lawyer-expertise" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                    <h2 id="experience-title" class="text-2xl font-bold mb-6 text-primary">执业经历</h2>
+                    <div id="lawyer-experience" class="space-y-4">
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                    <h2 id="cases-title" class="text-2xl font-bold mb-6 text-primary">代表案例</h2>
+                    <div id="lawyer-cases" class="space-y-4">
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold mb-6 text-primary">所获荣誉</h2>
+                    <div id="lawyer-awards" class="space-y-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="related-lawyers" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-2xl font-bold text-center mb-12">其他专业律师</h2>
+            <div id="related-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-primary text-white">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-white/80">四川拓泰律师事务所</p>
+            <p class="text-white/60 mt-2 text-sm">地址：成都市青羊区航空国创中心E4栋8层</p>
+        </div>
+    </footer>
+
+    <script>
+        const lawyers = {};
+
+        const lastNames = ['张', '李', '王', '刘', '陈', '杨', '赵', '黄', '周', '吴', '徐', '孙', '胡', '朱', '高', '林', '何', '郭', '马', '罗', '梁', '宋', '郑', '谢', '韩', '唐', '冯', '于', '董', '萧', '程', '曹', '袁', '邓', '许', '傅', '沈', '曾', '彭', '吕', '苏', '卢', '蒋', '蔡', '贾', '丁', '魏', '薛', '叶', '阎', '余', '潘', '杜', '戴', '夏', '钟', '汪', '田', '任', '姜', '范', '方', '石', '姚', '谭', '廖', '邹', '熊', '金', '陆', '郝', '孔', '白', '崔', '康', '毛', '邱', '秦', '江', '史', '顾', '侯', '邵', '孟', '龙', '万', '段', '漕', '钱', '汤', '尹', '黎', '易', '常', '武', '乔', '贺', '赖', '龚', '文'];
+        const firstNames = ['明', '华', '强', '丽', '伟', '芳', '娜', '敏', '静', '磊', '军', '洋', '勇', '艳', '杰', '涛', '超', '霞', '平', '刚', '建华', '建国', '建军', '志明', '志强', '志远', '志刚', '志伟', '秀兰', '秀珍', '凤英', '金花', '银花', '玉兰', '玉珍', '玉英', '桂花', '兰花', '梅花', '菊花', '芙蓉', '玫瑰', '丁香', '紫薇', '冬梅', '夏荷', '秋菊', '春兰'];
+        const titles = ['主任律师', '高级合伙人', '合伙人', '资深律师', '律师'];
+        const schools = ['四川大学', '中国政法大学', '西南政法大学', '华东政法大学', '武汉大学', '北京大学', '清华大学', '复旦大学'];
+        const specialtyData = {
+            '企业法律服务': {
+                expertise: ['企业法律顾问', '公司治理结构设计', '股权激励方案', '企业重组并购', '破产清算'],
+                cases: [
+                    '为某大型国有企业提供常年法律顾问服务，协助完成混合所有制改革',
+                    '代理某上市公司股权纠纷案，涉及金额超过5亿元',
+                    '为某科技公司提供VIE架构搭建及上市前法律服务'
+                ],
+                keywords: '企业法律服务'
+            },
+            '公司法务': {
+                expertise: ['合同审查与管理', '法律风险防控', '公司法务体系建设', '法律培训', '合规审查'],
+                cases: [
+                    '为某知名企业建立完善的法律风险防控体系',
+                    '代理某公司合同纠纷案，成功为当事人避免损失2000万元',
+                    '为某集团设计全套合同管理体系'
+                ],
+                keywords: '公司法务'
+            },
+            '股权纠纷': {
+                expertise: ['股权转让纠纷', '股东权益保护', '股权代持争议', '增资扩股纠纷', '股权激励争议'],
+                cases: [
+                    '代理某创业公司股东知情权纠纷案，获得全面胜诉',
+                    '为某家族企业股权传承提供专项法律服务',
+                    '代理某上市公司股权确认纠纷，涉及金额上亿元'
+                ],
+                keywords: '股权纠纷'
+            },
+            '知识产权': {
+                expertise: ['专利申请与保护', '商标注册与维权', '著作权保护', '商业秘密保护', '知识产权诉讼'],
+                cases: [
+                    '代理某科技公司专利侵权案，获赔经济损失3000万元',
+                    '为某知名餐饮品牌提供商标全类别注册保护方案',
+                    '代理某软件公司计算机软件著作权侵权案'
+                ],
+                keywords: '知识产权'
+            },
+            '专利申请': {
+                expertise: ['发明专利申请', '实用新型专利', '外观设计专利', '专利无效宣告', '专利许可与转让'],
+                cases: [
+                    '为某高新技术企业申请核心专利50余项',
+                    '代理某公司专利无效宣告案，成功维持专利有效性',
+                    '为某科研院所提供专利布局及申请策略'
+                ],
+                keywords: '专利申请'
+            },
+            '商标注册': {
+                expertise: ['商标注册申请', '商标异议与复审', '商标侵权诉讼', '品牌保护策略', '商标许可转让'],
+                cases: [
+                    '为某知名企业进行商标全类别注册，保护品牌价值',
+                    '代理某品牌商标侵权案，获赔经济损失500万元',
+                    '为某创业公司提供品牌商标战略规划'
+                ],
+                keywords: '商标注册'
+            },
+            '刑事辩护': {
+                expertise: ['经济犯罪辩护', '职务犯罪辩护', '暴力犯罪辩护', '毒品犯罪辩护', '刑事申诉与再审'],
+                cases: [
+                    '代理某企业家职务侵占案，最终获得不起诉决定',
+                    '为某涉黑案件主犯辩护，实现部分罪名无罪',
+                    '代理某公司高管受贿案，获得从轻处罚'
+                ],
+                keywords: '刑事辩护'
+            },
+            '刑事风险防控': {
+                expertise: ['企业刑事合规', '刑事风险评估', '反腐败制度建设', '刑事危机处理', '刑事法律咨询'],
+                cases: [
+                    '为某大型国企建立刑事合规体系，顺利通过专项检查',
+                    '为某上市公司提供刑事风险评估及防控方案',
+                    '协助某企业处理刑事危机事件，成功化解风险'
+                ],
+                keywords: '刑事风险防控'
+            },
+            '刑事申诉': {
+                expertise: ['死刑复核辩护', '无罪辩护', '罪轻辩护', '刑事申诉代理', '再审申请'],
+                cases: [
+                    '代理某冤假错案申诉，最终获得无罪判决',
+                    '为某死刑案件提供复核辩护，获得改判',
+                    '代理某涉黑案件申诉，部分罪名被撤销'
+                ],
+                keywords: '刑事申诉'
+            },
+            '民事诉讼': {
+                expertise: ['合同纠纷诉讼', '侵权责任纠纷', '物权纠纷诉讼', '婚姻家庭纠纷', '继承纠纷诉讼'],
+                cases: [
+                    '代理某建设工程合同纠纷案，涉及金额超过2亿元',
+                    '为某知名企业提供系列民事诉讼代理服务',
+                    '代理某房屋买卖合同纠纷案，成功为当事人维权'
+                ],
+                keywords: '民事诉讼'
+            },
+            '婚姻家庭': {
+                expertise: ['离婚纠纷', '财产分割', '子女抚养权', '家庭暴力保护', '婚姻无效与撤销'],
+                cases: [
+                    '代理某明星离婚案，在财产分割中为当事人争取到合理权益',
+                    '为某高净值人士提供婚前财产规划法律服务',
+                    '代理某涉外离婚案件，顺利解决管辖权及财产分割问题'
+                ],
+                keywords: '婚姻家庭'
+            },
+            '继承纠纷': {
+                expertise: ['遗嘱继承', '法定继承', '遗产分割纠纷', '遗赠扶养协议', '遗产继承诉讼'],
+                cases: [
+                    '代理某名人遗产继承纠纷案，涉及金额超过10亿元',
+                    '为某家族企业设计遗产传承方案',
+                    '代理某海外华人遗产继承案件，顺利实现遗产过户'
+                ],
+                keywords: '继承纠纷'
+            },
+            '房地产与建筑工程': {
+                expertise: ['房地产开发法律服务', '建筑工程合同', '房屋买卖纠纷', '物业管理纠纷', '土地征收补偿'],
+                cases: [
+                    '为某大型房地产项目提供全程法律服务，涉及资金超过50亿元',
+                    '代理某建设工程施工合同纠纷案，工程款纠纷超过1亿元',
+                    '为某棚户区改造项目提供专项法律服务'
+                ],
+                keywords: '房地产与建筑工程'
+            },
+            '土地征收': {
+                expertise: ['征地补偿方案', '拆迁纠纷处理', '土地征收审批', '补偿标准争议', '安置补偿诉讼'],
+                cases: [
+                    '代理某村集体土地征收补偿纠纷案，为村民争取到合理补偿',
+                    '为某重大基础设施项目提供土地征收法律服务',
+                    '代理某企业土地收储纠纷，涉及金额数千万元'
+                ],
+                keywords: '土地征收'
+            },
+            '房屋拆迁': {
+                expertise: ['拆迁补偿谈判', '拆迁纠纷诉讼', '安置房分配', '违章建筑认定', '拆迁协议审查'],
+                cases: [
+                    '代理某城市更新项目拆迁户维权，成功提高补偿标准',
+                    '为某商业综合体拆迁提供全程法律服务',
+                    '代理某国有企业厂房拆迁补偿纠纷案'
+                ],
+                keywords: '房屋拆迁'
+            },
+            '金融证券': {
+                expertise: ['证券发行与上市', '私募基金法律服务', '金融衍生品法律', '银行保险法律', '互联网金融合规'],
+                cases: [
+                    '为某公司科创板上市提供法律服务',
+                    '代理某私募基金设立及备案法律服务',
+                    '为某互联网金融平台提供合规整改法律服务'
+                ],
+                keywords: '金融证券'
+            },
+            '投融资': {
+                expertise: ['股权投资', '风险投资法律服务', '融资并购', '投资尽调', '对赌协议设计'],
+                cases: [
+                    '为某创业公司完成多轮融资法律服务',
+                    '代理某上市公司重大资产重组项目',
+                    '为某外资企业境内投资提供全程法律服务'
+                ],
+                keywords: '投融资'
+            },
+            '并购重组': {
+                expertise: ['企业并购', '资产重组', '债务重组', '破产重整', '并购尽职调查'],
+                cases: [
+                    '为某上市公司重大资产重组提供法律服务',
+                    '代理某国企混改项目，涉及资产超过100亿元',
+                    '为某濒危企业提供破产重整法律服务'
+                ],
+                keywords: '并购重组'
+            },
+            '劳动争议': {
+                expertise: ['劳动合同纠纷', '工伤赔偿争议', '年终奖争议', '违法解除劳动合同', '竞业限制纠纷'],
+                cases: [
+                    '代理某公司高管劳动仲裁案件，获得经济补偿金100万元',
+                    '为某知名企业处理群体性劳动纠纷',
+                    '代理某建筑工地工伤赔偿案件，为工人争取到合理赔偿'
+                ],
+                keywords: '劳动争议'
+            },
+            '劳动合同': {
+                expertise: ['劳动合同起草审查', '员工入职管理', '绩效考核设计', '离职手续办理', '劳务派遣合规'],
+                cases: [
+                    '为某大型企业设计全套劳动合同模板',
+                    '为某公司提供全员劳动合同合规审查服务',
+                    '代理某企业高管离职竞业限制纠纷案'
+                ],
+                keywords: '劳动合同'
+            },
+            '工伤赔偿': {
+                expertise: ['工伤认定申请', '劳动能力鉴定', '工伤赔偿标准', '工亡赔偿处理', '工伤保险待遇'],
+                cases: [
+                    '代理某建筑工人工伤赔偿案件，获得赔偿款80万元',
+                    '为某公司处理工亡赔偿事宜',
+                    '代理某职业病工伤认定及赔偿案件'
+                ],
+                keywords: '工伤赔偿'
+            },
+            '行政法律': {
+                expertise: ['行政复议代理', '行政诉讼代理', '政府信息公开', '行政处罚听证', '行政强制执行'],
+                cases: [
+                    '代理某企业不服行政处罚提起行政复议，成功撤销处罚决定',
+                    '为某企业提供政府信息公开申请法律服务',
+                    '代理某村集体行政诉讼案件，获得胜诉'
+                ],
+                keywords: '行政法律'
+            },
+            '行政复议': {
+                expertise: ['行政复议申请', '复议听证代理', '复议决定执行', '复议与诉讼衔接', '复议风险评估'],
+                cases: [
+                    '代理某企业不服税务行政处罚复议案件，获得减轻处罚',
+                    '为某公司提供征地补偿复议法律服务',
+                    '代理某村民小组不服土地征收复议'
+                ],
+                keywords: '行政复议'
+            },
+            '行政诉讼': {
+                expertise: ['一审行政诉讼', '二审行政诉讼', '再审行政申请', '国家赔偿诉讼', '行政行为效力'],
+                cases: [
+                    '代理某企业不服工商行政处罚提起诉讼，获得全面胜诉',
+                    '为某村民小组代理土地确权行政诉讼',
+                    '代理某公司诉政府行政强制违法案件'
+                ],
+                keywords: '行政诉讼'
+            },
+            '合规内控': {
+                expertise: ['企业合规体系建设', '内部控制制度', '合规培训', '合规审计', '合规风险评估'],
+                cases: [
+                    '为某央企提供合规体系建设法律服务',
+                    '为某上市公司建立反商业贿赂合规体系',
+                    '代理某企业应对监管部门合规检查'
+                ],
+                keywords: '合规内控'
+            },
+            '企业合规': {
+                expertise: ['合规政策制定', '合规审查流程', '合规文化建设', '第三方合规管理', '合规报告编制'],
+                cases: [
+                    '为某大型国企建立全套合规管理制度',
+                    '为某外资企业制定符合中国法律的合规方案',
+                    '代理某企业通过ISO 37301合规认证'
+                ],
+                keywords: '企业合规'
+            },
+            '风险评估': {
+                expertise: ['法律风险识别', '风险等级评估', '风险防控方案', '风险预警机制', '风险应对策略'],
+                cases: [
+                    '为某上市公司进行法律风险全面评估',
+                    '为某重大并购项目提供法律风险评估报告',
+                    '代理某企业建立法律风险预警系统'
+                ],
+                keywords: '风险评估'
+            },
+            '国际贸易': {
+                expertise: ['国际贸易合同', '进出口合规', '贸易救济措施', '跨境电商法律', '国际贸易纠纷'],
+                cases: [
+                    '为某外贸企业提供全程法律服务',
+                    '代理某企业应对美国337调查',
+                    '为某跨境电商平台提供法律合规服务'
+                ],
+                keywords: '国际贸易'
+            },
+            '跨境投资': {
+                expertise: ['境外投资备案', '跨境并购法律', '返程投资架构', '外汇合规管理', '跨境税务筹划'],
+                cases: [
+                    '为某企业境外投资提供全程法律服务',
+                    '代理某外资企业返程投资架构设计',
+                    '为某上市公司跨境并购提供法律服务'
+                ],
+                keywords: '跨境投资'
+            },
+            '涉外法律': {
+                expertise: ['涉外合同审查', '外资企业法律服务', '涉外婚姻继承', '涉外知识产权', '涉外诉讼代理'],
+                cases: [
+                    '为某外资企业提供常年法律顾问服务',
+                    '代理某涉外货物买卖合同纠纷',
+                    '为某涉外婚姻家庭提供法律服务'
+                ],
+                keywords: '涉外法律'
+            }
+        };
+
+        for (let i = 0; i < 80; i++) {
+            const lastName = lastNames[i % lastNames.length];
+            const firstName = firstNames[i % firstNames.length];
+            const name = lastName + firstName;
+            const title = titles[i % titles.length];
+            const school = schools[i % schools.length];
+            const specialtyKeys = Object.keys(specialtyData);
+            const mainSpecialty = specialtyKeys[i % specialtyKeys.length];
+            const specialty = specialtyData[mainSpecialty];
+            const years = 5 + (i % 20);
+            const seed = 1000 + i;
+            
+            lawyers['lawyer-' + (i + 1)] = {
+                name: name,
+                title: title,
+                image: `https://picsum.photos/seed/${seed}/400/500`,
+                tags: specialty.expertise.slice(0, 3),
+                intro: `${name}律师，四川拓泰律师事务所${title}。毕业于${school}，从业${years}年以上，在${mainSpecialty}领域具有丰富的实践经验。长期为各类企业提供专业、高效的法律服务。`,
+                email: `${name.toLowerCase()}@tuotai-law.com`,
+                phone: `028-${String(10000000 + i).substring(0, 8)}`,
+                expertise: specialty.expertise,
+                experience: [
+                    `${2010 + (i % 10)}年-至今：四川拓泰律师事务所${title}`,
+                    `${2008 + (i % 8)}年-${2010 + (i % 10)}年：${school}法学院讲师`,
+                    `${2005 + (i % 5)}年-${2008 + (i % 8)}年：某${['知名', '大型', '专业'][i % 3]}律所律师`
+                ],
+                cases: specialty.cases,
+                awards: [
+                    `${2020 + (i % 5)}年：${['年度优秀律师', '省级优秀律师', '优秀法律顾问', '业务标兵', '最佳服务奖'][i % 5]}`,
+                    `${2018 + (i % 5)}年：${['优秀党员律师', '先进工作者', '优秀代理人', '最佳进步奖', '专业之星'][i % 5]}`
+                ]
+            };
+        }
+
+        lawyers['lawyer-2'] = {
+            name: '吴苛政',
+            title: '主任 / 党支部书记 / 高级合伙人 ',
+            image: 'images/吴苛政.jpg',
+            tags: ['争议解决', '公司治理', '合规风控'],
+            intro: '吴苛政律师，中共党员，西南财经大学法学学士、法律硕士，四川省优秀律师，四川省公司法专业律师。吴苛政律师先后工作于成都市青羊区房产管理局、成都市锦江区人民法院，现为四川拓泰律师事务所党支部书记、主任、高级合伙人。',
+            email: 'wukezheng@tuotai-law.com',
+            phone: '028-86269888',
+            expertise: ['争议解决', '公司治理', '合规风控', '并购重组', '投资融资', '环境与资源'],
+            experience: [
+                '四川省律师协会装备制造专业委员会副主任',
+                '成都市律师协会律师执业考核专门委员会副主任',
+                '成都市律师协会公司法专业委员会副主任',
+                '成都市律师协会青羊工作委员会副主任',
+                '成都市律师协会理事'
+            ],
+            cases: [
+                '西南交通大学法律硕士研究生校外导师',
+                '西南财经大学地方法治研究所研究员',
+                '成都大学法律硕士研究生校外导师',
+                '四川警察学院法学专业校外导师'
+            ],
+            awards: [
+                '四川省优秀律师',
+                '成都市优秀律师',
+                '成都市青羊区优秀律师',
+                '美姑县人民政府法律顾问先进个人'
+            ]
+        };
+
+        const lawyerIds = Object.keys(lawyers);
+
+        function getLawyerIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('lawyer') || 'lawyer-1';
+        }
+
+        function loadLawyerDetail() {
+            const lawyerId = getLawyerIdFromUrl();
+            const lawyer = lawyers[lawyerId];
+
+            if (!lawyer) {
+                document.getElementById('lawyer-name').textContent = '律师未找到';
+                return;
+            }
+
+            document.getElementById('lawyer-image').src = lawyer.image;
+            document.getElementById('lawyer-image').alt = lawyer.name;
+            document.getElementById('lawyer-name').textContent = lawyer.name;
+            document.getElementById('lawyer-title').textContent = lawyer.title;
+            document.getElementById('lawyer-intro').textContent = lawyer.intro;
+            document.title = lawyer.name + ' - 四川拓泰律师事务所';
+
+            const isWuKezheng = (lawyerId === 'lawyer-2');
+            
+            const tagsContainer = document.getElementById('lawyer-tags');
+            if (isWuKezheng) {
+                tagsContainer.innerHTML = '';
+            } else {
+                tagsContainer.innerHTML = lawyer.tags.map(tag => 
+                    `<span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">${tag}</span>`
+                ).join('');
+            }
+
+            if (isWuKezheng) {
+                document.getElementById('lawyer-intro').style.textIndent = '2em';
+            }
+
+            document.getElementById('lawyer-email').value = lawyer.email;
+            document.getElementById('lawyer-phone').value = lawyer.phone;
+
+            const expertiseContainer = document.getElementById('lawyer-expertise');
+            expertiseContainer.innerHTML = lawyer.expertise.map(item => `
+                <div class="flex items-center space-x-2">
+                    <i class="fa fa-check-circle text-primary"></i>
+                    <span class="text-gray-700">${item}</span>
+                </div>
+            `).join('');
+
+            const experienceContainer = document.getElementById('lawyer-experience');
+            experienceContainer.innerHTML = lawyer.experience.map(item => `
+                <div class="flex items-start space-x-3">
+                    <i class="fa fa-briefcase text-primary mt-1"></i>
+                    <span class="text-gray-600">${item}</span>
+                </div>
+            `).join('');
+
+            if (isWuKezheng) {
+                document.getElementById('experience-title').textContent = '律协任职';
+            }
+
+            const casesContainer = document.getElementById('lawyer-cases');
+            casesContainer.innerHTML = lawyer.cases.map(item => `
+                <div class="flex items-start space-x-3">
+                    <i class="fa fa-gavel text-primary mt-1"></i>
+                    <span class="text-gray-600">${item}</span>
+                </div>
+            `).join('');
+
+            if (isWuKezheng) {
+                document.getElementById('cases-title').textContent = '社会职务';
+            }
+
+            const awardsContainer = document.getElementById('lawyer-awards');
+            awardsContainer.innerHTML = lawyer.awards.map(item => `
+                <div class="flex items-start space-x-3">
+                    <i class="fa fa-trophy text-yellow-500 mt-1"></i>
+                    <span class="text-gray-600">${item}</span>
+                </div>
+            `).join('');
+
+            const relatedGrid = document.getElementById('related-grid');
+            const currentIndex = lawyerIds.indexOf(lawyerId);
+            const otherLawyers = [];
+            
+            for (let i = 1; i <= 3; i++) {
+                const nextIndex = (currentIndex + i) % lawyerIds.length;
+                otherLawyers.push(lawyerIds[nextIndex]);
+            }
+            
+            relatedGrid.innerHTML = otherLawyers.map(id => {
+                const l = lawyers[id];
+                return `
+                    <a href="lawyer-detail.html?lawyer=${id}" class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary/30 overflow-hidden block">
+                        <div class="h-48 overflow-hidden">
+                            <img src="${l.image}" alt="${l.name}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-800">${l.name}</h3>
+                            <p class="text-primary text-sm mt-1">${l.title}</p>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadLawyerDetail);
+    </script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拓泰党建 - 四川拓泰律师事务所</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3a5f',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <nav class="navbar py-4 px-6">
+        <div class="container mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-red-700 to-red-800 rounded-lg flex items-center justify-center relative overflow-hidden">
+                    <span class="text-white font-bold text-sm relative z-10">拓泰</span>
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/20 via-transparent to-transparent transform -skew-x-12 translate-x-[-30%]"></div>
+                    <div class="absolute top-0 left-0 w-2 h-2 bg-white/40 rounded-full top-1 left-1"></div>
+                </div>
+                <span class="text-xl font-bold text-red-700 hidden md:inline">四川拓泰律师事务所</span>
+            </a>
+            <a href="index.html#party-building" class="text-sm text-gray-600 hover:text-primary transition-colors flex items-center space-x-2">
+                <i class="fa fa-arrow-left"></i>
+                <span>返回首页</span>
+            </a>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-12 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="text-sm font-bold uppercase tracking-wider text-red-600">党建动态</span>
+                <h1 class="text-3xl md:text-4xl font-bold mt-2 mb-4">拓泰党建</h1>
+                <div class="w-16 h-1 bg-red-600 mx-auto mb-4"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    四川拓泰律师事务所始终坚持党建引领，将党建工作与律所发展深度融合，以党建促所建，以所建强党建。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div id="party-list" class="max-w-5xl mx-auto space-y-8">
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-primary text-white">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-white/80">四川拓泰律师事务所</p>
+            <p class="text-white/60 mt-2 text-sm">地址：成都市青羊区航空国创中心E4栋8层</p>
+        </div>
+    </footer>
+
+    <script>
+        const partyActivities = {
+            'theme-day': {
+                title: '主题党日活动',
+                icon: 'fa-flag',
+                date: '2025-04-20',
+                image: 'https://picsum.photos/seed/party1/800/400',
+                summary: '定期组织党员开展主题党日活动，深入学习党的理论知识和重要会议精神，增强党员政治意识。',
+                content: `
+                    <p class="text-gray-600 leading-relaxed mb-6">我所党支部定期组织主题党日活动，活动内容丰富形式多样，包括专题党课学习、红色教育基地参观、党史知识竞赛等多种形式。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">通过主题党日活动，进一步增强了党员的政治意识、大局意识、核心意识、看齐意识，激发了党员的责任感和使命感。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">我所将持续开展主题党日活动，不断创新活动形式，丰富活动内容，提高活动实效，为推进律所党建工作高质量发展贡献力量。</p>
+                `
+            },
+            'volunteer': {
+                title: '党员志愿服务',
+                icon: 'fa-users',
+                date: '2025-04-15',
+                image: 'https://picsum.photos/seed/party2/800/400',
+                summary: '组织党员积极参与社会公益活动，为社区居民提供免费法律咨询服务，践行党员初心使命。',
+                content: `
+                    <p class="text-gray-600 leading-relaxed mb-6我所党支部组织党员律师走进社区，开展"法律服务进社区"志愿活动，为居民提供免费法律咨询、法治宣传等服务。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">活动涵盖了婚姻家庭、继承纠纷、劳动争议、合同纠纷等与群众生活密切相关的法律问题，受到社区居民的热烈欢迎和一致好评。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">我所将继续发挥党员律师的专业优势，定期开展志愿服务活动，以实际行动践行党员的初心和使命，为建设法治社会贡献力量。</p>
+                `
+            },
+            'training': {
+                title: '党建工作培训',
+                icon: 'fa-graduation-cap',
+                date: '2025-04-10',
+                image: 'https://picsum.photos/seed/party3/800/400',
+                summary: '开展党建工作培训，提升党员政治素养和业务能力，发挥党员先锋模范作用。',
+                content: `
+                    <p class="text-gray-600 leading-relaxed mb-6">我所定期举办党建工作培训班，邀请党建专家和优秀党员代表授课，内容涵盖党的理论、党史学习、党建实务等多个方面。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">通过培训，进一步提升了党员的政治素养和业务能力，增强了党员的党性修养和理论水平，为发挥党员先锋模范作用奠定了坚实基础。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">我所将持续开展党建工作培训，不断创新培训方式，提升培训实效，努力打造一支政治过硬、业务精通的党员律师队伍。</p>
+                `
+            },
+            'building': {
+                title: '党支部建设',
+                icon: 'fa-institution',
+                date: '2025-04-05',
+                image: 'https://picsum.photos/seed/party4/800/400',
+                summary: '加强党支部组织建设，完善党建工作制度，打造标准化规范化党支部。',
+                content: `
+                    <p class="text-gray-600 leading-relaxed mb-6">我所党支部始终高度重视组织建设，建立健全了党建工作制度，完善了党支部组织架构，实现了党建工作制度化、规范化、常态化。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">党支部严格落实"三会一课"制度，定期召开支部大会、支部委员会和党小组会，按时上好党课，确保党组织生活的严肃性和实效性。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">我所党支部将继续加强组织建设，不断提升党建工作水平，努力打造标准化规范化的示范党支部。</p>
+                `
+            },
+            'red-education': {
+                title: '红色教育实践活动',
+                icon: 'fa-book',
+                date: '2025-03-28',
+                image: 'https://picsum.photos/seed/party5/800/400',
+                summary: '组织党员赴红色教育基地开展革命传统教育，传承红色基因，赓续精神血脉。',
+                content: `
+                    <p class="text-gray-600 leading-relaxed mb-6">我所党支部组织党员赴遵义会议会址、红岩革命纪念馆等红色教育基地开展革命传统教育活动，重温党的光辉历程，感悟革命先辈的崇高精神。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">通过红色教育活动，党员们深受教育和启发，进一步坚定了理想信念，增强了党性修养，激发了干事创业的热情和动力。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">我所将继续开展红色教育实践活动，让党员在寻访红色足迹中传承红色基因，在感悟初心使命中汲取前进力量。</p>
+                `
+            },
+            'knowledge-contest': {
+                title: '党史知识竞赛',
+                icon: 'fa-trophy',
+                date: '2025-03-20',
+                image: 'https://picsum.photos/seed/party6/800/400',
+                summary: '举办党史知识竞赛，以赛促学、以学促干，推动党史学习教育走深走实。',
+                content: `
+                    <p class="text-gray-600 leading-relaxed mb-6">我所举办了党史知识竞赛活动，竞赛内容涵盖中国共产党党史、党的二十大精神、习近平法治思想等内容，全体党员积极参与。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">通过竞赛活动，进一步激发了党员学习党史的热情，营造了浓厚的学习氛围，达到了以赛促学、以学促干的目的。</p>
+                    <p class="text-gray-600 leading-relaxed mb-6">我所将继续创新党史学习教育形式，推动党史学习教育常态化长效化，引导党员从党的历史中汲取智慧和力量。</p>
+                `
+            }
+        };
+
+        function loadPartyList() {
+            const partyList = document.getElementById('party-list');
+            const activityIds = Object.keys(partyActivities);
+
+            partyList.innerHTML = activityIds.map(id => {
+                const activity = partyActivities[id];
+                return `
+                    <a href="party-building-detail.html?activity=${id}" class="block bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
+                        <div class="flex flex-col md:flex-row">
+                            <div class="md:w-64 h-48 md:h-auto flex-shrink-0 bg-white/40 backdrop-blur-sm border border-red-100/50 flex items-center justify-center">
+                                <i class="fa ${activity.icon} text-6xl text-red-500"></i>
+                            </div>
+                            <div class="flex-1 p-6">
+                                <div class="flex items-center mb-3">
+                                    <span class="text-xs text-red-600 font-medium px-3 py-1 bg-red-100 rounded-full mr-3">
+                                        <i class="fa fa-calendar mr-1"></i>${activity.date}
+                                    </span>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-3">${activity.title}</h3>
+                                <p class="text-gray-600 leading-relaxed">${activity.summary}</p>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadPartyList);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四川拓泰律师事务所 - 专业法律服务</title>
+    <meta name="description" content="四川拓泰律师事务所成立于2012年，提供企业法律服务、房地产与建筑工程、知识产权、刑事辩护、民事诉讼等专业领域法律服务。15年行业经验，50+专业律师，1000+案例展示。">
+    <meta name="keywords" content="四川律师事务所,成都律师,企业法律服务,房地产律师,知识产权律师,刑事辩护律师,民事诉讼律师,法律顾问">
+    <meta name="author" content="四川拓泰律师事务所">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="四川拓泰律师事务所 - 专业法律服务">
+    <meta property="og:description" content="专业、高效、全方位的法律服务提供商，15年行业经验，50+专业律师团队">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sctuotai.com">
+    <meta property="og:image" content="https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/7bddd50083e845d8bd30b8b56230c4ba.jpg~tplv-a9rns2rl98-24:720:720.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.sctuotai.com">
+    <!-- Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- GSAP 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- 统一的 Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B8860B',
+                        secondary: '#8B6914',
+                        accent: '#DAA520',
+                        dark: '#2C2C2C',
+                        light: '#F8F8F8',
+                        gold: '#C9A227',
+                        cream: '#FDF8F0'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Georgia', 'serif'],
+                    },
+                    transitionProperty: {
+                        'height': 'height',
+                        'spacing': 'margin, padding',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-balance {
+                text-wrap: balance;
+            }
+            .line-clamp-2 {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+    <style>
+        /* 自定义样式 */
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* 淡入动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 滑动进入动画 */
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 段落首行缩进 */
+        .textIndent {
+            text-indent: 2em;
+        }
+
+        /* 自定义鼠标 */
+        #custom-cursor {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            border: 1px solid #FFFFFF;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: width 0.3s, height 0.3s, opacity 0.3s;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FFFFFF;
+        }
+
+        /* 屏幕容器 */
+        .screen {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 线条元素 */
+        .line-element {
+            position: relative;
+            height: 1px;
+            background-color: #FFFFFF;
+            opacity: 0.7;
+        }
+
+        .corner-line {
+            position: absolute;
+        }
+
+        .diagonal-line {
+            position: absolute;
+            height: 1px;
+            background-color: #FFFFFF;
+            transform-origin: bottom left;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            transition: background-color 0.3s, padding 0.3s;
+        }
+
+        section[id] {
+            scroll-margin-top: 80px;
+        }
+
+        /* 服务卡片 */
+        .service-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 律师卡片 */
+        .lawyer-card {
+            transition: transform 0.3s;
+        }
+
+        .lawyer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 案例卡片 */
+        .case-card {
+            transition: transform 0.3s;
+        }
+
+        .case-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 手风琴组件 */
+        .accordion-item {
+            transition: height 0.3s ease;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+
+        /* 输入框焦点效果 */
+        .form-input:focus {
+            border-color: #B31535;
+            outline: none;
+        }
+
+        /* 按钮悬停效果 */
+        .btn-primary {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(184, 134, 11, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: #8B6914;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(184, 134, 11, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        /* 毛玻璃效果 */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        /* 数字增长动画 */
+        .counter-value {
+            transition: color 0.3s;
+        }
+
+        /* 无限滚动 */
+        .infinite-scroll-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .infinite-scroll-track {
+            display: flex;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .infinite-scroll-item {
+            flex-shrink: 0;
+        }
+
+        /* 卡片堆叠效果 */
+        .sticky-container {
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-content {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* 图片加载占位符 */
+        .img-loading {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .img-loaded {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .mobile-menu {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .mobile-menu.active {
+                transform: translateX(0);
+            }
+
+            iframe::-webkit-scrollbar {
+                width: 2px;
+                height: 2px;
+            }
+
+            iframe::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            iframe::-webkit-scrollbar-thumb {
+                background: #ccc;
+                border-radius: 1px;
+            }
+
+            iframe::-webkit-scrollbar-thumb:hover {
+                background: #999;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- 跳转到主要内容（无障碍访问） -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none">
+        跳转到主要内容
+    </a>
+
+    <!-- 自定义鼠标 -->
+    <div id="custom-cursor" class="fixed w-6 h-6 rounded-full border border-primary pointer-events-none mix-blend-difference z-50 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-300"></div>
+
+    <!-- 导航栏 -->
+    <nav id="navbar" class="navbar fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-sm">
+        <div class="container mx-auto px-6 py-0 flex justify-between items-center">
+            <a href="#" class="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+                <img src="images/0000.jpg" alt="四川拓泰律师事务所" class="h-20">
+            </a>
+            
+            <!-- 桌面导航 -->
+            <div class="hidden md:flex items-center space-x-12">
+                <a href="#about" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">关于我们</a>
+                <a href="#consulting" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">拓泰资讯</a>
+                <a href="#services" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">专业领域</a>
+                <a href="#team" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">专业律师</a>
+                <a href="#cases" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">案例展示</a>
+                <a href="#party-building" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">拓泰党建</a>
+                <a href="#contact" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">联系我们</a>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menu-toggle" class="md:hidden focus:outline-none">
+                <div class="w-6 h-0.5 bg-gray-600 mb-1.5"></div>
+                <div class="w-6 h-0.5 bg-gray-600 mb-1.5"></div>
+                <div class="w-6 h-0.5 bg-gray-600"></div>
+            </button>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 w-full h-screen bg-white z-40 flex flex-col justify-center items-center space-y-8 transform -translate-x-full transition-transform duration-300">
+            <button id="close-menu" class="absolute top-6 right-6 focus:outline-none">
+                <div class="w-6 h-0.5 bg-gray-800 transform rotate-45"></div>
+                <div class="w-6 h-0.5 bg-gray-800 transform -rotate-45 absolute top-0"></div>
+            </button>
+            <a href="#about" class="text-lg uppercase tracking-wider text-gray-800 hover:text-primary transition-colors">关于我们</a>
+            <a href="#consulting" class="text-lg uppercase tracking-wider text-gray-800 hover:text-primary transition-colors">拓泰资讯</a>
+            <a href="#services" class="text-lg uppercase tracking-wider text-gray-800 hover:text-primary transition-colors">专业领域</a>
+            <a href="#team" class="text-lg uppercase tracking-wider text-gray-800 hover:text-primary transition-colors">专业律师</a>
+            <a href="#cases" class="text-lg uppercase tracking-wider text-gray-800 hover:text-primary transition-colors">案例展示</a>
+            <a href="#party-building" class="text-lg uppercase tracking-wider text-gray-800 hover:text-primary transition-colors">拓泰党建</a>
+            <a href="#contact" class="text-lg uppercase tracking-wider text-gray-800 hover:text-primary transition-colors">联系我们</a>
+        </div>
+    </nav>
+
+    <!-- 英雄区 - 图片背景 -->
+    <section id="hero" class="screen relative min-h-screen overflow-hidden">
+        <!-- 全屏图片 -->
+        <div class="absolute inset-0">
+            <img src="images/001.jpg" alt="律所前台" class="w-full h-full object-cover brightness-110">
+            <div class="absolute inset-0 bg-black/10"></div>
+        </div>
+    </section>
+
+    <!-- 关于我们 - 浅色背景 -->
+    <section id="about" class="screen relative min-h-screen bg-white text-gray-900 z-40">
+        <div class="container mx-auto px-6 py-24">
+            <div class="flex flex-col md:flex-row items-start">
+                <!-- 左侧标题 -->
+                <div class="md:w-1/3 md:pr-12 mb-8 md:mb-0 fade-in">
+                    <span class="text-sm font-bold uppercase tracking-wider text-primary">关于我们</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6">专业服务<br>卓越品质</h2>
+                    <div class="w-24 h-1 bg-primary mb-6"></div>
+                    <img src="images/006.jpg" 
+                         alt="四川拓泰律师事务所前台" 
+                         class="w-full rounded-lg shadow-lg">
+                </div>
+            
+                <!-- 右侧内容 -->
+                <div class="md:w-2/3">
+                    <p class="text-lg text-gray-700 mb-6 textIndent text-justify">
+                        四川拓泰律师事务所成立于2012年，位于成都市青羊区航空国创中心E4栋8层，拥有近3000平方米的现代化办公场所，是一家特殊的普通合伙制律所，现有律师及律师助理一百二十余人，是"<span class="text-primary">四川省律师行业文化名所</span>"、"<span class="text-primary">四川省优秀律师事务所</span>"、“<span class="text-primary">四川省党建标准化律师事务所党组织</span>”、“<span class="text-primary">四川省律师行业先进党组织</span>”、"<span class="text-primary">成都市涉外法律服务先进律师事务所</span>"，也是律师行业中为数不多经国家知识产权局许可执业的"专利代理机构"。
+                    </p>
+                    <p class="text-lg text-gray-700 mb-6 textIndent text-justify">
+                        拓泰在发展中坚持贯彻先进管理理念，秉持"以人为本"的人才战略，汇集了众多有着家国天下、学人情怀且学贯中西的律界精英，立足四川、面向全国，吸纳众多拥有川内高校、法院、检察院从业经历的专家人才，与四川警察学院等公安、司法院校已建立紧密的合作关系，逐步形成了由专业律师人才、专业技术人才、专业管理人才、专业顾问人才组成的人才队伍，为社会各界提供全方位、高质量的法律服务。在公司业务、国资国企、合规内控、行政法律、刑事辩护、执行重组、财务税收及重大诉讼处理等诉讼及非诉领域有着独到的专业优势，矢志不渝为当事人提供"专业、高效、简单、满意"的优质服务。
+                    </p>
+                    <p class="text-lg text-gray-700 mb-12 textIndent text-justify">
+                        "拓以致远，泰而不骄"是拓泰的立所理念，拓泰在创新法律服务模式的同时，注重实战和实效，拒绝空洞与虚华，致力于为当事人创造无限价值。
+                    </p>
+                    
+                    <!-- 数据统计 -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
+                        <div class="text-center p-6 bg-gray-50 rounded-xl border border-gray-200 hover:border-primary/50 transition">
+                            <span class="text-5xl font-bold text-primary block mb-2 counter-value" data-count="14" id="stat1">0</span>
+                            <span class="text-gray-600">年建所至今</span>
+                        </div>
+                    
+                        <div class="text-center p-6 bg-gray-50 rounded-xl border border-gray-200 hover:border-primary/50 transition">
+                            <div class="text-5xl font-bold text-primary block mb-2">
+                                <span class="counter-value" data-count="80" id="stat2">0</span><sup>+</sup>
+                            </div>
+                            <span class="text-gray-600">专业律师</span>
+                        </div>
+                    
+                        <div class="text-center p-6 bg-gray-50 rounded-xl border border-gray-200 hover:border-primary/50 transition">
+                            <div class="text-5xl font-bold text-primary block mb-2">
+                                <span class="counter-value" data-count="1000" id="stat3">0</span><sup>+</sup>
+                            </div>
+                            <span class="text-gray-600">成功案例</span>
+                        </div>
+                    
+                        <div class="text-center p-6 bg-gray-50 rounded-xl border border-gray-200 hover:border-primary/50 transition">
+                            <div class="text-5xl font-bold text-primary block mb-2">
+                                <span class="counter-value" data-count="10" id="stat4">0</span><sup>+</sup>
+                            </div>
+                            <span class="text-primary">省级以上表彰</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 拓泰资讯 -->
+    <section id="consulting" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 fade-in">
+                <span class="text-sm font-bold uppercase tracking-wider text-primary">新闻动态</span>
+                <a href="news-list.html" class="block">
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4 hover:text-primary transition-colors">拓泰资讯</h2>
+                </a>
+                <div class="w-16 h-0.5 bg-primary mx-auto mb-4"></div>
+                <a href="news-list.html" class="text-gray-600 max-w-2xl mx-auto hover:text-primary transition-colors cursor-pointer">
+                    了解四川拓泰律师事务所的最新动态、学术成果、荣誉奖项及行业活动资讯。
+                </a>
+            </div>
+            
+            <div class="bg-gray-200 rounded-2xl shadow-lg p-4 md:p-8 max-w-7xl mx-auto">
+                <div id="news-container" class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                    <!-- 动态加载最新资讯 -->
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专业领域 - 图片背景 -->
+    <section id="services" class="py-24 text-gray-900 relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="images/005.jpg" alt="" class="w-full h-full object-cover opacity-80">
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 fade-in">
+                <span class="text-sm font-bold uppercase tracking-wider text-primary">我们的服务</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6">专业领域</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">我们提供全面的法律服务，涵盖多个专业领域，满足客户的不同需求。</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <!-- 行政法律 -->
+                <a href="service-detail.html?service=administrative-law" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-gavel text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">行政法律</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">提供行政复议、行政诉讼、政府信息公开等法律服务。</p>
+                </a>
+
+                <!-- 公司业务 -->
+                <a href="service-detail.html?service=corporate-business" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-industry text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">公司业务</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">涵盖公司设立、变更、并购、解散清算等全生命周期法律服务。</p>
+                </a>
+
+                <!-- 国资国企 -->
+                <a href="service-detail.html?service=state-owned-assets" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-building text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">国资国企</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">为国有企业提供改制重组、产权交易、合规管理等专业服务。</p>
+                </a>
+
+                <!-- 合规内控 -->
+                <a href="service-detail.html?service=compliance-internal-control" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-shield text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">合规内控</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">帮助企业建立健全合规体系，防范法律风险，确保稳健运营。</p>
+                </a>
+
+                <!-- 投资并购 -->
+                <a href="service-detail.html?service=investment-ma" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-exchange text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">投资并购</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">提供尽职调查、交易结构设计、协议起草等一站式并购服务。</p>
+                </a>
+
+                <!-- 金融证券 -->
+                <a href="service-detail.html?service=financial-securities" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-line-chart text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">金融证券</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">服务银行、证券、保险等金融机构，处理各类金融法律事务。</p>
+                </a>
+
+                <!-- 知识产权 -->
+                <a href="service-detail.html?service=intellectual-property" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-copyright text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">知识产权</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">专利、商标、著作权申请与维权，知识产权战略布局咨询。</p>
+                </a>
+
+                <!-- 建设工程 -->
+                <a href="service-detail.html?service=construction-engineering" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-building text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">建设工程</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">工程招投标、合同管理、索赔纠纷等建设领域法律服务。</p>
+                </a>
+
+                <!-- 执行重组 -->
+                <a href="service-detail.html?service=execution-restructuring" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-refresh text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">执行重组</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">企业破产清算、债务重组、强制执行等法律服务。</p>
+                </a>
+
+                <!-- 财务税收 -->
+                <a href="service-detail.html?service=financial-tax" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-calculator text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">财务税收</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">税务筹划、税务争议解决、财务合规等专业服务。</p>
+                </a>
+
+                <!-- 刑事辩护 -->
+                <a href="service-detail.html?service=criminal-defense" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-balance-scale text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">刑事辩护</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">提供侦查、审查起诉、审判阶段的刑事辩护及法律帮助。</p>
+                </a>
+
+                <!-- 文化旅游 -->
+                <a href="service-detail.html?service=cultural-tourism" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-plane text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">文化旅游</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">文旅项目开发、景区运营、文化产业投融资等法律服务。</p>
+                </a>
+
+                <!-- 民事诉讼 -->
+                <a href="service-detail.html?service=civil-litigation" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-gavel text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">民事诉讼</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">处理各类民事纠纷，包括合同争议、侵权责任等诉讼代理服务。</p>
+                </a>
+
+                <!-- 劳动人事 -->
+                <a href="service-detail.html?service=labor-employment" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-users text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">劳动人事</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">劳动争议处理、劳动合同起草、企业人力资源合规等法律服务。</p>
+                </a>
+
+                <!-- 婚姻家事 -->
+                <a href="service-detail.html?service=marriage-family" class="group relative block bg-white/10 hover:bg-white/20 rounded-xl border border-white/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 p-5">
+                    <div class="w-12 h-12 bg-white/40 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-home text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 text-center">婚姻家事</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed text-center">婚姻家庭纠纷、继承与遗嘱、财富传承等私人法律顾问服务。</p>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 律师团队 - 无限滑动展示 -->
+    <section id="team" class="py-24 bg-white text-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <a href="lawyer-list.html" class="block hover:opacity-80 transition-opacity">
+                    <span class="text-sm font-bold uppercase tracking-wider text-primary">我们的团队</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6 hover:text-primary transition-colors">专业律师</h2>
+                </a>
+                <a href="lawyer-list.html" class="text-gray-600 max-w-2xl mx-auto hover:text-primary transition-colors cursor-pointer block">
+                    我们拥有一支经验丰富、专业素养高的律师团队，致力于为客户提供最优质的法律服务。
+                </a>
+            </div>
+            
+            <!-- 无限滑动容器 - 第一行律师 -->
+            <div class="relative overflow-hidden py-10">
+                <div class="infinite-scroll-container" id="scrollContainer">
+                    <div class="infinite-scroll-track flex" id="lawyer-scroll-track-top">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 无限滑动容器 - 第二行律师 -->
+            <div class="relative overflow-hidden py-10">
+                <div class="infinite-scroll-container" id="scrollContainerBottom">
+                    <div class="infinite-scroll-track flex" id="lawyer-scroll-track-bottom">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 案例展示 - 卡片堆叠滚动效果 -->
+    <section id="cases" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center text-gray-900">案例展示</h2>
+        
+            <!-- 主容器 - 这是正常滚动的容器 -->
+            <div class="cards-container relative" id="cardsContainer">
+                <!-- 卡片1 -->
+                <div class="sticky-container h-screen sticky top-0 flex items-center justify-center">
+                    <div class="card-content max-w-7xl w-full flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="md:w-2/5">
+                            <img src="images/事务所大楼外立面.jpg" alt="某大型企业并购重组案" class="w-full h-full object-cover">
+                        </div>
+                        <div class="md:w-3/5 p-8">
+                            <h3 class="text-2xl font-bold mb-3">某大型企业并购重组案</h3>
+                            <p class="text-gray-600 mb-4">为某大型企业提供并购重组全程法律服务，涉及金额超过10亿元，成功帮助客户完成并购，实现业务扩张。</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">企业法律</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">并购重组</span>
+                            </div>
+                            <div class="border-t pt-4">
+                                <p class="italic text-gray-600 mb-3">"专业的团队帮助我们成功完成了复杂的并购交易，为公司发展奠定了坚实基础。"</p>
+                                <div class="flex items-center">
+                                    <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/5ac76e71e50040d58ceb9c144877a4a5~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260502185431339939BE5A3081582B0B&rrcfp=f06b921b&x-expires=1780311315&x-signature=02%2Bo6cz9PXTZRSXL1rZ1LuaHNoY%3D" alt="客户" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <h4 class="font-medium">赵总</h4>
+                                        <p class="text-sm text-gray-500">集团公司CEO</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- 卡片2 -->
+                <div class="sticky-container h-screen sticky top-0 flex items-center justify-center">
+                    <div class="card-content max-w-7xl w-full flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="md:w-2/5">
+                            <img src="images/004.jpg" alt="某房地产开发项目纠纷案" class="w-full h-full object-cover">
+                        </div>
+                        <div class="md:w-3/5 p-8">
+                            <h3 class="text-2xl font-bold mb-3">某房地产开发项目纠纷案</h3>
+                            <p class="text-gray-600 mb-4">成功代理某房地产开发项目纠纷案件，涉案金额5亿元，为客户挽回经济损失3亿元。</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">房地产</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">合同纠纷</span>
+                            </div>
+                            <div class="border-t pt-4">
+                                <p class="italic text-gray-600 mb-3">"律师团队的专业能力和敬业精神令人钦佩，他们帮助我们成功解决了复杂的纠纷。"</p>
+                                <div class="flex items-center">
+                                    <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/5ac76e71e50040d58ceb9c144877a4a5~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260502185431339939BE5A3081582B0B&rrcfp=f06b921b&x-expires=1780311315&x-signature=02%2Bo6cz9PXTZRSXL1rZ1LuaHNoY%3D" alt="客户" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <h4 class="font-medium">钱总</h4>
+                                        <p class="text-sm text-gray-500">房地产公司董事长</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- 卡片3 -->
+                <div class="sticky-container h-screen sticky top-0 flex items-center justify-center">
+                    <div class="card-content max-w-7xl w-full flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="md:w-2/5">
+                            <img src="images/009.jpg" alt="某知名品牌商标侵权案" class="w-full h-full object-cover">
+                        </div>
+                        <div class="md:w-3/5 p-8">
+                            <h3 class="text-2xl font-bold mb-3">某知名品牌商标侵权案</h3>
+                            <p class="text-gray-600 mb-4">成功代理某国际知名品牌商标侵权案件，为客户赢得诉讼，保护了品牌形象和市场地位。</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">知识产权</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">商标侵权</span>
+                            </div>
+                            <div class="border-t pt-4">
+                                <p class="italic text-gray-600 mb-3">"律师团队的专业知识和诉讼经验帮助我们成功维权，保护了公司的知识产权。"</p>
+                                <div class="flex items-center">
+                                    <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/5ac76e71e50040d58ceb9c144877a4a5~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260502185431339939BE5A3081582B0B&rrcfp=f06b921b&x-expires=1780311315&x-signature=02%2Bo6cz9PXTZRSXL1rZ1LuaHNoY%3D" alt="客户" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <h4 class="font-medium">孙总</h4>
+                                        <p class="text-sm text-gray-500">品牌公司法务总监</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 拓泰党建 -->
+    <section id="party-building" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 fade-in">
+                <span class="text-sm font-bold uppercase tracking-wider text-red-600">党建动态</span>
+                <a href="party-building-list.html" class="block">
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4 hover:text-red-600 transition-colors">拓泰党建</h2>
+                </a>
+                <div class="w-16 h-0.5 bg-red-600 mx-auto"></div>
+                <a href="party-building-list.html" class="text-gray-600 mt-6 max-w-2xl mx-auto hover:text-red-600 transition-colors cursor-pointer block">
+                    四川拓泰律师事务所始终坚持党建引领，将党建工作与律所发展深度融合，以党建促所建，以所建强党建。
+                </a>
+            </div>
+            
+            <div class="max-w-6xl mx-auto">
+                <!-- 党建活动卡片 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- 党建活动1 -->
+                    <a href="party-building-detail.html?activity=theme-day" class="bg-white rounded-xl p-8 border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-2 hover:scale-105 hover:border-2 hover:border-red-500 transition-all duration-300 block relative overflow-hidden">
+                        <div class="absolute right-4 bottom-4 opacity-5 text-red-600">
+                            <i class="fa fa-flag" style="font-size: 120px;"></i>
+                        </div>
+                        <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-6 relative z-10">
+                            <i class="fa fa-flag text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 relative z-10">主题党日活动</h3>
+                        <p class="text-gray-600 relative z-10">定期组织党员开展主题党日活动，深入学习党的理论知识和重要会议精神，增强党员政治意识。</p>
+                    </a>
+                    
+                    <!-- 党建活动2 -->
+                    <a href="party-building-detail.html?activity=volunteer" class="bg-white rounded-xl p-8 border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-2 hover:scale-105 hover:border-2 hover:border-red-500 transition-all duration-300 block relative overflow-hidden">
+                        <div class="absolute right-4 bottom-4 opacity-5 text-red-600">
+                            <i class="fa fa-star" style="font-size: 120px;"></i>
+                        </div>
+                        <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-6 relative z-10">
+                            <i class="fa fa-users text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 relative z-10">党员志愿服务</h3>
+                        <p class="text-gray-600 relative z-10">组织党员积极参与社会公益活动，为社区居民提供免费法律咨询服务，践行党员初心使命。</p>
+                    </a>
+                    
+                    <!-- 党建活动3 -->
+                    <a href="party-building-detail.html?activity=training" class="bg-white rounded-xl p-8 border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-2 hover:scale-105 hover:border-2 hover:border-red-500 transition-all duration-300 block relative overflow-hidden">
+                        <div class="absolute right-4 bottom-4 opacity-5 text-red-600">
+                            <i class="fa fa-graduation-cap" style="font-size: 120px;"></i>
+                        </div>
+                        <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-6 relative z-10">
+                            <i class="fa fa-graduation-cap text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 relative z-10">党建工作培训</h3>
+                        <p class="text-gray-600 relative z-10">开展党建工作培训，提升党员政治素养和业务能力，发挥党员先锋模范作用。</p>
+                    </a>
+                    
+                    <!-- 党建活动4 -->
+                    <a href="party-building-detail.html?activity=building" class="bg-white rounded-xl p-8 border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-2 hover:scale-105 hover:border-2 hover:border-red-500 transition-all duration-300 block relative overflow-hidden">
+                        <div class="absolute right-4 bottom-4 opacity-5 text-red-600">
+                            <i class="fa fa-institution" style="font-size: 120px;"></i>
+                        </div>
+                        <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-6 relative z-10">
+                            <i class="fa fa-institution text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 relative z-10">党支部建设</h3>
+                        <p class="text-gray-600 relative z-10">加强党支部组织建设，完善党建工作制度，打造标准化规范化党支部。</p>
+                    </a>
+                </div>
+                
+                <!-- 数据统计 -->
+                <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="text-center p-6 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-2 hover:scale-105 hover:border-2 hover:border-red-500 transition-all duration-300 cursor-pointer">
+                        <div class="text-3xl font-bold text-red-600 mb-2">25%</div>
+                        <p class="text-gray-600 text-sm">党员占比</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-2 hover:scale-105 hover:border-2 hover:border-red-500 transition-all duration-300 cursor-pointer">
+                        <div class="text-3xl font-bold text-red-600 mb-2">20+</div>
+                        <p class="text-gray-600 text-sm">党建活动/年</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-2 hover:scale-105 hover:border-2 hover:border-red-500 transition-all duration-300 cursor-pointer">
+                        <div class="text-3xl font-bold text-red-600 mb-2">100%</div>
+                        <p class="text-gray-600 text-sm">活动覆盖率</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-2 hover:scale-105 hover:border-2 hover:border-red-500 transition-all duration-300 cursor-pointer">
+                        <div class="text-3xl font-bold text-red-600 mb-2">省级优秀</div>
+                        <p class="text-gray-600 text-sm">党支部评级</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="py-12 bg-white text-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-8">
+                <span class="text-sm font-bold uppercase tracking-wider text-primary">联系我们</span>
+                <h2 class="text-2xl font-bold mt-2">预约咨询</h2>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-12 max-w-6xl mx-auto">
+                <!-- 联系信息 -->
+                <div class="lg:w-1/2 bg-gray-50 p-6 rounded-xl">
+                    <h3 class="text-lg font-bold mb-4">联系方式</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fa fa-map-marker text-sm text-red-600"></i>
+                            </div>
+                            <a href="https://map.baidu.com/?latlng=30.667587,104.043455&title=四川拓泰律师事务所&content=成都市青羊区光华南四路186号航空国创中心E4栋8楼&output=html&searchFlag=exact_match" target="_blank" class="hover:text-red-600 transition-colors">
+                                <p class="text-sm text-gray-600">成都市青羊区光华南四路186号航空国创中心E4栋8楼</p>
+                            </a>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fa fa-phone text-sm text-red-600"></i>
+                            </div>
+                            <a href="tel:028-85078618" class="hover:text-red-600 transition-colors">
+                                <p class="text-gray-600">028-85078618</p>
+                            </a>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fa fa-clock-o text-sm text-red-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">周一至周五 9:00-18:00</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <div class="flex justify-start space-x-4">
+                            <div class="text-center">
+                                <div class="w-24 h-24 rounded-lg overflow-hidden mb-2">
+                                    <img src="images/公众号二维码.jpg" alt="公众号" class="w-full h-full object-cover">
+                                </div>
+                                <span class="text-xs text-gray-600">服务号</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 地图 -->
+                <div class="lg:w-1/2 relative rounded-xl overflow-hidden border border-gray-200 shadow-sm min-h-[300px] cursor-pointer" onclick="window.open('https://map.baidu.com/?latlng=30.667587,104.043455&title=四川拓泰律师事务所&content=成都市青羊区光华南四路186号航空国创中心E4栋8楼&output=html&searchFlag=exact_match', '_blank')">
+                    <img
+                        src="https://api.map.baidu.com/staticimage?width=800&height=600&address=成都市青羊区光华南四路186号航空国创中心E4栋&zoom=18&markers=成都市青羊区光华南四路186号航空国创中心E4栋&markerStyles=l,A,FF0000"
+                        alt="地图"
+                        class="w-full h-full object-cover"
+                        style="min-height: 300px;"
+                    >
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/5 transition-all">
+                        <div class="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg opacity-0 hover:opacity-100 transition-opacity">
+                            <span class="text-sm text-gray-700"><i class="fa fa-external-link mr-2"></i>点击查看大图</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 - 浅色背景 -->
+    <footer class="bg-gray-100 text-gray-900 py-8 border-t border-gray-200">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <h3 class="text-lg font-bold mb-4">快速链接</h3>
+                <div class="w-12 h-1 bg-primary mb-4 mx-auto"></div>
+                <ul class="flex justify-center space-x-8 text-sm">
+                    <li><a href="http://online.tota.org.cn/tt/Libra.Web.Answer.Frames.Multiwindow.Do.aspx?R=eb20b437-677a-4f17-9271-b0b3000f0168" target="_blank" class="text-gray-600 hover:text-primary transition-colors">拓泰律所OA系统</a></li>
+                    <li><a href="#about" class="text-gray-600 hover:text-primary transition-colors">关于我们</a></li>
+                    <li><a href="https://www.cdslsxh.com" target="_blank" class="text-gray-600 hover:text-primary transition-colors">成都市律师协会</a></li>
+                    <li><a href="http://www.scslsxh.cn" target="_blank" class="text-gray-600 hover:text-primary transition-colors">四川省律师协会</a></li>
+                    <li><a href="https://www.acla.org.cn" target="_blank" class="text-gray-600 hover:text-primary transition-colors">中华全国律师协会</a></li>
+                    <li><a href="https://www.court.gov.cn/fabu.html" target="_blank" class="text-gray-600 hover:text-primary transition-colors">最高人民法院</a></li>
+                    <li><a href="https://flk.npc.gov.cn/index" target="_blank" class="text-gray-600 hover:text-primary transition-colors">国家法律法规数据库</a></li>
+                    <li><a href="https://zxgk.court.gov.cn" target="_blank" class="text-gray-600 hover:text-primary transition-colors">中国执行信息公开网</a></li>
+                    <li><a href="https://www.gsxt.gov.cn/index.html" target="_blank" class="text-gray-600 hover:text-primary transition-colors">国家企业信用信息公示系统</a></li>
+                </ul>
+            </div>
+
+            <div class="border-t border-gray-200 mt-8 pt-6 text-center text-sm text-gray-500">
+                <p>© 2025 四川拓泰律师事务所 版权所有 | 蜀ICP备12345678号</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 拓泰资讯数据
+        const newsItems = {
+            'youth-award-2026': { title: '【拓泰动态】礼遇青年骨干，赋能新锐绽风华', category: '拓泰人文', date: '2026-04-29', image: 'https://picsum.photos/seed/youth/100/100', excerpt: '拓泰青年律师王瑞，凭借过硬的专业素养、务实的工作作风与优异的业务成果，在青年律师队伍中崭露头角、脱颖而出。为表彰实干担当，嘉奖优秀实绩，树立青年成长标杆，进一步激发青年人才干事活力，其所在团队予以专项激励，为王瑞律师配置专属独立办公室。', wechatUrl: 'https://mp.weixin.qq.com/s/W1zKCsGu-xO37nA6HvdL1g' },
+            'legal-aid-2026': { title: '【拓泰动态】千里赴援 助力孤老交通事故纠纷', category: '业务活动', date: '2026-04-24', image: 'https://picsum.photos/seed/legal-aid/100/100', excerpt: '近日，我所王馨媛律师积极响应法律援助号召，主动接受法律援助中心指派，为一位75岁高龄、无儿无女、无固定住所、双腿粉碎性骨折的孤寡老人提供交通事故责任纠纷案件的法律援助。', wechatUrl: 'https://mp.weixin.qq.com/s/_rNwFlzSIZMCT5lO5FCbtA' },
+            'thailand-forum-2026': { title: '【拓泰动态】我所联合国力公证处与泰国机构座谈 推进中泰法律协作', category: '业务活动', date: '2026-04-15', image: 'https://picsum.photos/seed/thailand/100/100', excerpt: '2026年4月14日，我所守创团队与泰国博海翻译咨询有限公司举行交流座谈会，旨在响应"一带一路"倡议，加强川渝地区与泰国的法律及商事合作。', wechatUrl: 'https://mp.weixin.qq.com/s/cOyVKJgopQibbZY1-hE1GQ' },
+            'taoyuan-lawyer-2026': { title: '【拓泰动态】拓泰·桃园团律师受聘担任国企外部董事', category: '业务活动', date: '2026-04-10', image: 'https://picsum.photos/seed/taoyuan/100/100', excerpt: '近日，我所高级合伙人、执委会委员、桃园律师团创始人——黄礼律师，正式受聘为眉山某国企兼职外部董事。', wechatUrl: 'https://mp.weixin.qq.com/s/jR48gC1FXFDLs7-faI3ueQ' },
+            'yanjun-team-2026': { title: '【拓泰动态】热烈欢迎严俊律师团队加盟 共谱拓泰律所发展新篇章', category: '业务活动', date: '2026-04-03', image: 'https://picsum.photos/seed/yanjun/100/100', excerpt: '近日，拓泰律所成功引进资深律师严俊团队，此举为律所持续推进规模化、专业化发展战略筑牢人才根基。', wechatUrl: 'https://mp.weixin.qq.com/s/IRD3VNLSkJlbPO6vQNsoiw' },
+            'thailand-consul-2026': { title: '【拓泰动态】专业宣讲促中泰交流，我所涉外法律服务获泰领馆高度评价', category: '业务活动', date: '2026-03-25', image: 'https://picsum.photos/seed/thailand-consul/100/100', excerpt: '近日，我所收到来自泰王国驻成都总领事馆的正式感谢信，对我所此前受邀参加其组织的"地方性法律法规知识宣讲会"所作出的专业贡献与大力支持表示诚挚感谢。', wechatUrl: 'https://mp.weixin.qq.com/s/Mhg4zYTKeFgOUPAuKKgnVw' },
+            'life-seven-part2': { title: '【拓泰生活】七分（二）', category: '拓泰人文', date: '2026-04-23', image: 'https://picsum.photos/seed/life7-2/100/100', excerpt: '岁月含情，一念温柔。七分一家迎来了新的一年，这一年有两件大事：他们终于在城里有了自己的房子，不再是"漂泊者"；家里添了新成员。', wechatUrl: 'https://mp.weixin.qq.com/s/_2ZhGbrfEx8PYMYWFkUr4Q' },
+            'life-seven-part1': { title: '【拓泰生活】七分（一）', category: '拓泰人文', date: '2026-04-17', image: 'https://picsum.photos/seed/life7-1/100/100', excerpt: '七分出生在一个贫困的年代，在家排行老三。他上面有两个哥哥、一个姐姐，下面有一个妹妹、一个弟弟。听说原本还有一个姐姐，四岁那年掉进后院的井里溺亡了。', wechatUrl: 'https://mp.weixin.qq.com/s/hXU5f8d29yu4OBba5vLL_w' },
+            'peach-plum-tree': { title: '【拓泰生活】难忘故乡桃李树', category: '拓泰人文', date: '2026-02-26', image: 'https://picsum.photos/seed/peach-plum/100/100', excerpt: '少小离家，不知不觉离开故乡已有三十余年。又到了春风拂面的季节，城市街道两旁的樱花树花团锦簇，我的思绪飘回了那遥远的故乡。', wechatUrl: 'https://mp.weixin.qq.com/s/R2LIWeKBxyXNmcAMkyGtww' },
+            'annual-meeting-2026': { title: '【拓泰动态】四川拓泰律师事务所2025年度总结暨2026年新春年会活动圆满落幕', category: '拓泰人文', date: '2026-02-01', image: 'https://picsum.photos/seed/meeting/100/100', excerpt: '2026年1月31日至2月1日，律所同仁齐聚成都安仁福朋喜来登酒店，参加"2025年度总结暨2026新春年会"。', wechatUrl: 'https://mp.weixin.qq.com/s/GskCKKGaDGESR4R7IoZybA' },
+            '13th-anniversary-2025': { title: '【拓泰动态】四川拓泰律师事务所隆重举办十三周年庆典活动', category: '拓泰人文', date: '2025-07-14', image: 'https://picsum.photos/seed/anniversary/100/100', excerpt: '十三年栉风沐雨，十三年春华秋实。为庆祝成立十三周年，四川拓泰律师事务所全体成员齐聚云凌草堂酒店，举办了以"筑梦十三载，一路趣前行"为主题的周年庆典活动。', wechatUrl: 'https://mp.weixin.qq.com/s/a6YSxy3z12V7YRj_fCJ4iA' },
+            'deyang-training-visit-2025': { title: '【拓泰动态】以关怀促成长，以实践励英才|四川拓泰律师事务所主任及监委会主任赴德阳培训基地慰问并指导实习律师', category: '拓泰人文', date: '2025-04-18', image: 'https://picsum.photos/seed/deyang/100/100', excerpt: '2025年4月17日，四川拓泰律师事务所主任吴苛政与监委会主任张东前往德阳市的四川司法警官职业学院，慰问正在参加执业培训的7名实习律师。', wechatUrl: 'https://mp.weixin.qq.com/s/KqvygRBl8LaYr7-zfxKNRQ' },
+            'public-welfare-honor-2025': { title: '【拓泰动态】践行公益初心｜拓泰律所再获履职表彰', category: '拓泰荣誉', date: '2025-12-30', image: 'https://picsum.photos/seed/public-welfare/100/100', excerpt: '因在"法务助手"岗位上的专业履职与公益担当，拓泰律所再次获得金沙街道人大工委的表彰。', wechatUrl: 'https://mp.weixin.qq.com/s/oM_G7oNhmMuQ4rV8RpTkZw' },
+            'company-law-category-2024': { title: '【拓泰研究】公司法新规—类别股', category: '拓泰研究', date: '2024-10-15', image: 'https://picsum.photos/seed/company-law/100/100', excerpt: '2023年《公司法》在第144、145、146条正式引入了类别股制度，本文详细解析了类别股的定义、发展历程和主要类型。', wechatUrl: 'https://mp.weixin.qq.com/s/nXXZqrY05Bu5nKny1Qyspg' },
+            'chengdu-lawyer-congress-2024': { title: '【拓泰喜报】成都市第八次律师代表大会召开，我所执行主任吴苛政律师当选第八届理事会理事', category: '拓泰荣誉', date: '2024-09-30', image: 'https://picsum.photos/seed/lawyer-congress/100/100', excerpt: '成都市第八次律师代表大会胜利召开，会议选举产生了成都市律师协会第八届理事会理事，我所执行主任吴苛政律师当选第八届理事会理事。', wechatUrl: 'https://mp.weixin.qq.com/s/UwPc1TzjBlyRgYyeljsavg' },
+            'securities-dispute-2024': { title: '【拓泰研究】证券虚假陈述责任纠纷实务争议焦点', category: '拓泰研究', date: '2024-09-25', image: 'https://picsum.photos/seed/securities/100/100', excerpt: '本文通过对相关案例的筛选总结，探讨实务中证券虚假陈述责任纠纷案件的争议焦点。', wechatUrl: 'https://mp.weixin.qq.com/s/gpzRE1S8d71rSBli4fdlWA' },
+            'party-building-honor-2024': { title: '【拓泰党建】四川拓泰律师事务所党支部荣获"四川省律师行业先进基层党组织"称号', category: '拓泰荣誉', date: '2024-07-02', image: 'https://picsum.photos/seed/party-honor/100/100', excerpt: '热烈祝贺四川拓泰律师事务所党支部再次被授予"四川省律师行业先进基层党组织"的荣誉称号。', wechatUrl: 'https://mp.weixin.qq.com/s/61nbunUEx9KJMXWyioq-RA' },
+            'xiong-yi-guo-honor-2023': { title: '【拓泰喜报】祝贺！拓泰律所党员律师荣获省、市表彰', category: '拓泰荣誉', date: '2023-07-03', image: 'https://picsum.photos/seed/xiong-guo-honor/100/100', excerpt: '成都市律师行业党委表扬我所高级合伙人熊艺律师为"成都市律师行业2023年度优秀共产党员"，一级合伙人郭小林律师被评选为"四川省律师行业优秀共产党员"。', wechatUrl: 'https://mp.weixin.qq.com/s/XbBsBu9l884iGupYAYWSzw' },
+            'chengdu-lawyer-association-2024': { title: '【拓泰喜讯】我所主任当选成都市律师协会专业委员会副主任、多位律师当选委员', category: '拓泰荣誉', date: '2024-12-26', image: 'https://picsum.photos/seed/lawyer-assoc/100/100', excerpt: '成都市律师协会公布第八届成都市律师协会专业委员会成员名单，我所吴苛政主任当选公司法专业委员会副主任，多位律师当选各专业委员会委员。', wechatUrl: 'https://mp.weixin.qq.com/s/8ovCyfBJJte8-5cDAjWLxA' },
+            'xiong-yi-honor-2025': { title: '【拓泰喜报】我所高级合伙人熊艺律师荣获"四川省律师行业优秀共产党员"称号', category: '拓泰荣誉', date: '2025-07-03', image: 'https://picsum.photos/seed/xiongyi/100/100', excerpt: '我所熊艺律师荣获"四川省律师行业优秀共产党员"称号，这份荣誉是对其个人政治素养、专业精神和服务贡献的充分肯定。', wechatUrl: 'https://mp.weixin.qq.com/s/O6zb4EjK_l3TS5M2vXxrVA' },
+            'wang-xinyuan-honor-2025': { title: '【拓泰喜报】祝贺王馨媛律师荣获"蓉城先锋・律动微光"第二届青年律师演讲比赛三等奖', category: '拓泰荣誉', date: '2025-04-28', image: 'https://picsum.photos/seed/wangxinyuan/100/100', excerpt: '成都市律师协会主办的"蓉城先锋・律动微光"第二届青年律师演讲比赛圆满落幕，我所王馨媛律师荣获三等奖。', wechatUrl: 'https://mp.weixin.qq.com/s/Y8pavcWrdot4L78-MtlcRA' },
+            'sichuan-police-college-2025': { title: '【拓泰动态】我所党支部书记、主任吴苛政参与四川警察学院法学"校外实践教学基地"建设研讨会暨签约授牌仪式', category: '拓泰荣誉', date: '2025-04-28', image: 'https://picsum.photos/seed/police-college/100/100', excerpt: '四川警察学院举行"校院（所）合作协同育人法学\'校外实践教学基地\'建设研讨会暨签约授牌仪式，我所吴苛政主任等三位律师被聘为校外导师。', wechatUrl: 'https://mp.weixin.qq.com/s/9AsdGYAtufctheicawPY1w' },
+            'cdut-cooperation-2025': { title: '【拓泰动态】成都理工大学文法学院与拓泰律所举行院所合作共建签约仪式', category: '业务活动', date: '2025-12-24', image: 'https://picsum.photos/seed/cdut/100/100', excerpt: '2025年12月23日下午，成都理工大学文法学院与拓泰律所举行院所合作共建签约仪式，推进法学教育与实践的深度融合。', wechatUrl: 'https://mp.weixin.qq.com/s/6qeti-zgjJNenfUbvFN4dA' },
+            'seminar-2025': { title: '诚邀精英，共筑法途 | 拓泰律所期待您的加入', category: '业务活动', date: '2026-03-18', image: 'https://picsum.photos/seed/news1/100/100', excerpt: '在拓泰，我们始终相信：一个真正优秀的执业平台，不仅要让律师"接得了案子"，更要让律师"待得舒服、办得高效、成长得踏实"。' },
+            'visit-guide-2026': { title: '【到访指引】四川拓泰律师事务所访客路线指引', category: '业务活动', date: '2026-03-11', image: 'https://picsum.photos/seed/visit-guide/100/100', excerpt: '律所地址位于成都市青羊区光华南四路186号航空国创中心E4栋8层。自驾可从光华南四路或光华南巷进入停车场，停放E4区域后乘坐电梯至1楼大厅，再换乘低层电梯至8层。', wechatUrl: 'https://mp.weixin.qq.com/s/y7Gfi2Lk7IGBzFwPDTAdKw' },
+            'limengsong-2026': { title: '【拓泰动态】执行主任李孟松履职再创佳绩，两件建议入选2026年区人大督办建议', category: '业务活动', date: '2026-03-18', image: 'https://picsum.photos/seed/limengsong/100/100', excerpt: '我所执行主任李孟松律师在区第八届人民代表大会第五次会议上提交的两件建议，双双被青羊区人大常委会评为2026年重点督办建议。', wechatUrl: 'https://mp.weixin.qq.com/s/InWVc9bMWU9ITn-gQ9P5Ig' },
+            'party-building-honor-2026': { title: '【拓泰党建】我所党建工作入选四川省律师行业党建工作典型案例', category: '拓泰荣誉', date: '2026-03-26', image: 'https://picsum.photos/seed/party-honor/100/100', excerpt: '3月25日，四川省律师协会发布了四川省律师行业党建工作典型案例，四川拓泰律师事务所申报的案例成功入选。', wechatUrl: 'https://mp.weixin.qq.com/s/IVLh2Yap977UHTMcDDEs0A' },
+            'award-2025': { title: '我所荣获年度优秀律师事务所', category: '荣誉奖项', date: '2025-04-15', image: 'https://picsum.photos/seed/award/100/100', excerpt: '在2025年度法律服务行业评选中，我所荣获"年度优秀律师事务所"称号。' },
+            'book-compliance': { title: '《企业合规管理实务指南》正式出版', category: '学术文章', date: '2025-03-20', image: 'https://picsum.photos/seed/book/100/100', excerpt: '我所律师团队编著的《企业合规管理实务指南》正式出版发行。' },
+            'forum-compliance': { title: '我所主办企业合规管理论坛', category: '行业活动', date: '2025-03-15', image: 'https://picsum.photos/seed/event/100/100', excerpt: '由我所主办的企业合规管理论坛在成都成功举办，汇聚众多企业代表。' },
+            '315-consumer': { title: '我所开展315消费者权益保护普法活动', category: '新闻资讯', date: '2025-03-08', image: 'https://picsum.photos/seed/news2/100/100', excerpt: '在3·15消费者权益日，我所律师走进社区开展普法宣传活动。' },
+            'lawyer-award': { title: '多名律师获评省级优秀律师', category: '荣誉奖项', date: '2025-02-28', image: 'https://picsum.photos/seed/award2/100/100', excerpt: '我所三名律师在省级律师评选中获评"优秀律师"荣誉称号。' },
+            'book-civil-law': { title: '《民法典解读与实务应用》专著发布', category: '学术文章', date: '2025-02-15', image: 'https://picsum.photos/seed/book2/100/100', excerpt: '我所律师团队编写的《民法典解读与实务应用》一书正式发布。' },
+            'forum-chengdu-chongqing': { title: '我所协办成渝地区双城经济圈法律服务论坛', category: '行业活动', date: '2025-01-20', image: 'https://picsum.photos/seed/event2/100/100', excerpt: '我所协办的成渝地区双城经济圈法律服务论坛在成都圆满召开。' },
+            'annual-meeting-2024': { title: '我所召开2024年度工作总结大会', category: '新闻资讯', date: '2025-01-10', image: 'https://picsum.photos/seed/news3/100/100', excerpt: '我所召开2024年度工作总结大会，总结成绩，表彰先进，规划未来发展。' },
+            'ethics-training': { title: '我所举办律师职业道德专题培训', category: '行业活动', date: '2024-12-28', image: 'https://picsum.photos/seed/training/100/100', excerpt: '为提升律师职业素养，我所举办律师职业道德与执业纪律专题培训。' },
+            'legal-consultation-2024': { title: '我所开展公益法律咨询活动', category: '行业活动', date: '2024-12-15', image: 'https://picsum.photos/seed/consult/100/100', excerpt: '我所组织律师团队在成都市多个社区开展公益法律咨询活动。' },
+            'exchange-2024': { title: '我所与多家律所开展业务交流', category: '行业活动', date: '2024-12-01', image: 'https://picsum.photos/seed/exchange/100/100', excerpt: '近日，我所与来自北京、上海的多家知名律所开展业务交流活动。' },
+            'conference-2024': { title: '我所主办西部法律服务高峰论坛', category: '行业活动', date: '2024-11-20', image: 'https://picsum.photos/seed/conference/100/100', excerpt: '由我所主办的西部法律服务高峰论坛在成都成功举办。' },
+            'training-2024': { title: '我所开展青年律师入职培训', category: '行业活动', date: '2024-11-10', image: 'https://picsum.photos/seed/newtrain/100/100', excerpt: '我所对新入职的青年律师开展了为期一周的系统培训。' },
+            'visit-2024': { title: '我所接待外地律所参观考察', category: '行业活动', date: '2024-10-25', image: 'https://picsum.photos/seed/visit/100/100', excerpt: '近日，重庆市律师协会组织当地律所代表到我所参观考察。' }
+        };
+
+        // 动态渲染最新资讯
+        function renderLatestNews() {
+            const container = document.getElementById('news-container');
+            if (!container) return;
+
+            // 置顶文章ID
+            const pinnedIds = ['seminar-2025', 'visit-guide-2026'];
+
+            // 获取置顶文章
+            const pinnedNews = pinnedIds.map(id => [id, newsItems[id]]).filter(item => item[1]);
+
+            // 获取其他文章（排除置顶文章），按日期排序
+            const otherNews = Object.entries(newsItems)
+                .filter(([id]) => !pinnedIds.includes(id))
+                .sort((a, b) => new Date(b[1].date) - new Date(a[1].date))
+                .slice(0, 10 - pinnedNews.length);
+
+            // 合并置顶文章和其他文章
+            const sortedNews = [...pinnedNews, ...otherNews];
+
+            // 生成单条资讯HTML
+            const createNewsHTML = ([id, news]) => `
+                <a href="news-detail.html?news=${id}" class="block bg-white rounded-lg shadow p-5 border-2 border-transparent hover:border-yellow-400 hover:shadow-lg hover:scale-105 transition flex items-start space-x-4 h-full">
+                    <img src="${news.image}" alt="${news.category}" class="w-20 h-20 rounded-lg object-cover bg-gray-100 flex-shrink-0">
+                    <div class="flex-1 min-h-[100px]">
+                        <div class="flex items-center mb-2">
+                            <span class="text-xs text-primary font-medium px-2 py-1 bg-primary/10 rounded mr-3">${news.category}</span>
+                            <span class="text-sm text-gray-500">${news.date}</span>
+                        </div>
+                        <h3 class="text-base font-bold line-clamp-2">${news.title}</h3>
+                        <p class="text-gray-600 text-sm mt-1 line-clamp-2">${news.excerpt}</p>
+                    </div>
+                </a>
+            `;
+
+            // 从左到右、从上到下排列，直接利用grid布局
+            container.innerHTML = sortedNews.map(item => createNewsHTML(item)).join('');
+        }
+
+        // 图片懒加载
+        function initLazyLoading() {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            images.forEach(img => {
+                if (img.complete) {
+                    img.classList.add('img-loaded');
+                } else {
+                    img.addEventListener('load', () => {
+                        img.classList.add('img-loaded');
+                    });
+                }
+            });
+        }
+
+        // 页面加载完成后渲染资讯
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLatestNews();
+            initLazyLoading();
+        });
+
+        // 自定义鼠标
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.getElementById('custom-cursor');
+            
+            // 显示自定义鼠标
+            setTimeout(() => {
+                cursor.style.opacity = '1';
+            }, 500);
+            
+            // 鼠标移动
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+            });
+            
+            // 鼠标悬停在交互元素上
+            const interactiveElements = document.querySelectorAll('a, button, input, select, textarea');
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.style.width = '40px';
+                    cursor.style.height = '40px';
+                    cursor.style.opacity = '0.7';
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    cursor.style.width = '24px';
+                    cursor.style.height = '24px';
+                    cursor.style.opacity = '1';
+                });
+            });
+        });
+
+        // 移动端菜单
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        document.getElementById('close-menu').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // 点击菜单外部关闭
+        document.getElementById('mobile-menu').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('mobile-menu')) {
+                document.getElementById('mobile-menu').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // ESC键关闭菜单
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('mobile-menu').classList.contains('active')) {
+                document.getElementById('mobile-menu').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 关闭移动端菜单
+                document.getElementById('mobile-menu').classList.remove('active');
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 数字增长动画
+        document.addEventListener('DOMContentLoaded', () => {
+            const stats = document.querySelectorAll('[data-count]');
+            let animated = false;
+        
+            // 检测元素是否在视窗内
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
+                    rect.bottom >= 0
+                );
+            }
+        
+            // 数字增长动画
+            function animateValue(element, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const value = Math.floor(progress * (end - start) + start);
+                    element.textContent = value;
+                
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+        
+            // 滚动监听
+            function checkScroll() {
+                if (!animated && isInViewport(stats[0])) {
+                    stats.forEach(stat => {
+                        const target = parseInt(stat.getAttribute('data-count'), 10);
+                        animateValue(stat, 0, target, 2000); // 2秒内完成动画
+                    });
+                    animated = true; // 防止重复动画
+                }
+            }
+        
+            // 初始检查和滚动监听
+            checkScroll();
+            window.addEventListener('scroll', checkScroll);
+        });
+
+        // 手风琴组件
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            const serviceImage = document.getElementById('serviceImage');
+        
+            // 设置第一个项目默认打开
+            const firstHeader = document.querySelector('.accordion-header');
+            const firstContent = document.querySelector('.accordion-content');
+            const firstButton = document.querySelector('.accordion-button');
+        
+            firstContent.classList.remove('hidden');
+            firstButton.innerHTML = '<i class="fa fa-minus text-white"></i>';
+            // 设置默认图片
+            if (firstHeader.dataset.image) {
+                serviceImage.src = firstHeader.dataset.image;
+            }
+        
+            // 为每个手风琴项目添加点击事件
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const button = item.querySelector('.accordion-button');
+            
+                header.addEventListener('click', () => {
+                    // 切换当前内容显示状态
+                    content.classList.toggle('hidden');
+                
+                    // 切换按钮图标
+                    if (content.classList.contains('hidden')) {
+                        button.innerHTML = '<i class="fa fa-plus text-white"></i>';
+                    } else {
+                        button.innerHTML = '<i class="fa fa-minus text-white"></i>';
+                    
+                        // 更新图片
+                        if (header.dataset.image) {
+                            serviceImage.src = header.dataset.image;
+                        }
+                    
+                        // 关闭其他所有项目（单选模式）
+                        accordionItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                const otherContent = otherItem.querySelector('.accordion-content');
+                                const otherButton = otherItem.querySelector('.accordion-button');
+                                otherContent.classList.add('hidden');
+                                otherButton.innerHTML = '<i class="fa fa-plus text-white"></i>';
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+        // 滚动动画 - 元素进入视口时触发
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // 卡片堆叠滚动效果
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardsContainer = document.getElementById('cardsContainer');
+            if (!cardsContainer) return;
+            
+            const cards = cardsContainer.querySelectorAll('.card-content');
+            
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                
+                cards.forEach((card, index) => {
+                    const container = card.parentElement;
+                    const rect = container.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+                    
+                    if (rect.top < viewportHeight && rect.bottom > 0) {
+                        const progress = (viewportHeight - rect.top) / viewportHeight;
+                        const translateY = Math.min(progress * 50, 50);
+                        const scale = Math.max(1 - (progress * 0.1), 0.9);
+                        const opacity = Math.min(progress * 1.5, 1);
+                        
+                        card.style.transform = `translateY(${translateY}px) scale(${scale})`;
+                        card.style.opacity = opacity;
+                    }
+                });
+            });
+        });
+
+        // 无限滚动 - CSS动画方式
+        function setupInfiniteScroll(containerId, direction = 1, speed = 1) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const track = container.querySelector('.infinite-scroll-track');
+            const items = container.querySelectorAll('.infinite-scroll-item');
+            if (items.length === 0) return;
+
+            // 计算单个卡片的宽度（包括间距）
+            const itemWidth = items[0].offsetWidth;
+            const gapWidth = 16; // gap-4 = 16px
+            const singleItemWidth = itemWidth + gapWidth;
+
+            // 复制项目以确保无缝循环
+            items.forEach(item => {
+                const clone = item.cloneNode(true);
+                track.appendChild(clone);
+            });
+
+            // 设置动画持续时间（根据卡片数量和速度计算）
+            const duration = (singleItemWidth * items.length) / (speed * 50);
+
+            // 应用CSS动画
+            track.style.display = 'flex';
+            track.style.animation = `infiniteScroll ${duration}s linear infinite`;
+            track.style.animationDirection = direction > 0 ? 'normal' : 'reverse';
+        }
+
+        // 添加CSS动画关键帧和悬停暂停
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes infiniteScroll {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+            .infinite-scroll-track:hover {
+                animation-play-state: paused !important;
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // 初始化律师滚动 (在DOMContentLoaded中由renderHomeLawyers调用)
+
+        // 卡片堆叠滚动效果
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardsContainer = document.getElementById('cardsContainer');
+            const cardContents = document.querySelectorAll('.card-content');
+            const stickyContainers = document.querySelectorAll('.sticky-container');
+        
+            // 初始化所有卡片内容
+            cardContents.forEach(card => {
+                card.style.transform = 'scale(1)';
+                card.style.transition = 'transform 0.3s ease-out';
+            });
+        
+            // 滚动处理
+            window.addEventListener('scroll', () => {
+                // 获取主容器位置
+                const containerRect = cardsContainer.getBoundingClientRect();
+                const containerTop = containerRect.top;
+                const containerHeight = containerRect.height;
+            
+                // 计算每个卡片的位置和缩放
+                stickyContainers.forEach((container, index) => {
+                    // 计算该容器在整个大容器中的相对位置
+                    const containerPosition = index * window.innerHeight; // 每个sticky容器高度为屏幕高度
+                    const scrollProgress = (containerPosition - Math.abs(containerTop)) / window.innerHeight;
+                
+                    // 当卡片开始向上滚出视窗时应用缩放
+                    if (scrollProgress < 0 && index < stickyContainers.length - 1) {
+                        // 计算缩放值，范围从1到0.9
+                        const scale = Math.max(0.9, 1 + scrollProgress * 0.1);
+                        cardContents[index].style.transform = `scale(${scale})`;
+                    } else {
+                        // 重置为原始大小
+                        cardContents[index].style.transform = 'scale(1)';
+                    }
+                });
+            });
+        });
+
+        // 律师卡片数据 - 用于首页滚动展示 (16个律师，分两行)
+        const homeLawyers = [
+            { id: 'lawyer-1', name: '尹东升', title: '二级律师 / 首席合伙人', image: 'https://picsum.photos/seed/1001/400/500', specialty: '企业法律服务、房地产与建筑工程' },
+            { id: 'lawyer-2', name: '吴苛政', title: '主任 / 党支部书', image: 'images/吴苛政.jpg', specialty: '公司法、民事诉讼' },
+            { id: 'lawyer-3', name: '李孟松', title: '执行主任 / 高级合伙人', image: 'https://picsum.photos/seed/1002/400/500', specialty: '公司法、民事诉讼' },
+            { id: 'lawyer-4', name: '黄礼', title: '高级合伙人', image: 'https://picsum.photos/seed/1003/400/500', specialty: '刑事辩护、企业合规' },
+            { id: 'lawyer-5', name: '张东', title: '高级合伙人', image: 'https://picsum.photos/seed/1004/400/500', specialty: '婚姻家庭、继承纠纷' },
+            { id: 'lawyer-6', name: '聂巧', title: '高级合伙人', image: 'https://picsum.photos/seed/1005/400/500', specialty: '金融证券、投融资' },
+            { id: 'lawyer-7', name: '熊艺', title: '高级合伙人', image: 'https://picsum.photos/seed/1006/400/500', specialty: '劳动争议、工伤赔偿' },
+            { id: 'lawyer-8', name: '熊浩宇', title: '业务四部部长', image: 'https://picsum.photos/seed/1007/400/500', specialty: '行政法律、行政诉讼' },
+            { id: 'lawyer-9', name: '郭义靖', title: '业务五部部长', image: 'https://picsum.photos/seed/1008/400/500', specialty: '国际贸易、跨境投资' },
+            { id: 'lawyer-10', name: '郭小林', title: '业务二部部长', image: 'https://picsum.photos/seed/1009/400/500', specialty: '合规内控、风险评估' },
+            { id: 'lawyer-11', name: '李培辉', title: '一级合伙人', image: 'https://picsum.photos/seed/1010/400/500', specialty: '专利申请、商标注册' },
+            { id: 'lawyer-12', name: '王惟', title: '一级合伙人', image: 'https://picsum.photos/seed/1011/400/500', specialty: '刑事风险防控、刑事申诉' },
+            { id: 'lawyer-13', name: '汪良军', title: '一级合伙人', image: 'https://picsum.photos/seed/1012/400/500', specialty: '土地征收、房屋拆迁' },
+            { id: 'lawyer-14', name: '王江', title: '一级合伙人', image: 'https://picsum.photos/seed/1013/400/500', specialty: '并购重组、企业合规' },
+            { id: 'lawyer-15', name: '尹茂生', title: '高级律师', image: 'https://picsum.photos/seed/1014/400/500', specialty: '婚姻家庭、民事诉讼' },
+            { id: 'lawyer-16', name: '高洋', title: '律师', image: 'https://picsum.photos/seed/1015/400/500', specialty: '知识产权、著作权保护' },
+            { id: 'lawyer-17', name: '林涛', title: '资深律师', image: 'https://picsum.photos/seed/1016/400/500', specialty: '金融证券、保险法律' }
+        ];
+
+        // 渲染首页律师滚动卡片 - 两行，每行8个
+        function renderHomeLawyers() {
+            const trackTop = document.getElementById('lawyer-scroll-track-top');
+            const trackBottom = document.getElementById('lawyer-scroll-track-bottom');
+            if (!trackTop || !trackBottom) return;
+            
+            const topRow = homeLawyers.slice(0, 5);
+            const bottomRow = homeLawyers.slice(5);
+            
+            const lawyerCardHTML = (lawyer) => `
+                <div class="infinite-scroll-item flex-shrink-0 px-4 w-80">
+                    <a href="lawyer-detail.html?lawyer=${lawyer.id}" class="block bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:border-primary/50 transition h-full">
+                        <div class="relative overflow-hidden h-80">
+                            <img src="${lawyer.image}" alt="${lawyer.name}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-1">${lawyer.name}</h3>
+                            <p class="text-primary text-sm mb-3">${lawyer.title}</p>
+                            <p class="text-gray-600 text-sm mb-4">
+                                专注于${lawyer.specialty}领域，拥有丰富的执业经验。
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            `;
+            
+            trackTop.innerHTML = topRow.map(lawyerCardHTML).join('');
+            trackBottom.innerHTML = bottomRow.map(lawyerCardHTML).join('');
+            
+            // 渲染完成后设置滚动
+            setupInfiniteScroll('scrollContainer', 1, 1);
+            setupInfiniteScroll('scrollContainerBottom', -1, 4);
+        }
+
+        document.addEventListener('DOMContentLoaded', renderHomeLawyers);
+    </script>
+    
+    <!-- 返回顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-6 right-6 flex items-center justify-center hover:opacity-70 transition-opacity opacity-0 pointer-events-none z-50" style="transition: opacity 0.3s;">
+        <i class="fa fa-arrow-up text-3xl text-gray-400"></i>
+    </button>
+    
+    <script>
+        // 返回顶部功能
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                backToTopBtn.classList.add('opacity-100');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                backToTopBtn.classList.remove('opacity-100');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
