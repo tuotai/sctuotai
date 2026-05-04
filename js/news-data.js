@@ -1,17 +1,17 @@
 var newsData = [
     {
+        "id": "seminar-2025",
         "title": "诚邀精英，共筑法途 | 拓泰律所期待您的加入",
         "category": "业务活动",
         "date": "2026-03-18",
-        "summary": "在拓泰，我们始终相信：一个真正优秀的执业平台，不仅要让律师“接得了案子”，更要让律师“待得舒服、办得高效、成长得踏实”。律所秉持专业化、团队化的发展理念，致力于为律师提供优质的执业平台与发展空间，诚邀志同道合的法律英才加盟，共创未来。",
-        "content": "https://mp.weixin.qq.com/s/-BqTyj-V2ty7gr8Cf6veqg",
-        "image": "",
-        "id": "1777877513408"
+        "summary": "在拓泰，我们始终相信：一个真正优秀的执业平台，不仅要让律师「接得了案子」，更要让律师「待得舒服、办得高效、成长得踏实」。律所秉持专业化、团队化的发展理念，致力于为律师提供优质的执业平台与发展空间，诚邀志同道合的法律英才加盟，共创未来。",
+        "wechatUrl": "https://mp.weixin.qq.com/s/-BqTyj-V2ty7gr8Cf6veqg",
+        "image": "https://picsum.photos/seed/join/800/400"
     },
     {
         "id": "youth-award-2026",
         "title": "【拓泰动态】礼遇青年骨干，赋能新锐绽风华",
-        "category": "拓泰人文",
+        "category": "人文生活",
         "date": "2026-04-29",
         "image": "https://picsum.photos/seed/youth/800/400",
         "summary": "拓泰青年律师王瑞，凭借过硬的专业素养、务实的工作作风与优异的业务成果，荣获律所专项激励，配置专属独立办公室。",
@@ -56,7 +56,7 @@ var newsData = [
     {
         "id": "life-seven-part2",
         "title": "【拓泰生活】七分（二）",
-        "category": "拓泰人文",
+        "category": "人文生活",
         "date": "2026-04-23",
         "image": "https://picsum.photos/seed/life7-2/800/400",
         "summary": "岁月含情，一念温柔。七分一家迎来了新的一年，他们终于在城里有了自己的房子。",
@@ -65,7 +65,7 @@ var newsData = [
     {
         "id": "life-seven-part1",
         "title": "【拓泰生活】七分（一）",
-        "category": "拓泰人文",
+        "category": "人文生活",
         "date": "2026-04-17",
         "image": "https://picsum.photos/seed/life7-1/800/400",
         "summary": "七分出生在一个贫困的年代，在家排行老三。他上面有两个哥哥、一个姐姐，下面有一个妹妹、一个弟弟。",
@@ -74,7 +74,7 @@ var newsData = [
     {
         "id": "peach-plum-tree",
         "title": "【拓泰生活】难忘故乡桃李树",
-        "category": "拓泰人文",
+        "category": "人文生活",
         "date": "2026-02-26",
         "image": "https://picsum.photos/seed/peach-plum/800/400",
         "summary": "少小离家，不知不觉离开故乡已有三十余年，故乡的记忆虽已模糊，但家乡的味道却时常萦绕心头。",
@@ -83,7 +83,7 @@ var newsData = [
     {
         "id": "annual-meeting-2026",
         "title": "【拓泰动态】四川拓泰律师事务所2025年度总结暨2026年新春年会活动圆满落幕",
-        "category": "拓泰人文",
+        "category": "人文生活",
         "date": "2026-02-01",
         "image": "https://picsum.photos/seed/meeting/800/400",
         "summary": "律所同仁齐聚成都安仁福朋喜来登酒店，参加\"2025年度总结暨2026新春年会\"。",
@@ -92,7 +92,7 @@ var newsData = [
     {
         "id": "public-welfare-honor-2025",
         "title": "【拓泰动态】践行公益初心｜拓泰律所再获履职表彰",
-        "category": "拓泰荣誉",
+        "category": "荣誉奖励",
         "date": "2025-12-30",
         "image": "https://picsum.photos/seed/public-welfare/800/400",
         "summary": "因在\"法务助手\"岗位上的专业履职与公益担当，我所再次获得金沙街道人大工委的表彰。",
@@ -101,7 +101,7 @@ var newsData = [
     {
         "id": "chengdu-lawyer-association-2024",
         "title": "【拓泰喜讯】我所主任当选成都市律师协会专业委员会副主任、多位律师当选委员",
-        "category": "拓泰荣誉",
+        "category": "荣誉奖励",
         "date": "2024-12-26",
         "image": "https://picsum.photos/seed/lawyer-assoc/800/400",
         "summary": "我所主任吴苛政成功当选为成都市律师协会公司法专业委员会副主任。",
@@ -110,7 +110,7 @@ var newsData = [
     {
         "id": "xiong-yi-honor-2025",
         "title": "【拓泰喜报】我所高级合伙人熊艺律师荣获四川省律师行业优秀共产党员称号",
-        "category": "拓泰荣誉",
+        "category": "荣誉奖励",
         "date": "2025-07-03",
         "image": "https://picsum.photos/seed/xiongyi/800/400",
         "summary": "熊艺律师凭借其坚定的政治立场、精湛的专业能力荣获\"四川省律师行业优秀共产党员\"称号。",
@@ -119,7 +119,7 @@ var newsData = [
     {
         "id": "company-law-category-2024",
         "title": "【拓泰研究】公司法新规—类别股",
-        "category": "拓泰研究",
+        "category": "学术研究",
         "date": "2024-10-15",
         "image": "https://picsum.photos/seed/company-law/800/400",
         "summary": "2023年《公司法》正式引入了类别股制度，本文详细解析了类别股的定义、发展历程和主要类型。",
@@ -128,7 +128,7 @@ var newsData = [
     {
         "id": "securities-dispute-2024",
         "title": "【拓泰研究】证券虚假陈述责任纠纷实务争议焦点",
-        "category": "拓泰研究",
+        "category": "学术研究",
         "date": "2024-09-25",
         "image": "https://picsum.photos/seed/securities/800/400",
         "summary": "本文通过对相关案例的筛选总结，探讨实务中证券虚假陈述责任纠纷案件的争议焦点。",
@@ -164,7 +164,7 @@ var newsData = [
     {
         "id": "party-building-honor-2026",
         "title": "【拓泰党建】我所党建工作入选四川省律师行业党建工作典型案例",
-        "category": "拓泰荣誉",
+        "category": "荣誉奖励",
         "date": "2026-03-26",
         "image": "https://picsum.photos/seed/party-honor/800/400",
         "summary": "我所申报的《以十个标准化为引领 推动党建与业务同频共振》案例成功入选。",
@@ -173,7 +173,7 @@ var newsData = [
     {
         "id": "award-2025",
         "title": "我所荣获年度优秀律师事务所",
-        "category": "荣誉奖项",
+        "category": "荣誉奖励",
         "date": "2025-04-15",
         "image": "https://picsum.photos/seed/award/800/400",
         "summary": "在2025年度法律服务行业评选中，我所荣获\"年度优秀律师事务所\"称号。"
@@ -181,7 +181,7 @@ var newsData = [
     {
         "id": "book-compliance",
         "title": "《企业合规管理实务指南》正式出版",
-        "category": "学术文章",
+        "category": "学术研究",
         "date": "2025-03-20",
         "image": "https://picsum.photos/seed/book/800/400",
         "summary": "我所律师团队编著的《企业合规管理实务指南》正式出版发行。"
@@ -189,7 +189,7 @@ var newsData = [
     {
         "id": "forum-compliance",
         "title": "我所主办企业合规管理论坛",
-        "category": "行业活动",
+        "category": "业务活动",
         "date": "2025-03-15",
         "image": "https://picsum.photos/seed/event/800/400",
         "summary": "由我所主办的企业合规管理论坛在成都成功举办，汇聚众多企业代表。"
@@ -197,7 +197,7 @@ var newsData = [
     {
         "id": "315-consumer",
         "title": "我所开展315消费者权益保护普法活动",
-        "category": "新闻资讯",
+        "category": "业务活动",
         "date": "2025-03-08",
         "image": "https://picsum.photos/seed/news2/800/400",
         "summary": "在3·15消费者权益日，我所律师走进社区开展普法宣传活动。"
@@ -205,7 +205,7 @@ var newsData = [
     {
         "id": "lawyer-award",
         "title": "多名律师获评省级优秀律师",
-        "category": "荣誉奖项",
+        "category": "荣誉奖励",
         "date": "2025-02-28",
         "image": "https://picsum.photos/seed/award2/800/400",
         "summary": "我所三名律师在省级律师评选中获评\"优秀律师\"荣誉称号。"
@@ -213,7 +213,7 @@ var newsData = [
     {
         "id": "book-civil-law",
         "title": "《民法典解读与实务应用》专著发布",
-        "category": "学术文章",
+        "category": "学术研究",
         "date": "2025-02-15",
         "image": "https://picsum.photos/seed/book2/800/400",
         "summary": "我所律师团队编写的《民法典解读与实务应用》一书正式发布。"
@@ -221,7 +221,7 @@ var newsData = [
     {
         "id": "forum-chengdu-chongqing",
         "title": "我所协办成渝地区双城经济圈法律服务论坛",
-        "category": "行业活动",
+        "category": "业务活动",
         "date": "2025-01-20",
         "image": "https://picsum.photos/seed/event2/800/400",
         "summary": "我所协办的成渝地区双城经济圈法律服务论坛在成都圆满召开。"
@@ -229,7 +229,7 @@ var newsData = [
     {
         "id": "annual-meeting-2024",
         "title": "我所召开2024年度工作总结大会",
-        "category": "新闻资讯",
+        "category": "业务活动",
         "date": "2025-01-10",
         "image": "https://picsum.photos/seed/news3/800/400",
         "summary": "我所召开2024年度工作总结大会，总结成绩，表彰先进，规划未来发展。"
@@ -237,7 +237,7 @@ var newsData = [
     {
         "id": "ethics-training",
         "title": "我所举办律师职业道德专题培训",
-        "category": "行业活动",
+        "category": "业务活动",
         "date": "2024-12-28",
         "image": "https://picsum.photos/seed/training/800/400",
         "summary": "为提升律师职业素养，我所举办律师职业道德与执业纪律专题培训。"
@@ -245,7 +245,7 @@ var newsData = [
     {
         "id": "legal-consultation-2024",
         "title": "我所开展公益法律咨询活动",
-        "category": "行业活动",
+        "category": "业务活动",
         "date": "2024-12-15",
         "image": "https://picsum.photos/seed/consult/800/400",
         "summary": "我所组织律师团队在成都市多个社区开展公益法律咨询活动。"
@@ -253,7 +253,7 @@ var newsData = [
     {
         "id": "exchange-2024",
         "title": "我所与多家律所开展业务交流",
-        "category": "行业活动",
+        "category": "业务活动",
         "date": "2024-12-01",
         "image": "https://picsum.photos/seed/exchange/800/400",
         "summary": "近日，我所与来自北京、上海的多家知名律所开展业务交流活动。"
@@ -261,7 +261,7 @@ var newsData = [
     {
         "id": "conference-2024",
         "title": "我所主办西部法律服务高峰论坛",
-        "category": "行业活动",
+        "category": "业务活动",
         "date": "2024-11-20",
         "image": "https://picsum.photos/seed/conference/800/400",
         "summary": "由我所主办的西部法律服务高峰论坛在成都成功举办。"
@@ -269,7 +269,7 @@ var newsData = [
     {
         "id": "training-2024",
         "title": "我所开展青年律师入职培训",
-        "category": "行业活动",
+        "category": "业务活动",
         "date": "2024-11-10",
         "image": "https://picsum.photos/seed/newtrain/800/400",
         "summary": "我所对新入职的青年律师开展了为期一周的系统培训。"
@@ -277,7 +277,7 @@ var newsData = [
     {
         "id": "visit-2024",
         "title": "我所接待外地律所参观考察",
-        "category": "行业活动",
+        "category": "业务活动",
         "date": "2024-10-25",
         "image": "https://picsum.photos/seed/visit/800/400",
         "summary": "近日，重庆市律师协会组织当地律所代表到我所参观考察。"
@@ -285,7 +285,7 @@ var newsData = [
     {
         "id": "open-day-2024",
         "title": "我所举办开放日活动",
-        "category": "行业活动",
+        "category": "业务活动",
         "date": "2024-10-15",
         "image": "https://picsum.photos/seed/openday/800/400",
         "summary": "我所举办开放日活动，邀请各界人士参观交流，增进了解。"
