@@ -298,17 +298,18 @@ var newsData = [
         "image": "https://picsum.photos/seed/%E3%80%90%E6%8B%93%E6%B3%B0%E5%8A%A8%E6%80%81%E3%80%91%E2%80%9C%E6%B3%95%E5%AE%98%E4%B8%89%E4%BA%BA%E8%B0%88%E2%80%9D%E5%85%AC%E7%9B%8A%E6%B2%99%E9%BE%99%E5%9C%A8%E5%9B%9B%E5%B7%9D%E6%8B%93%E6%B3%B0%E5%BE%8B%E5%B8%88%E4%BA%8B%E5%8A%A1%E6%89%80%E6%88%90%E5%8A%9F%E4%B8%BE%E5%8A%9E/800/400",
         "summary": "12月21日，正值冬至之际，一场以“法官眼中出庭律师都踩了哪些坑”为主题的公益沙龙活动——“法官三人谈”在四川拓泰律师事务所成功举办，本次活动邀请了三位经验丰富曾分别任职基层、中级、高级法院的资深前法官担任主讲人，吸引了众多律师和法务同仁的积极参与。",
         "wechatUrl": "https://mp.weixin.qq.com/s/sEHjcvJ1cu0q6bRXl78MmQ"
+    },
+    {
+        "id": "-拓泰动态-青律v光-拓泰志愿律师在行动",
+        "title": "【拓泰动态】“青律V光”拓泰志愿律师在行动",
+        "category": "业务活动",
+        "date": "2026-05-04",
+        "image": "https://picsum.photos/seed/%E3%80%90%E6%8B%93%E6%B3%B0%E5%8A%A8%E6%80%81%E3%80%91%E2%80%9C%E9%9D%92%E5%BE%8BV%E5%85%89%E2%80%9D%E6%8B%93%E6%B3%B0%E5%BF%97%E6%84%BF%E5%BE%8B%E5%B8%88%E5%9C%A8%E8%A1%8C%E5%8A%A8/800/400",
+        "summary": "“青律V光”是青羊区司法局以党建为引领，依托成都市律师协会青羊分会和青羊志愿者联合会打造的党建创新项目。项目旨在引领党员律师积极参与“微网实格”，举旗帜、树品牌、强队伍、惠民生，扩大青羊法律服务的社会影响力。参与该项目的律师主要围绕法律咨询、普法宣传、纠纷调解、法律明白人培训几个方面展开工作。",
+        "wechatUrl": "https://mp.weixin.qq.com/s/OYQMnPgy-N8ZwCGdyxWbLQ"
     }
 ];
 
-function getNewsById(id) {
-    return newsData.find(n => n.id === id);
-}
-
-function getNewsByCategory(category) {
-    return newsData.filter(n => n.category === category).sort((a, b) => new Date(b.date) - new Date(a.date));
-}
-
-function getAllCategories() {
-    return [...new Set(newsData.map(n => n.category))];
-}
+function getAllNews() { return newsData; }
+function getNewsById(id) { return newsData.find(n => n.id === id); }
+function getNewsByCategory(category) { return newsData.filter(n => n.category === category); }
