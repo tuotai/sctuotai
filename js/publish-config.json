@@ -1,0 +1,8 @@
+{
+  "github": {
+    "token": "YOUR_GITHUB_TOKEN_HERE",
+    "owner": "your-github-username",
+    "repo": "your-repo-name",
+    "branch": "main"
+  }
+}
