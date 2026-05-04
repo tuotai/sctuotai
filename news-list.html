@@ -74,7 +74,7 @@
 
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-6 py-4">
-                        <h3 class="text-xl font-bold"><i class="fa fa-trophy mr-2"></i>拓泰荣誉</h3>
+                        <h3 class="text-xl font-bold"><i class="fa fa-trophy mr-2"></i>荣誉奖励</h3>
                     </div>
                     <div id="news-honors" class="p-4 space-y-4">
                     </div>
@@ -82,7 +82,7 @@
 
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-4">
-                        <h3 class="text-xl font-bold"><i class="fa fa-book mr-2"></i>拓泰研究</h3>
+                        <h3 class="text-xl font-bold"><i class="fa fa-book mr-2"></i>学术研究</h3>
                     </div>
                     <div id="news-research" class="p-4 space-y-4">
                     </div>
@@ -90,7 +90,7 @@
 
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-4">
-                        <h3 class="text-xl font-bold"><i class="fa fa-users mr-2"></i>拓泰人文</h3>
+                        <h3 class="text-xl font-bold"><i class="fa fa-users mr-2"></i>人文生活</h3>
                     </div>
                     <div id="news-culture" class="p-4 space-y-4">
                     </div>
@@ -112,9 +112,10 @@
         function renderList(containerId, items, categoryKey) {
             const container = document.getElementById(containerId);
             const visibleItems = items.slice(0, displayLimit);
+            const hiddenItems = items.slice(displayLimit);
             const hasMore = items.length > displayLimit;
 
-            container.innerHTML = visibleItems.map(item => {
+            container.innerHTML = visibleItems.map((item, index) => {
                 return `
                     <a href="${item.wechatUrl}" target="_blank" class="flex items-start space-x-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer group">
                         <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden">
@@ -130,9 +131,27 @@
             }).join('');
 
             if (hasMore) {
+                const hiddenContent = hiddenItems.map((item, index) => {
+                    const itemIndex = displayLimit + index;
+                    return `
+                        <a href="${item.wechatUrl}" target="_blank" class="flex items-start space-x-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer group more-content-${categoryKey}" style="display: none;">
+                            <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden">
+                                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-medium text-gray-800 group-hover:text-primary truncate">${item.title}</h4>
+                                <p class="text-sm text-gray-500 mt-1">${item.date}</p>
+                            </div>
+                            <i class="fa fa-external-link text-gray-400 group-hover:text-primary transition-colors flex-shrink-0 mt-2"></i>
+                        </a>
+                    `;
+                }).join('');
+                
+                container.innerHTML += hiddenContent;
+                
                 container.innerHTML += `
                     <div class="text-center pt-2">
-                        <button onclick="loadMore('${categoryKey}', '${containerId}', ${displayLimit})" class="text-primary hover:text-primary/80 text-sm font-medium cursor-pointer">
+                        <button onclick="toggleMore('${categoryKey}', '${containerId}')" class="text-primary hover:text-primary/80 text-sm font-medium cursor-pointer more-btn-${categoryKey}">
                             查看更多 <i class="fa fa-chevron-down ml-1"></i>
                         </button>
                     </div>
@@ -140,55 +159,38 @@
             }
         }
 
-        window.currentPage = {
-            'activities': 1,
-            'honors': 1,
-            'research': 1,
-            'culture': 1
+        window.expanded = {
+            'activities': false,
+            'honors': false,
+            'research': false,
+            'culture': false
         };
 
-        window.loadMore = function(categoryKey, containerId, displayLimit) {
-            const categoryItems = categoryKey === 'activities' ? getNewsByCategory('业务活动') :
-                                  categoryKey === 'honors' ? getNewsByCategory('拓泰荣誉') :
-                                  categoryKey === 'research' ? getNewsByCategory('拓泰研究') : getNewsByCategory('拓泰人文');
-
+        window.toggleMore = function(categoryKey, containerId) {
             const container = document.getElementById(containerId);
-            window.currentPage[categoryKey]++;
-            const startIdx = window.currentPage[categoryKey] * displayLimit;
-            const endIdx = startIdx + displayLimit;
-            const newItems = categoryItems.slice(startIdx, endIdx);
-
-            if (newItems.length === 0) {
-                return;
-            }
-
-            newItems.forEach(item => {
-                const html = `
-                    <a href="${item.wechatUrl}" target="_blank" class="flex items-start space-x-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer group">
-                        <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden">
-                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-medium text-gray-800 group-hover:text-primary truncate">${item.title}</h4>
-                            <p class="text-sm text-gray-500 mt-1">${item.date}</p>
-                        </div>
-                        <i class="fa fa-external-link text-gray-400 group-hover:text-primary transition-colors flex-shrink-0 mt-2"></i>
-                    </a>
-                `;
-                container.insertAdjacentHTML('beforeend', html);
-            });
-
-            if (endIdx >= categoryItems.length) {
-                const moreBtn = container.querySelector('button');
-                if (moreBtn) moreBtn.remove();
+            const moreContents = container.querySelectorAll(`.more-content-${categoryKey}`);
+            const moreBtn = container.querySelector(`.more-btn-${categoryKey}`);
+            
+            if (window.expanded[categoryKey]) {
+                moreContents.forEach(item => {
+                    item.style.display = 'none';
+                });
+                moreBtn.innerHTML = '查看更多 <i class="fa fa-chevron-down ml-1"></i>';
+                window.expanded[categoryKey] = false;
+            } else {
+                moreContents.forEach(item => {
+                    item.style.display = 'flex';
+                });
+                moreBtn.innerHTML = '收起 <i class="fa fa-chevron-up ml-1"></i>';
+                window.expanded[categoryKey] = true;
             }
         };
 
         document.addEventListener('DOMContentLoaded', function() {
-            renderList('news-activities', getNewsByCategory('业务活动'), 'activities');
-            renderList('news-honors', getNewsByCategory('拓泰荣誉'), 'honors');
-            renderList('news-research', getNewsByCategory('拓泰研究'), 'research');
-            renderList('news-culture', getNewsByCategory('拓泰人文'), 'culture');
+            renderList('news-activities', getNewsByCategory('业务活动').sort((a, b) => new Date(b.date) - new Date(a.date)), 'activities');
+            renderList('news-honors', getNewsByCategory('荣誉奖励').sort((a, b) => new Date(b.date) - new Date(a.date)), 'honors');
+            renderList('news-research', getNewsByCategory('学术研究').sort((a, b) => new Date(b.date) - new Date(a.date)), 'research');
+            renderList('news-culture', getNewsByCategory('人文生活').sort((a, b) => new Date(b.date) - new Date(a.date)), 'culture');
         });
     </script>
 </body>
