@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实用工具 - 四川拓泰律师事务所</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        .calculator-input {
+            transition: border-color 0.3s ease;
+        }
+        .calculator-input:focus {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+        .result-box {
+            background: white;
+            border: 2px solid #dc2626;
+        }
+        .result-box p {
+            color: #dc2626;
+        }
+        .result-box .opacity-80 {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html">
+                    <img src="images/0000.jpg" alt="四川拓泰律师事务所" class="h-16">
+                </a>
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="index.html#about" class="text-sm uppercase tracking-wider text-gray-700 hover:text-red-600 transition-colors">关于我们</a>
+                    <a href="index.html#consulting" class="text-sm uppercase tracking-wider text-gray-700 hover:text-red-600 transition-colors">拓泰资讯</a>
+                    <a href="index.html#services" class="text-sm uppercase tracking-wider text-gray-700 hover:text-red-600 transition-colors">专业领域</a>
+                    <a href="lawyer-list.html" class="text-sm uppercase tracking-wider text-gray-700 hover:text-red-600 transition-colors">专业律师</a>
+                    <a href="index.html#cases" class="text-sm uppercase tracking-wider text-gray-700 hover:text-red-600 transition-colors">案例展示</a>
+                    <a href="party-building-list.html" class="text-sm uppercase tracking-wider text-gray-700 hover:text-red-600 transition-colors">拓泰党建</a>
+                    <a href="index.html#contact" class="text-sm uppercase tracking-wider text-gray-700 hover:text-red-600 transition-colors">联系我们</a>
+                    <a href="tools.html" class="text-sm uppercase tracking-wider text-red-600 font-medium">实用工具</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="pt-32 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-sm font-bold uppercase tracking-wider text-red-600">实用工具</span>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2">专业法律计算工具</h1>
+            <div class="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
+            <p class="text-gray-600 mt-4">提供专业的法律计算工具，助力您的法律事务处理</p>
+        </div>
+    </section>
+
+    <!-- 工具卡片 -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 律师费计算 -->
+                <div class="tool-card bg-white rounded-xl shadow-lg p-6 border border-black" id="lawyer-fee-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fa-solid fa-scale-unbalanced text-red-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">律师费计算</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">业务类别</label>
+                            <select id="lawyer-fee-type" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                <option value="civil-no-property">民事/仲裁案件(不涉及财产)</option>
+                                <option value="civil-property" selected>民事/仲裁案件(涉及财产)</option>
+                                <option value="civil-risk">民事/仲裁案件(风险代理)</option>
+                                <option value="criminal-investigation">刑事案件(侦查/审查起诉)</option>
+                                <option value="criminal-trial">刑事案件(一审/二审)</option>
+                                <option value="criminal-complex">刑事案件(重大疑难)</option>
+                                <option value="administrative">行政案件</option>
+                                <option value="non-lawsuit">非诉讼业务</option>
+                                <option value="legal-consultant">常年法律顾问</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">标的金额（元）</label>
+                            <input type="number" id="lawyer-fee-amount" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="请输入金额">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">难度系数</label>
+                            <input type="number" id="lawyer-fee-difficulty" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="请输入难度系数" value="1.0" step="0.1" min="0.5" max="3.0">
+                        </div>
+                        <button onclick="calculateLawyerFee()" class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors">
+                            计算
+                        </button>
+                        <div id="lawyer-fee-result" class="result-box p-4 rounded-lg hidden">
+                            <p class="text-sm opacity-80">参考律师费</p>
+                            <p class="text-2xl font-bold" id="lawyer-fee-value">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 诉讼费/仲裁费计算 -->
+                <div class="tool-card bg-white rounded-xl shadow-lg p-6 border border-black" id="lawsuit-fee-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fa-solid fa-file-text text-blue-600 text-xl"></i>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="btn-lawsuit" onclick="switchCalculator('lawsuit')" class="px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium">
+                                诉讼费计算
+                            </button>
+                            <button id="btn-arbitration" onclick="switchCalculator('arbitration')" class="px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
+                                成都仲裁费计算
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 诉讼费计算内容 -->
+                    <div id="lawsuit-content">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">费用类型</label>
+                                <select id="lawsuit-fee-type" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" onchange="updateLawsuitSubtype()">
+                                    <option value="case-fee">案件受理费</option>
+                                    <option value="application-fee">申请费</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">案件类型</label>
+                                <select id="lawsuit-subtype" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                    <option value="property">财产案件</option>
+                                    <option value="divorce">离婚案件</option>
+                                    <option value="personality">人格权案件</option>
+                                    <option value="other-non-property">其他非财产案件</option>
+                                    <option value="intellectual">知识产权案件</option>
+                                    <option value="labor">劳动争议案件</option>
+                                    <option value="admin-trademark">商标/专利/海事行政案件</option>
+                                    <option value="admin-other">其他行政案件</option>
+                                </select>
+                            </div>
+                            <div id="lawsuit-amount-div">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">标的金额（元）</label>
+                                <input type="number" id="lawsuit-fee-amount" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="请输入金额">
+                            </div>
+                            <button onclick="calculateLawsuitFee()" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                计算诉讼费
+                            </button>
+                            <div id="lawsuit-fee-result" class="result-box p-4 rounded-lg hidden">
+                                <p class="text-sm opacity-80">计算结果</p>
+                                <p class="text-2xl font-bold" id="lawsuit-fee-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 成都仲裁费计算内容 -->
+                    <div id="arbitration-content" class="hidden">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">争议金额（元）</label>
+                                <input type="number" id="arbitration-amount" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="请输入争议金额">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">是否无争议金额请求</label>
+                                <select id="arbitration-no-amount" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                    <option value="no">否（有争议金额）</option>
+                                    <option value="yes">是（无争议金额）</option>
+                                </select>
+                            </div>
+                            <button onclick="calculateArbitrationFee()" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                计算仲裁费
+                            </button>
+                            <div id="arbitration-fee-result" class="result-box p-4 rounded-lg hidden">
+                                <div class="space-y-2">
+                                    <div>
+                                        <p class="text-sm opacity-80">受理费</p>
+                                        <p class="text-xl font-bold" id="arbitration-fee-fee">-</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm opacity-80">处理费</p>
+                                        <p class="text-xl font-bold" id="arbitration-fee-handling">-</p>
+                                    </div>
+                                    <hr class="border-gray-300 my-2">
+                                    <div>
+                                        <p class="text-sm opacity-80">合计</p>
+                                        <p class="text-2xl font-bold" id="arbitration-fee-total">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 利息计算/日期计算 -->
+                <div class="tool-card bg-white rounded-xl shadow-lg p-6 border border-black" id="interest-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fa-solid fa-calculator text-green-600 text-xl"></i>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="btn-interest" onclick="switchInterestDateType('interest')" class="px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium">
+                                利息计算
+                            </button>
+                            <button id="btn-date" onclick="switchInterestDateType('date')" class="px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
+                                日期计算
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 利息计算内容 -->
+                    <div id="interest-content">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">本金（元）</label>
+                                <input type="number" id="interest-principal" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="请输入本金">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">借款日期</label>
+                                <div class="flex space-x-2">
+                                    <input type="date" id="interest-start-date" class="calculator-input flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                    <span class="flex items-center text-gray-400">至</span>
+                                    <input type="date" id="interest-end-date" class="calculator-input flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">利率类型</label>
+                                <div class="flex space-x-2">
+                                    <button id="btn-yearly" onclick="selectInterestRateType('yearly')" class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium">
+                                        年利率
+                                    </button>
+                                    <button id="btn-monthly" onclick="selectInterestRateType('monthly')" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
+                                        月利率
+                                    </button>
+                                    <button id="btn-daily" onclick="selectInterestRateType('daily')" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
+                                        日利率
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">利率（%）</label>
+                                <input type="number" id="interest-rate" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="请输入利率" step="0.001">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">多时间段利率设置（可选）</label>
+                                <button onclick="addInterestPeriod()" class="text-sm text-blue-600 hover:text-blue-700 mb-2">+ 添加时间段</button>
+                                <div id="interest-periods-container">
+                                    <!-- 动态添加时间段 -->
+                                </div>
+                            </div>
+                            <button onclick="calculateInterest()" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                计算
+                            </button>
+                            <div id="interest-result" class="result-box p-4 rounded-lg hidden">
+                                <p class="text-sm opacity-80">应付利息</p>
+                                <p class="text-2xl font-bold" id="interest-value">-</p>
+                                <p class="text-sm opacity-80 mt-2">借款天数</p>
+                                <p class="text-xl font-bold" id="interest-days-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 日期计算内容 -->
+                    <div id="date-content" class="hidden">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">开始日期</label>
+                                <input type="date" id="date-start" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">结束日期</label>
+                                <input type="date" id="date-end" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                            </div>
+                            <button onclick="calculateDays()" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                计算
+                            </button>
+                            <div id="date-result" class="result-box p-4 rounded-lg hidden">
+                                <p class="text-sm opacity-80">天数差</p>
+                                <p class="text-2xl font-bold" id="date-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 赔偿计算（人身损害赔偿/工伤赔偿） -->
+                <div class="tool-card bg-white rounded-xl shadow-lg p-6 border border-black" id="compensation-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fa-solid fa-heart-pulse text-orange-600 text-xl"></i>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="btn-personal-injury" onclick="switchCompensationType('personal')" class="px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium">
+                                人身损害赔偿
+                            </button>
+                            <button id="btn-work-injury" onclick="switchCompensationType('work')" class="px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
+                                工伤赔偿
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 人身损害赔偿内容 -->
+                    <div id="personal-injury-content">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">伤残等级</label>
+                                <select id="personal-injury-level" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                    <option value="1">一级伤残</option>
+                                    <option value="2">二级伤残</option>
+                                    <option value="3">三级伤残</option>
+                                    <option value="4">四级伤残</option>
+                                    <option value="5">五级伤残</option>
+                                    <option value="6">六级伤残</option>
+                                    <option value="7">七级伤残</option>
+                                    <option value="8">八级伤残</option>
+                                    <option value="9">九级伤残</option>
+                                    <option value="10">十级伤残</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">所在地区</label>
+                                <select id="personal-injury-region" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                    <option value="sichuan">四川省</option>
+                                    <option value="beijing">北京市</option>
+                                    <option value="shanghai">上海市</option>
+                                    <option value="guangdong">广东省</option>
+                                </select>
+                            </div>
+                            <button onclick="calculatePersonalInjury()" class="w-full bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition-colors">
+                                计算
+                            </button>
+                            <div id="personal-injury-result" class="result-box p-4 rounded-lg hidden">
+                                <p class="text-sm opacity-80">伤残赔偿金</p>
+                                <p class="text-2xl font-bold" id="personal-injury-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 工伤赔偿内容 -->
+                    <div id="work-injury-content" class="hidden">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">伤残等级</label>
+                                <select id="work-injury-level" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                    <option value="1">一级伤残</option>
+                                    <option value="2">二级伤残</option>
+                                    <option value="3">三级伤残</option>
+                                    <option value="4">四级伤残</option>
+                                    <option value="5">五级伤残</option>
+                                    <option value="6">六级伤残</option>
+                                    <option value="7">七级伤残</option>
+                                    <option value="8">八级伤残</option>
+                                    <option value="9">九级伤残</option>
+                                    <option value="10">十级伤残</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">月工资(元)</label>
+                                <input type="number" id="work-injury-salary" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="请输入月工资">
+                            </div>
+                            <button onclick="calculateWorkInjury()" class="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-colors">
+                                计算
+                            </button>
+                            <div id="work-injury-result" class="result-box p-4 rounded-lg hidden">
+                                <p class="text-sm opacity-80">赔偿金额</p>
+                                <p class="text-2xl font-bold" id="work-injury-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 薪资计算（社保计算/个税计算） -->
+                <div class="tool-card bg-white rounded-xl shadow-lg p-6 border border-black" id="salary-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fa-solid fa-building-columns text-purple-600 text-xl"></i>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="btn-social" onclick="switchSalaryType('social')" class="px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium">
+                                社保计算
+                            </button>
+                            <button id="btn-tax" onclick="switchSalaryType('tax')" class="px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
+                                个税计算
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 社保计算内容 -->
+                    <div id="social-content">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">缴费基数（元）</label>
+                                <input type="number" id="social-base" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="请输入基数">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">所在城市</label>
+                                <select id="social-city" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                    <option value="chengdu">成都</option>
+                                    <option value="beijing">北京</option>
+                                    <option value="shanghai">上海</option>
+                                    <option value="guangzhou">广州</option>
+                                </select>
+                            </div>
+                            <button onclick="calculateSocialInsurance()" class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                                计算
+                            </button>
+                            <div id="social-result" class="result-box p-4 rounded-lg hidden">
+                                <p class="text-sm opacity-80">个人缴纳</p>
+                                <p class="text-xl font-bold" id="social-personal">-</p>
+                                <p class="text-sm opacity-80 mt-2">单位缴纳</p>
+                                <p class="text-xl font-bold" id="social-company">-</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 个税计算内容 -->
+                    <div id="tax-content" class="hidden">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">月收入(元)</label>
+                                <input type="number" id="tax-income" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="请输入月收入">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">五险一金(元)</label>
+                                <input type="number" id="tax-insurance" class="calculator-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" placeholder="请输入五险一金">
+                            </div>
+                            <button onclick="calculateTax()" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                                计算
+                            </button>
+                            <div id="tax-result" class="result-box p-4 rounded-lg hidden">
+                                <p class="text-sm opacity-80">应缴个税</p>
+                                <p class="text-2xl font-bold" id="tax-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 页面右下角彩色鸡蛋（带放射性光芒）- 滚动到底部时显示 -->
+    <a href="games.html" id="magic-egg" class="fixed bottom-4 right-4 z-50 cursor-pointer opacity-0 transition-opacity duration-500" title="点击进入游戏页面">
+        <div class="relative">
+            <!-- 光芒效果 -->
+            <div class="absolute inset-0 w-10 h-12 rounded-full bg-gradient-to-br from-yellow-300 via-orange-400 to-red-500 opacity-40 animate-ping" style="clip-path: ellipse(50% 45% at 50% 50%);"></div>
+            <!-- 鸡蛋本体 -->
+            <div class="relative w-10 h-12 rounded-full bg-gradient-to-br from-yellow-300 via-orange-400 to-red-500 shadow-lg hover:scale-110 transition-transform cursor-pointer" style="clip-path: ellipse(50% 45% at 50% 50%); box-shadow: 0 0 20px rgba(251, 191, 36, 0.8), 0 0 40px rgba(249, 115, 22, 0.6), 0 0 60px rgba(239, 68, 68, 0.4);"></div>
+        </div>
+    </a>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <img src="images/0000.jpg" alt="四川拓泰律师事务所" class="h-16 mx-auto mb-4">
+                <p class="text-gray-400">四川拓泰律师事务所</p>
+                <p class="text-gray-500 text-sm mt-2">版权所有 © 2024</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 滚动检测：页面滚动到底部时显示鸡蛋
+        window.addEventListener('scroll', function() {
+            const egg = document.getElementById('magic-egg');
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            
+            // 当滚动位置距离底部小于200像素时显示鸡蛋
+            if (documentHeight - scrollTop - windowHeight < 200) {
+                egg.classList.remove('opacity-0');
+                egg.classList.add('opacity-100');
+            } else {
+                egg.classList.remove('opacity-100');
+                egg.classList.add('opacity-0');
+            }
+        });
+        
+        // 页面加载完成后检查初始滚动位置
+        window.addEventListener('load', function() {
+            const egg = document.getElementById('magic-egg');
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            
+            if (documentHeight - scrollTop - windowHeight < 200) {
+                egg.classList.remove('opacity-0');
+                egg.classList.add('opacity-100');
+            }
+        });
+        
+        // 律师费计算
+        function calculateLawyerFee() {
+            const type = document.getElementById('lawyer-fee-type').value;
+            const amount = parseFloat(document.getElementById('lawyer-fee-amount').value) || 0;
+            const difficulty = parseFloat(document.getElementById('lawyer-fee-difficulty').value) || 1.0;
+            
+            let feeResult = '';
+
+            // 根据收费标准计算律师费区间
+            switch(type) {
+                case 'civil-no-property':
+                    // 不涉及财产：5000-30000元/件
+                    feeResult = '¥' + Math.round(5000 * difficulty).toLocaleString() + ' - ¥' + Math.round(30000 * difficulty).toLocaleString();
+                    break;
+                    
+                case 'civil-property':
+                    // 涉及财产案件 - 展示区间
+                    if (amount <= 100000) {
+                        const minBase = amount * 0.08;
+                        const maxBase = amount * 0.10;
+                        const min = Math.max(minBase, 5000) * difficulty;
+                        const max = Math.max(maxBase, 5000) * difficulty;
+                        feeResult = '¥' + Math.round(min).toLocaleString() + ' - ¥' + Math.round(max).toLocaleString();
+                    } else if (amount <= 500000) {
+                        const min = (100000 * 0.08 + (amount - 100000) * 0.07) * difficulty;
+                        const max = (100000 * 0.10 + (amount - 100000) * 0.09) * difficulty;
+                        feeResult = '¥' + Math.round(min).toLocaleString() + ' - ¥' + Math.round(max).toLocaleString();
+                    } else if (amount <= 1000000) {
+                        const min = (100000 * 0.08 + 400000 * 0.07 + (amount - 500000) * 0.06) * difficulty;
+                        const max = (100000 * 0.10 + 400000 * 0.09 + (amount - 500000) * 0.08) * difficulty;
+                        feeResult = '¥' + Math.round(min).toLocaleString() + ' - ¥' + Math.round(max).toLocaleString();
+                    } else if (amount <= 5000000) {
+                        const min = (100000 * 0.08 + 400000 * 0.07 + 500000 * 0.06 + (amount - 1000000) * 0.05) * difficulty;
+                        const max = (100000 * 0.10 + 400000 * 0.09 + 500000 * 0.08 + (amount - 1000000) * 0.07) * difficulty;
+                        feeResult = '¥' + Math.round(min).toLocaleString() + ' - ¥' + Math.round(max).toLocaleString();
+                    } else if (amount <= 10000000) {
+                        const min = (100000 * 0.08 + 400000 * 0.07 + 500000 * 0.06 + 4000000 * 0.05 + (amount - 5000000) * 0.04) * difficulty;
+                        const max = (100000 * 0.10 + 400000 * 0.09 + 500000 * 0.08 + 4000000 * 0.07 + (amount - 5000000) * 0.06) * difficulty;
+                        feeResult = '¥' + Math.round(min).toLocaleString() + ' - ¥' + Math.round(max).toLocaleString();
+                    } else if (amount <= 20000000) {
+                        const min = (100000 * 0.08 + 400000 * 0.07 + 500000 * 0.06 + 4000000 * 0.05 + 5000000 * 0.04 + (amount - 10000000) * 0.03) * difficulty;
+                        const max = (100000 * 0.10 + 400000 * 0.09 + 500000 * 0.08 + 4000000 * 0.07 + 5000000 * 0.06 + (amount - 10000000) * 0.05) * difficulty;
+                        feeResult = '¥' + Math.round(min).toLocaleString() + ' - ¥' + Math.round(max).toLocaleString();
+                    } else if (amount <= 50000000) {
+                        const min = (100000 * 0.08 + 400000 * 0.07 + 500000 * 0.06 + 4000000 * 0.05 + 5000000 * 0.04 + 10000000 * 0.03 + (amount - 20000000) * 0.02) * difficulty;
+                        const max = (100000 * 0.10 + 400000 * 0.09 + 500000 * 0.08 + 4000000 * 0.07 + 5000000 * 0.06 + 10000000 * 0.05 + (amount - 20000000) * 0.04) * difficulty;
+                        feeResult = '¥' + Math.round(min).toLocaleString() + ' - ¥' + Math.round(max).toLocaleString();
+                    } else {
+                        const min = (100000 * 0.08 + 400000 * 0.07 + 500000 * 0.06 + 4000000 * 0.05 + 5000000 * 0.04 + 10000000 * 0.03 + 30000000 * 0.02 + (amount - 50000000) * 0.01) * difficulty;
+                        const max = (100000 * 0.10 + 400000 * 0.09 + 500000 * 0.08 + 4000000 * 0.07 + 5000000 * 0.06 + 10000000 * 0.05 + 30000000 * 0.04 + (amount - 50000000) * 0.03) * difficulty;
+                        feeResult = '¥' + Math.round(min).toLocaleString() + ' - ¥' + Math.round(max).toLocaleString();
+                    }
+                    break;
+                    
+                case 'civil-risk':
+                    // 风险代理 - 展示区间
+                    if (amount <= 1000000) {
+                        feeResult = '≤ ¥' + Math.round(amount * 0.18 * difficulty).toLocaleString();
+                    } else if (amount <= 5000000) {
+                        feeResult = '≤ ¥' + Math.round((1000000 * 0.18 + (amount - 1000000) * 0.15) * difficulty).toLocaleString();
+                    } else if (amount <= 10000000) {
+                        feeResult = '≤ ¥' + Math.round((1000000 * 0.18 + 4000000 * 0.15 + (amount - 5000000) * 0.12) * difficulty).toLocaleString();
+                    } else if (amount <= 50000000) {
+                        feeResult = '≤ ¥' + Math.round((1000000 * 0.18 + 4000000 * 0.15 + 5000000 * 0.12 + (amount - 10000000) * 0.09) * difficulty).toLocaleString();
+                    } else {
+                        feeResult = '≤ ¥' + Math.round((1000000 * 0.18 + 4000000 * 0.15 + 5000000 * 0.12 + 40000000 * 0.09 + (amount - 50000000) * 0.06) * difficulty).toLocaleString();
+                    }
+                    break;
+                    
+                case 'criminal-investigation':
+                    // 侦查/审查起诉：2000-15000元/件
+                    feeResult = '¥' + Math.round(2000 * difficulty).toLocaleString() + ' - ¥' + Math.round(15000 * difficulty).toLocaleString();
+                    break;
+                    
+                case 'criminal-trial':
+                    // 一审/二审/重审/申诉：10000-30000元/件
+                    feeResult = '¥' + Math.round(10000 * difficulty).toLocaleString() + ' - ¥' + Math.round(30000 * difficulty).toLocaleString();
+                    break;
+                    
+                case 'criminal-complex':
+                    // 重大疑难案件：每阶段可上浮10000-15000元/件
+                    feeResult = '¥' + Math.round(30000 * difficulty).toLocaleString() + ' - ¥' + Math.round(45000 * difficulty).toLocaleString();
+                    break;
+                    
+                case 'administrative':
+                    // 行政案件参照民事标准
+                    feeResult = '参照民事案件标准';
+                    break;
+                    
+                case 'non-lawsuit':
+                    // 非诉讼业务
+                    if (amount <= 1000000) {
+                        feeResult = '≥ ¥' + Math.round(50000 * difficulty).toLocaleString();
+                    } else if (amount <= 5000000) {
+                        feeResult = '¥' + Math.round(amount * 0.03 * difficulty).toLocaleString() + ' - ¥' + Math.round(amount * 0.05 * difficulty).toLocaleString();
+                    } else if (amount <= 10000000) {
+                        feeResult = '¥' + Math.round((1000000 * 0.03 + 4000000 * 0.03 + (amount - 5000000) * 0.02) * difficulty).toLocaleString() + ' - ¥' + Math.round((1000000 * 0.05 + 4000000 * 0.05 + (amount - 5000000) * 0.03) * difficulty).toLocaleString();
+                    } else if (amount <= 50000000) {
+                        feeResult = '¥' + Math.round((1000000 * 0.03 + 4000000 * 0.03 + 5000000 * 0.02 + (amount - 10000000) * 0.01) * difficulty).toLocaleString() + ' - ¥' + Math.round((1000000 * 0.05 + 4000000 * 0.05 + 5000000 * 0.03 + (amount - 10000000) * 0.02) * difficulty).toLocaleString();
+                    } else if (amount <= 100000000) {
+                        feeResult = '¥' + Math.round((1000000 * 0.03 + 4000000 * 0.03 + 5000000 * 0.02 + 40000000 * 0.01 + (amount - 50000000) * 0.005) * difficulty).toLocaleString() + ' - ¥' + Math.round((1000000 * 0.05 + 4000000 * 0.05 + 5000000 * 0.03 + 40000000 * 0.02 + (amount - 50000000) * 0.009) * difficulty).toLocaleString();
+                    } else {
+                        feeResult = '¥' + Math.round((1000000 * 0.03 + 4000000 * 0.03 + 5000000 * 0.02 + 40000000 * 0.01 + 50000000 * 0.005 + (amount - 100000000) * 0.003) * difficulty).toLocaleString() + ' - ¥' + Math.round((1000000 * 0.05 + 4000000 * 0.05 + 5000000 * 0.03 + 40000000 * 0.02 + 50000000 * 0.009 + (amount - 100000000) * 0.005) * difficulty).toLocaleString();
+                    }
+                    break;
+                    
+                case 'legal-consultant':
+                    // 常年法律顾问：机关/事业单位3-20万，大型企业10-80万，中型6-60万，小微2-20万
+                    feeResult = '¥' + Math.round(20000 * difficulty).toLocaleString() + ' - ¥' + Math.round(80000 * difficulty).toLocaleString() + '/年';
+                    break;
+                    
+                default:
+                    feeResult = '请选择业务类别';
+            }
+
+            document.getElementById('lawyer-fee-value').textContent = feeResult;
+            document.getElementById('lawyer-fee-result').classList.remove('hidden');
+        }
+
+        // 切换计算器类型
+        function switchCalculator(type) {
+            const lawsuitContent = document.getElementById('lawsuit-content');
+            const arbitrationContent = document.getElementById('arbitration-content');
+            const btnLawsuit = document.getElementById('btn-lawsuit');
+            const btnArbitration = document.getElementById('btn-arbitration');
+            
+            if (type === 'lawsuit') {
+                lawsuitContent.style.display = 'block';
+                arbitrationContent.style.display = 'none';
+                btnLawsuit.className = 'px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium';
+                btnArbitration.className = 'px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+            } else {
+                lawsuitContent.style.display = 'none';
+                arbitrationContent.style.display = 'block';
+                btnLawsuit.className = 'px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+                btnArbitration.className = 'px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium';
+            }
+        }
+
+        // 成都仲裁费计算
+        function calculateArbitrationFee() {
+            const amount = parseFloat(document.getElementById('arbitration-amount').value) || 0;
+            const noAmount = document.getElementById('arbitration-no-amount').value;
+            
+            let fee = 0; // 受理费
+            let handlingFee = 0; // 处理费
+            
+            if (noAmount === 'yes') {
+                // 无争议金额请求
+                fee = 800;
+            } else {
+                // 根据争议金额计算受理费
+                if (amount <= 1000) {
+                    fee = 80;
+                } else if (amount <= 50000) {
+                    fee = 80 + (amount - 1000) * 0.04;
+                } else if (amount <= 100000) {
+                    fee = 2040 + (amount - 50000) * 0.03;
+                } else if (amount <= 200000) {
+                    fee = 3540 + (amount - 100000) * 0.02;
+                } else if (amount <= 500000) {
+                    fee = 5540 + (amount - 200000) * 0.01;
+                } else if (amount <= 1000000) {
+                    fee = 8540 + (amount - 500000) * 0.005;
+                } else {
+                    fee = 11040 + (amount - 1000000) * 0.0025;
+                }
+            }
+            
+            // 计算处理费 = 受理费 × 35%（不足3000按3000收，最高不超过20万）
+            handlingFee = fee * 0.35;
+            if (handlingFee < 3000) handlingFee = 3000;
+            if (handlingFee > 200000) handlingFee = 200000;
+            
+            const total = fee + handlingFee;
+            
+            document.getElementById('arbitration-fee-fee').textContent = '¥' + Math.round(fee).toLocaleString();
+            document.getElementById('arbitration-fee-handling').textContent = '¥' + Math.round(handlingFee).toLocaleString();
+            document.getElementById('arbitration-fee-total').textContent = '¥' + Math.round(total).toLocaleString();
+            document.getElementById('arbitration-fee-result').classList.remove('hidden');
+        }
+
+        // 更新案件类型下拉框
+        function updateLawsuitSubtype() {
+            const feeType = document.getElementById('lawsuit-fee-type').value;
+            const subtypeSelect = document.getElementById('lawsuit-subtype');
+            const amountDiv = document.getElementById('lawsuit-amount-div');
+            
+            subtypeSelect.innerHTML = '';
+            
+            if (feeType === 'case-fee') {
+                // 案件受理费类型
+                const caseTypes = [
+                    { value: 'property', label: '财产案件' },
+                    { value: 'divorce', label: '离婚案件' },
+                    { value: 'personality', label: '人格权案件' },
+                    { value: 'other-non-property', label: '其他非财产案件' },
+                    { value: 'intellectual', label: '知识产权案件' },
+                    { value: 'labor', label: '劳动争议案件' },
+                    { value: 'admin-trademark', label: '商标/专利/海事行政案件' },
+                    { value: 'admin-other', label: '其他行政案件' }
+                ];
+                caseTypes.forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type.value;
+                    option.textContent = type.label;
+                    subtypeSelect.appendChild(option);
+                });
+                amountDiv.style.display = 'block';
+            } else {
+                // 申请费类型
+                const applicationTypes = [
+                    { value: 'execution', label: '执行案件' },
+                    { value: '保全', label: '财产保全' },
+                    { value: 'payment', label: '支付令' },
+                    { value: 'public-notice', label: '公示催告' },
+                    { value: 'cancel-arbitration', label: '撤销仲裁裁决' },
+                    { value: 'bankruptcy', label: '破产案件' },
+                    { value: 'maritime-fund', label: '海事赔偿责任限制基金' },
+                    { value: 'maritime-order', label: '海事强制令' },
+                    { value: 'maritime-priority', label: '船舶优先权催告' },
+                    { value: 'maritime-registry', label: '海事债权登记' },
+                    { value: 'maritime-average', label: '共同海损理算' }
+                ];
+                applicationTypes.forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type.value;
+                    option.textContent = type.label;
+                    subtypeSelect.appendChild(option);
+                });
+                amountDiv.style.display = 'block';
+            }
+        }
+
+        // 诉讼费计算
+        function calculateLawsuitFee() {
+            const feeType = document.getElementById('lawsuit-fee-type').value;
+            const subtype = document.getElementById('lawsuit-subtype').value;
+            const amount = parseFloat(document.getElementById('lawsuit-fee-amount').value) || 0;
+            
+            let fee = 0;
+            let feeRange = null;
+
+            if (feeType === 'case-fee') {
+                // 案件受理费
+                switch (subtype) {
+                    case 'property':
+                        // 财产案件分段累计计算
+                        if (amount <= 10000) fee = 50;
+                        else if (amount <= 100000) fee = 50 + (amount - 10000) * 0.025;
+                        else if (amount <= 200000) fee = 2300 + (amount - 100000) * 0.02;
+                        else if (amount <= 500000) fee = 4300 + (amount - 200000) * 0.015;
+                        else if (amount <= 1000000) fee = 8800 + (amount - 500000) * 0.01;
+                        else if (amount <= 2000000) fee = 13800 + (amount - 1000000) * 0.009;
+                        else if (amount <= 5000000) fee = 22800 + (amount - 2000000) * 0.008;
+                        else if (amount <= 10000000) fee = 46800 + (amount - 5000000) * 0.007;
+                        else if (amount <= 20000000) fee = 81800 + (amount - 10000000) * 0.006;
+                        else fee = 141800 + (amount - 20000000) * 0.005;
+                        break;
+                        
+                    case 'divorce':
+                        // 离婚案件
+                        if (amount <= 200000) feeRange = [50, 300];
+                        else fee = 300 + (amount - 200000) * 0.005;
+                        break;
+                        
+                    case 'personality':
+                        // 人格权案件
+                        if (amount <= 50000) feeRange = [100, 500];
+                        else if (amount <= 100000) fee = 500 + (amount - 50000) * 0.01;
+                        else fee = 1000 + (amount - 100000) * 0.005;
+                        break;
+                        
+                    case 'other-non-property':
+                        // 其他非财产案件
+                        feeRange = [50, 100];
+                        break;
+                        
+                    case 'intellectual':
+                        // 知识产权案件
+                        if (amount <= 0) feeRange = [500, 1000];
+                        else fee = calculatePropertyFee(amount);
+                        break;
+                        
+                    case 'labor':
+                        // 劳动争议案件
+                        fee = 10;
+                        break;
+                        
+                    case 'admin-trademark':
+                        // 商标、专利、海事行政案件
+                        fee = 100;
+                        break;
+                        
+                    case 'admin-other':
+                        // 其他行政案件
+                        fee = 50;
+                        break;
+                }
+            } else {
+                // 申请费
+                switch (subtype) {
+                    case 'execution':
+                        // 执行案件
+                        if (amount <= 0) feeRange = [50, 500];
+                        else if (amount <= 10000) fee = 50;
+                        else if (amount <= 500000) fee = 50 + (amount - 10000) * 0.015;
+                        else if (amount <= 5000000) fee = 7400 + (amount - 500000) * 0.01;
+                        else if (amount <= 10000000) fee = 52400 + (amount - 5000000) * 0.005;
+                        else fee = 77400 + (amount - 10000000) * 0.001;
+                        break;
+                        
+                    case '保全':
+                        // 财产保全
+                        if (amount <= 1000) fee = 30;
+                        else if (amount <= 100000) fee = 30 + (amount - 1000) * 0.01;
+                        else fee = Math.min(1020, 5000); // 最多不超过5000元
+                        break;
+                        
+                    case 'payment':
+                        // 支付令（财产案件受理费标准的1/3）
+                        fee = Math.round(calculatePropertyFee(amount) / 3);
+                        break;
+                        
+                    case 'public-notice':
+                        // 公示催告
+                        fee = 100;
+                        break;
+                        
+                    case 'cancel-arbitration':
+                        // 撤销仲裁裁决或认定仲裁协议效力
+                        fee = 400;
+                        break;
+                        
+                    case 'bankruptcy':
+                        // 破产案件（按财产案件标准减半，最高不超过30万）
+                        fee = Math.min(Math.round(calculatePropertyFee(amount) / 2), 300000);
+                        break;
+                        
+                    case 'maritime-fund':
+                        // 海事赔偿责任限制基金
+                        feeRange = [1000, 10000];
+                        break;
+                        
+                    case 'maritime-order':
+                        // 海事强制令
+                        feeRange = [1000, 5000];
+                        break;
+                        
+                    case 'maritime-priority':
+                        // 船舶优先权催告
+                        feeRange = [1000, 5000];
+                        break;
+                        
+                    case 'maritime-registry':
+                        // 海事债权登记
+                        fee = 1000;
+                        break;
+                        
+                    case 'maritime-average':
+                        // 共同海损理算
+                        fee = 1000;
+                        break;
+                }
+            }
+
+            let result = '-';
+            if (feeRange) {
+                result = '¥' + feeRange[0].toLocaleString() + ' - ¥' + feeRange[1].toLocaleString();
+            } else if (fee > 0) {
+                result = '¥' + Math.round(fee).toLocaleString();
+            }
+
+            document.getElementById('lawsuit-fee-value').textContent = result;
+            document.getElementById('lawsuit-fee-result').classList.remove('hidden');
+        }
+
+        // 财产案件计算辅助函数
+        function calculatePropertyFee(amount) {
+            let fee = 0;
+            if (amount <= 10000) fee = 50;
+            else if (amount <= 100000) fee = 50 + (amount - 10000) * 0.025;
+            else if (amount <= 200000) fee = 2300 + (amount - 100000) * 0.02;
+            else if (amount <= 500000) fee = 4300 + (amount - 200000) * 0.015;
+            else if (amount <= 1000000) fee = 8800 + (amount - 500000) * 0.01;
+            else if (amount <= 2000000) fee = 13800 + (amount - 1000000) * 0.009;
+            else if (amount <= 5000000) fee = 22800 + (amount - 2000000) * 0.008;
+            else if (amount <= 10000000) fee = 46800 + (amount - 5000000) * 0.007;
+            else if (amount <= 20000000) fee = 81800 + (amount - 10000000) * 0.006;
+            else fee = 141800 + (amount - 20000000) * 0.005;
+            return fee;
+        }
+
+        // 切换利息/日期计算类型
+        function switchInterestDateType(type) {
+            const btnInterest = document.getElementById('btn-interest');
+            const btnDate = document.getElementById('btn-date');
+            const interestContent = document.getElementById('interest-content');
+            const dateContent = document.getElementById('date-content');
+            
+            if (type === 'interest') {
+                btnInterest.className = 'px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium';
+                btnDate.className = 'px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+                interestContent.classList.remove('hidden');
+                dateContent.classList.add('hidden');
+            } else {
+                btnInterest.className = 'px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+                btnDate.className = 'px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium';
+                interestContent.classList.add('hidden');
+                dateContent.classList.remove('hidden');
+            }
+        }
+        
+        // 当前选中的利率类型
+        let currentInterestRateType = 'yearly';
+        
+        // 选择利率类型
+        function selectInterestRateType(type) {
+            currentInterestRateType = type;
+            
+            const btnYearly = document.getElementById('btn-yearly');
+            const btnMonthly = document.getElementById('btn-monthly');
+            const btnDaily = document.getElementById('btn-daily');
+            
+            // 重置所有按钮样式
+            btnYearly.className = 'flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+            btnMonthly.className = 'flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+            btnDaily.className = 'flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+            
+            // 设置选中按钮样式为红色
+            if (type === 'yearly') {
+                btnYearly.className = 'flex-1 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium';
+            } else if (type === 'monthly') {
+                btnMonthly.className = 'flex-1 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium';
+            } else if (type === 'daily') {
+                btnDaily.className = 'flex-1 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium';
+            }
+        }
+        
+        // 添加时间段
+        let periodCount = 0;
+        function addInterestPeriod() {
+            periodCount++;
+            const container = document.getElementById('interest-periods-container');
+            const periodDiv = document.createElement('div');
+            periodDiv.className = 'bg-gray-50 p-3 rounded-lg mb-2';
+            periodDiv.innerHTML = `
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-700">时间段 ${periodCount}</span>
+                    <button onclick="removeInterestPeriod(this)" class="text-sm text-red-500 hover:text-red-700">删除</button>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <input type="date" class="period-start-date calculator-input px-3 py-1.5 border border-gray-300 rounded focus:outline-none text-sm">
+                    <input type="date" class="period-end-date calculator-input px-3 py-1.5 border border-gray-300 rounded focus:outline-none text-sm">
+                </div>
+                <div class="flex space-x-1 mb-2">
+                    <button onclick="selectPeriodRateType(this, 'yearly')" class="flex-1 px-2 py-1 bg-red-600 text-white rounded text-xs font-medium">年利率</button>
+                    <button onclick="selectPeriodRateType(this, 'monthly')" class="flex-1 px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs font-medium">月利率</button>
+                    <button onclick="selectPeriodRateType(this, 'daily')" class="flex-1 px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs font-medium">日利率</button>
+                </div>
+                <input type="number" class="period-rate calculator-input w-full px-3 py-1.5 border border-gray-300 rounded focus:outline-none text-sm" placeholder="利率值（%）" step="0.001">
+            `;
+            container.appendChild(periodDiv);
+        }
+        
+        // 选择时间段利率类型
+        function selectPeriodRateType(btn, type) {
+            const parentDiv = btn.parentElement;
+            const buttons = parentDiv.querySelectorAll('button');
+            
+            buttons.forEach(b => {
+                b.className = 'flex-1 px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs font-medium';
+            });
+            
+            btn.className = 'flex-1 px-2 py-1 bg-red-600 text-white rounded text-xs font-medium';
+            btn.dataset.type = type;
+        }
+        
+        // 删除时间段
+        function removeInterestPeriod(btn) {
+            btn.parentElement.parentElement.remove();
+        }
+        
+        // 计算两个日期之间的天数
+        function getDaysBetweenDates(startDate, endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diffTime = end - start;
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+        
+        // 获取有效年利率
+        function getEffectiveYearlyRate(rateType, rateValue) {
+            const rate = parseFloat(rateValue) || 0;
+            if (rateType === 'yearly') {
+                return rate;
+            } else if (rateType === 'monthly') {
+                return rate * 12;
+            } else if (rateType === 'daily') {
+                return rate * 365;
+            }
+            return 0;
+        }
+        
+        // 获取时间段的利率类型
+        function getPeriodRateType(periodDiv) {
+            const activeBtn = periodDiv.querySelector('.bg-red-600');
+            return activeBtn ? activeBtn.dataset.type || 'yearly' : 'yearly';
+        }
+        
+        // 利息计算
+        function calculateInterest() {
+            const principal = parseFloat(document.getElementById('interest-principal').value) || 0;
+            const startDate = document.getElementById('interest-start-date').value;
+            const endDate = document.getElementById('interest-end-date').value;
+            const rateValue = document.getElementById('interest-rate').value;
+            
+            // 检查日期是否填写
+            if (!startDate || !endDate) {
+                alert('请填写借款日期');
+                return;
+            }
+            
+            const totalDays = getDaysBetweenDates(startDate, endDate);
+            
+            // 获取时间段设置
+            const periodsContainer = document.getElementById('interest-periods-container');
+            const periodDivs = periodsContainer.querySelectorAll('.bg-gray-50');
+            
+            let totalInterest = 0;
+            
+            if (periodDivs.length > 0) {
+                // 使用多时间段利率计算
+                let lastEndDate = startDate;
+                
+                for (let index = 0; index < periodDivs.length; index++) {
+                    const periodDiv = periodDivs[index];
+                    const periodStart = periodDiv.querySelector('.period-start-date').value || lastEndDate;
+                    const periodEnd = periodDiv.querySelector('.period-end-date').value || endDate;
+                    const periodRateType = getPeriodRateType(periodDiv);
+                    const periodRate = periodDiv.querySelector('.period-rate').value;
+                    
+                    if (!periodStart || !periodRate) {
+                        alert(`请填写完整时间段 ${index + 1} 的信息`);
+                        return;
+                    }
+                    
+                    const periodDays = getDaysBetweenDates(periodStart, periodEnd);
+                    const yearlyRate = getEffectiveYearlyRate(periodRateType, periodRate);
+                    const interest = principal * (yearlyRate / 100) * (periodDays / 365);
+                    totalInterest += interest;
+                    
+                    lastEndDate = periodEnd;
+                }
+                
+                // 检查是否覆盖了整个时间段
+                if (lastEndDate < endDate) {
+                    const remainingDays = getDaysBetweenDates(lastEndDate, endDate);
+                    const yearlyRate = getEffectiveYearlyRate(currentInterestRateType, rateValue);
+                    const interest = principal * (yearlyRate / 100) * (remainingDays / 365);
+                    totalInterest += interest;
+                }
+            } else {
+                // 使用单一利率计算
+                const yearlyRate = getEffectiveYearlyRate(currentInterestRateType, rateValue);
+                totalInterest = principal * (yearlyRate / 100) * (totalDays / 365);
+            }
+            
+            document.getElementById('interest-value').textContent = '¥' + totalInterest.toFixed(2);
+            document.getElementById('interest-days-value').textContent = totalDays + ' 天';
+            document.getElementById('interest-result').classList.remove('hidden');
+        }
+
+        // 切换赔偿类型
+        function switchCompensationType(type) {
+            const btnPersonal = document.getElementById('btn-personal-injury');
+            const btnWork = document.getElementById('btn-work-injury');
+            const personalContent = document.getElementById('personal-injury-content');
+            const workContent = document.getElementById('work-injury-content');
+            
+            if (type === 'personal') {
+                btnPersonal.className = 'px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium';
+                btnWork.className = 'px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+                personalContent.classList.remove('hidden');
+                workContent.classList.add('hidden');
+            } else {
+                btnPersonal.className = 'px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+                btnWork.className = 'px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium';
+                personalContent.classList.add('hidden');
+                workContent.classList.remove('hidden');
+            }
+        }
+        
+        // 人身损害赔偿计算
+        function calculatePersonalInjury() {
+            const level = parseInt(document.getElementById('personal-injury-level').value);
+            const region = document.getElementById('personal-injury-region').value;
+            
+            const compensationBase = {
+                sichuan: 43233,
+                beijing: 81518,
+                shanghai: 84034,
+                guangdong: 63216
+            };
+            
+            const disabilityRate = 1.1 - level * 0.1;
+            const compensation = compensationBase[region] * 20 * disabilityRate;
+            
+            document.getElementById('personal-injury-value').textContent = '¥' + compensation.toLocaleString();
+            document.getElementById('personal-injury-result').classList.remove('hidden');
+        }
+        
+        // 工伤赔偿计算
+        function calculateWorkInjury() {
+            const level = parseInt(document.getElementById('work-injury-level').value);
+            const salary = parseFloat(document.getElementById('work-injury-salary').value) || 0;
+            
+            const injuryMultiplier = {
+                1: 27,
+                2: 25,
+                3: 23,
+                4: 21,
+                5: 18,
+                6: 16,
+                7: 13,
+                8: 11,
+                9: 9,
+                10: 7
+            };
+            
+            const compensation = salary * injuryMultiplier[level];
+            
+            document.getElementById('work-injury-value').textContent = '¥' + compensation.toLocaleString();
+            document.getElementById('work-injury-result').classList.remove('hidden');
+        }
+        
+        // 切换薪资计算类型
+        function switchSalaryType(type) {
+            const btnSocial = document.getElementById('btn-social');
+            const btnTax = document.getElementById('btn-tax');
+            const socialContent = document.getElementById('social-content');
+            const taxContent = document.getElementById('tax-content');
+            
+            if (type === 'social') {
+                btnSocial.className = 'px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium';
+                btnTax.className = 'px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+                socialContent.classList.remove('hidden');
+                taxContent.classList.add('hidden');
+            } else {
+                btnSocial.className = 'px-4 py-1.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors';
+                btnTax.className = 'px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium';
+                socialContent.classList.add('hidden');
+                taxContent.classList.remove('hidden');
+            }
+        }
+
+        // 社保计算
+        function calculateSocialInsurance() {
+            const base = parseFloat(document.getElementById('social-base').value) || 0;
+            const city = document.getElementById('social-city').value;
+            
+            const rates = {
+                chengdu: { personal: 0.105, company: 0.315 },
+                beijing: { personal: 0.102, company: 0.32 },
+                shanghai: { personal: 0.105, company: 0.31 },
+                guangzhou: { personal: 0.105, company: 0.305 }
+            };
+            
+            const personal = base * rates[city].personal;
+            const company = base * rates[city].company;
+            
+            document.getElementById('social-personal').textContent = '¥' + personal.toFixed(2);
+            document.getElementById('social-company').textContent = '¥' + company.toFixed(2);
+            document.getElementById('social-result').classList.remove('hidden');
+        }
+
+        // 个税计算器
+        function calculateTax() {
+            const income = parseFloat(document.getElementById('tax-income').value) || 0;
+            const insurance = parseFloat(document.getElementById('tax-insurance').value) || 0;
+            
+            const threshold = 5000; // 起征点
+            const taxable = Math.max(0, income - insurance - threshold);
+            
+            let tax = 0;
+            if (taxable <= 3000) tax = taxable * 0.03;
+            else if (taxable <= 12000) tax = taxable * 0.1 - 210;
+            else if (taxable <= 25000) tax = taxable * 0.2 - 1410;
+            else if (taxable <= 35000) tax = taxable * 0.25 - 2660;
+            else if (taxable <= 55000) tax = taxable * 0.3 - 4410;
+            else if (taxable <= 80000) tax = taxable * 0.35 - 7160;
+            else tax = taxable * 0.45 - 15160;
+            
+            document.getElementById('tax-value').textContent = '¥' + tax.toFixed(2);
+            document.getElementById('tax-result').classList.remove('hidden');
+        }
+
+        // 工伤赔偿计算器
+        function calculateInjury() {
+            const level = parseInt(document.getElementById('injury-level').value);
+            const salary = parseFloat(document.getElementById('injury-salary').value) || 0;
+            
+            const multipliers = {1: 27, 2: 25, 3: 23, 4: 21, 5: 18, 6: 16, 7: 13, 8: 11, 9: 9, 10: 7};
+            const compensation = salary * (multipliers[level] || 7);
+            
+            document.getElementById('injury-value').textContent = '¥' + compensation.toLocaleString();
+            document.getElementById('injury-result').classList.remove('hidden');
+        }
+
+        // 日期计算器
+        function calculateDays() {
+            const start = new Date(document.getElementById('date-start').value);
+            const end = new Date(document.getElementById('date-end').value);
+            
+            if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+                alert('请选择有效日期');
+                return;
+            }
+            
+            const diff = Math.abs(end - start);
+            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('date-value').textContent = days + ' 天';
+            document.getElementById('date-result').classList.remove('hidden');
+        }
+
+    </script>
+</body>
+</html>

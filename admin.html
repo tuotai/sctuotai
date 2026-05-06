@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新闻管理 - 拓泰律所</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>内容管理 - 拓泰律所</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -18,21 +18,8 @@
         }
     </script>
     <style>
-        .modal-overlay {
-            backdrop-filter: blur(4px);
-        }
-        .code-container {
-            max-height: 400px;
-            overflow: auto;
-        }
-        .code-container pre {
-            margin: 0;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-        .publish-btn {
-            animation: pulse 2s infinite;
-        }
+        .modal-overlay { backdrop-filter: blur(4px); }
+        .publish-btn { animation: pulse 2s infinite; }
         @keyframes pulse {
             0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
             50% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
@@ -40,142 +27,506 @@
     </style>
 </head>
 <body class="bg-gray-100">
+    <!-- 登录覆盖层 -->
+    <div id="login-overlay" class="fixed inset-0 bg-gray-900/80 flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-gradient-to-br from-red-700 to-red-800 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <span class="text-white font-bold text-xl">拓泰</span>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">内容管理</h2>
+                <p class="text-gray-500 mt-2">请输入密码登录</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                    <input type="password" id="login-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent" placeholder="请输入管理密码">
+                </div>
+                <button onclick="checkPassword()" class="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors font-medium">
+                    登录
+                </button>
+                <p id="login-error" class="text-red-500 text-sm text-center hidden">密码错误，请重试</p>
+            </div>
+        </div>
+    </div>
+
     <div class="min-h-screen flex">
-        <aside class="w-64 bg-white shadow-lg p-6 flex flex-col">
-            <div class="flex items-center space-x-3 mb-8">
+        <aside class="w-64 bg-white shadow-lg p-4 flex flex-col">
+            <div class="flex items-center space-x-3 mb-6">
                 <div class="w-10 h-10 bg-gradient-to-br from-red-700 to-red-800 rounded-lg flex items-center justify-center">
                     <span class="text-white font-bold text-sm">拓泰</span>
                 </div>
-                <span class="text-lg font-bold text-gray-800">新闻管理</span>
+                <span class="text-lg font-bold text-gray-800">内容管理</span>
             </div>
-            <nav class="flex-1 space-y-2">
-                <button onclick="showSection('list')" id="nav-list" class="w-full text-left px-4 py-3 bg-primary text-white rounded-lg flex items-center space-x-2">
-                    <i class="fa fa-list"></i>
-                    <span>新闻列表</span>
+            <nav class="flex-1 space-y-1 overflow-y-auto">
+                <div class="text-xs text-gray-400 uppercase tracking-wider mb-2 px-2">资讯</div>
+                <button onclick="showSection('news-list')" id="nav-news-list" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-newspaper w-5"></i><span>新闻列表</span>
                 </button>
-                <button onclick="showSection('add')" id="nav-add" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2 transition-colors">
-                    <i class="fa fa-plus-circle"></i>
-                    <span>添加新闻</span>
+                <button onclick="showSection('news-add')" id="nav-news-add" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-plus-circle w-5"></i><span>添加新闻</span>
                 </button>
-                <button onclick="showSection('settings')" id="nav-settings" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2 transition-colors">
-                    <i class="fa fa-cog"></i>
-                    <span>GitHub设置</span>
+
+                <div class="text-xs text-gray-400 uppercase tracking-wider mb-2 mt-4 px-2">专业领域</div>
+                <button onclick="showSection('service-list')" id="nav-service-list" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-briefcase w-5"></i><span>服务列表</span>
                 </button>
-                <button onclick="showSection('help')" id="nav-help" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2 transition-colors">
-                    <i class="fa fa-question-circle"></i>
-                    <span>使用帮助</span>
+                <button onclick="showSection('service-add')" id="nav-service-add" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-plus-circle w-5"></i><span>添加服务</span>
+                </button>
+
+                <div class="text-xs text-gray-400 uppercase tracking-wider mb-2 mt-4 px-2">专业律师</div>
+                <button onclick="showSection('lawyer-list')" id="nav-lawyer-list" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-users w-5"></i><span>律师列表</span>
+                </button>
+                <button onclick="showSection('lawyer-add')" id="nav-lawyer-add" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-user-plus w-5"></i><span>添加律师</span>
+                </button>
+
+                <div class="text-xs text-gray-400 uppercase tracking-wider mb-2 mt-4 px-2">案例展示</div>
+                <button onclick="showSection('case-list')" id="nav-case-list" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-folder-open w-5"></i><span>案例列表</span>
+                </button>
+                <button onclick="showSection('case-add')" id="nav-case-add" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-plus-circle w-5"></i><span>添加案例</span>
+                </button>
+
+                <div class="text-xs text-gray-400 uppercase tracking-wider mb-2 mt-4 px-2">拓泰党建</div>
+                <button onclick="showSection('party-list')" id="nav-party-list" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-flag w-5"></i><span>党建列表</span>
+                </button>
+                <button onclick="showSection('party-add')" id="nav-party-add" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-plus-circle w-5"></i><span>添加党建</span>
+                </button>
+
+                <div class="text-xs text-gray-400 uppercase tracking-wider mb-2 mt-4 px-2">系统</div>
+                <button onclick="showSection('settings')" id="nav-settings" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-cog w-5"></i><span>GitHub设置</span>
+                </button>
+                <button onclick="syncAllFromGitHub()" class="w-full text-left px-3 py-2 text-sm text-blue-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+                    <i class="fa fa-download w-5"></i><span>同步全部</span>
                 </button>
             </nav>
-            <div class="mt-auto pt-4 border-t">
+            <div class="mt-4 pt-4 border-t">
                 <p class="text-xs text-gray-400 text-center">四川拓泰律师事务所</p>
             </div>
         </aside>
 
-        <main class="flex-1 p-8">
-            <div id="section-list" class="section active">
-                <div class="flex items-center justify-between mb-6">
-                    <h1 class="text-2xl font-bold text-gray-800">新闻列表</h1>
-                    <div class="flex items-center space-x-3">
-                        <button onclick="syncFromGitHub()" class="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition-colors">
-                            <i class="fa fa-download"></i>
-                            <span>从 GitHub 同步</span>
+        <main class="flex-1 p-6 overflow-auto">
+            <!-- 图片上传区域 -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        <i class="fa fa-image mr-2 text-blue-600"></i>图片上传
+                    </h3>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <input type="file" id="image-file" accept="image/*" class="hidden" onchange="previewImage(this)">
+                        <button onclick="document.getElementById('image-file').click()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fa fa-upload mr-2"></i>选择图片
                         </button>
-                        <button onclick="saveToLocalFile()" class="bg-orange-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-orange-700 transition-colors">
-                            <i class="fa fa-save"></i>
-                            <span>💾 保存到本地文件</span>
-                        </button>
-                        <button onclick="publishToGitHub()" id="publish-btn" class="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-green-700 transition-colors">
-                            <i class="fa fa-rocket"></i>
-                            <span>发布新闻</span>
-                        </button>
-                        <button onclick="publishAllFiles()" id="publish-all-btn" class="bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-purple-700 transition-colors">
-                            <i class="fa fa-cloud-upload"></i>
-                            <span>同步全部文件</span>
-                        </button>
-                        <button onclick="showSection('add')" class="bg-primary text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-primary/90 transition-colors">
-                            <i class="fa fa-plus"></i>
-                            <span>添加新闻</span>
-                        </button>
+                        <span id="image-name" class="text-gray-600 text-sm"></span>
                     </div>
-                </div>
-
-                <div id="publish-status" class="hidden mb-4 p-4 rounded-lg">
-                </div>
-
-                <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">标题</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">分类</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">日期</th>
-                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="news-table-body" class="divide-y divide-gray-200">
-                            </tbody>
-                        </table>
+                    <div id="image-preview" class="hidden">
+                        <img id="preview-img" class="max-h-40 rounded-lg border border-gray-300">
+                    </div>
+                    <button id="upload-btn" onclick="uploadImage()" class="hidden bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                        <i class="fa fa-cloud-upload mr-2"></i>上传到 GitHub
+                    </button>
+                    <div id="upload-result" class="hidden">
+                        <p class="text-green-600 text-sm mb-2"><i class="fa fa-check-circle mr-1"></i>上传成功！图片链接：</p>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="image-url" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm" readonly>
+                            <button onclick="copyImageUrl()" class="bg-gray-200 px-3 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                                <i class="fa fa-copy"></i>复制
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div id="section-add" class="section hidden">
-                <div class="max-w-2xl mx-auto">
-                    <div class="flex items-center justify-between mb-6">
-                        <h1 class="text-2xl font-bold text-gray-800">添加新闻</h1>
-                        <button onclick="showSection('list')" class="text-gray-500 hover:text-gray-700">
-                            <i class="fa fa-times text-2xl"></i>
+            <div id="publish-status" class="hidden mb-4 p-4 rounded-lg"></div>
+
+            <div id="section-news-list" class="section hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">新闻列表</h1>
+                    <div class="flex space-x-3">
+                        <button onclick="publishAllFiles()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            <i class="fa fa-upload mr-2"></i>发布全部
+                        </button>
+                        <button onclick="showSection('news-add')" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fa fa-plus mr-2"></i>添加新闻
                         </button>
                     </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">标题</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">分类</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">日期</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="news-table-body" class="divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
 
-                    <div class="bg-white rounded-xl shadow-md p-6 space-y-6">
+            <div id="section-news-add" class="section hidden">
+                <div class="max-w-2xl mx-auto">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-6">添加新闻</h1>
+                    <div class="bg-white rounded-xl shadow-md p-6 space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">标题 <span class="text-red-500">*</span></label>
-                            <input type="text" id="edit-title" placeholder="请输入新闻标题" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            <input type="text" id="news-title" placeholder="请输入新闻标题" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
                         </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">分类 <span class="text-red-500">*</span></label>
-                            <select id="edit-category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                                <option value="业务活动">业务活动</option>
-                                <option value="荣誉奖励">荣誉奖励</option>
-                                <option value="学术研究">学术研究</option>
-                                <option value="人文生活">人文生活</option>
-                            </select>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">分类</label>
+                                <select id="news-category" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                                    <option value="业务活动">业务活动</option>
+                                    <option value="荣誉奖励">荣誉奖励</option>
+                                    <option value="学术研究">学术研究</option>
+                                    <option value="人文生活">人文生活</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">日期</label>
+                                <input type="date" id="news-date" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            </div>
                         </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">日期 <span class="text-red-500">*</span></label>
-                            <input type="date" id="edit-date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                        </div>
-
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">图片链接</label>
-                            <input type="text" id="edit-image" placeholder="https://picsum.photos/seed/xxx/800/400" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                            <p class="text-xs text-gray-400 mt-1">
-                                <strong>图片生成方法：</strong>使用 https://picsum.photos/seed/关键词/800/400
-                                <br>例如：https://picsum.photos/seed/meeting/800/400
-                            </p>
+                            <input type="text" id="news-image" placeholder="https://picsum.photos/seed/xxx/800/400" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
                         </div>
-
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">摘要</label>
-                            <textarea id="edit-summary" rows="3" placeholder="请输入新闻摘要（可选）" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                            <textarea id="news-summary" rows="2" placeholder="请输入新闻摘要" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
                         </div>
-
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">微信文章链接 <span class="text-red-500">*</span></label>
-                            <input type="text" id="edit-wechatUrl" placeholder="https://mp.weixin.qq.com/s/..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">微信文章链接</label>
+                            <input type="text" id="news-wechatUrl" placeholder="https://mp.weixin.qq.com/s/..." class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
                         </div>
-
                         <div class="flex space-x-4 pt-4">
-                            <button onclick="saveNews()" class="flex-1 bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-                                保存新闻
-                            </button>
-                            <button onclick="clearForm()" class="px-6 py-3 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors">
-                                重置
-                            </button>
+                            <button onclick="saveNews()" class="flex-1 bg-primary text-white py-3 rounded-lg hover:bg-primary/90">保存</button>
+                            <button onclick="clearNewsForm()" class="px-6 py-3 border rounded-lg hover:bg-gray-50">重置</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-service-list" class="section hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">专业领域列表</h1>
+                    <div class="flex space-x-3">
+                        <button onclick="publishAllFiles()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            <i class="fa fa-upload mr-2"></i>发布全部
+                        </button>
+                        <button onclick="showSection('service-add')" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fa fa-plus mr-2"></i>添加服务
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">名称</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">图标</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">描述</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="service-table-body" class="divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="section-service-add" class="section hidden">
+                <div class="max-w-2xl mx-auto">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-6">添加专业领域</h1>
+                    <div class="bg-white rounded-xl shadow-md p-6 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">名称 <span class="text-red-500">*</span></label>
+                            <input type="text" id="service-name" placeholder="如：民事诉讼" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">图标类名</label>
+                            <input type="text" id="service-icon" placeholder="如：fa-gavel" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            <p class="text-xs text-gray-400 mt-1">参考 Font Awesome 图标</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">描述</label>
+                            <textarea id="service-description" rows="2" placeholder="请输入服务描述" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">服务详情（每行一条）</label>
+                            <textarea id="service-details" rows="4" placeholder="合同纠纷诉讼&#10;侵权责任纠纷" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div class="flex space-x-4 pt-4">
+                            <button onclick="saveService()" class="flex-1 bg-primary text-white py-3 rounded-lg hover:bg-primary/90">保存</button>
+                            <button onclick="clearServiceForm()" class="px-6 py-3 border rounded-lg hover:bg-gray-50">重置</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-lawyer-list" class="section hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">专业律师列表</h1>
+                    <div class="flex space-x-3">
+                        <button onclick="publishAllFiles()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            <i class="fa fa-upload mr-2"></i>发布全部
+                        </button>
+                        <button onclick="showSection('lawyer-add')" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fa fa-plus mr-2"></i>添加律师
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">姓名</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">职位</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">邮箱</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lawyer-table-body" class="divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="section-lawyer-add" class="section hidden">
+                <div class="max-w-2xl mx-auto">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-6">添加律师</h1>
+                    <div class="bg-white rounded-xl shadow-md p-6 space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">姓名 <span class="text-red-500">*</span></label>
+                                <input type="text" id="lawyer-name" placeholder="律师姓名" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">职位</label>
+                                <input type="text" id="lawyer-title" placeholder="如：主任律师" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">照片链接</label>
+                            <input type="text" id="lawyer-photo" placeholder="https://picsum.photos/seed/lawyer1/400/500" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">邮箱</label>
+                                <input type="email" id="lawyer-email" placeholder="email@example.com" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">电话</label>
+                                <input type="text" id="lawyer-contact" placeholder="13800138000" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">个人简介</label>
+                            <textarea id="lawyer-introduction" rows="3" placeholder="请输入律师简介" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">专业领域详情（每行一个，详情页展示）</label>
+                            <textarea id="lawyer-expertise" rows="3" placeholder="企业法律顾问服务&#10;房地产开发与交易&#10;建设工程合同纠纷" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">执业经历（每行一个，详情页展示）</label>
+                            <textarea id="lawyer-experience" rows="3" placeholder="2010年-至今：四川拓泰律师事务所&#10;2008年-2010年：某律所律师" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">律协任职（每行一个）</label>
+                            <textarea id="lawyer-bar-association" rows="3" placeholder="四川省律师协会理事&#10;成都市律师协会常务理事" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">社会任职（每行一个）</label>
+                            <textarea id="lawyer-social-roles" rows="3" placeholder="某大学法学院客座教授&#10;某仲裁委员会仲裁员" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">代表案例（每行一个）</label>
+                            <textarea id="lawyer-cases" rows="3" placeholder="代理某建设工程合同纠纷案，涉及金额超过2亿元&#10;为某知名企业提供系列民事诉讼代理服务" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">所获荣誉（每行一个）</label>
+                            <textarea id="lawyer-awards" rows="3" placeholder="2020年：年度优秀律师&#10;2018年：优秀党员律师" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div class="flex space-x-4 pt-4">
+                            <button onclick="saveLawyer()" class="flex-1 bg-primary text-white py-3 rounded-lg hover:bg-primary/90">保存</button>
+                            <button onclick="clearLawyerForm()" class="px-6 py-3 border rounded-lg hover:bg-gray-50">重置</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-case-list" class="section hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">案例展示列表</h1>
+                    <div class="flex space-x-3">
+                        <button onclick="publishAllFiles()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            <i class="fa fa-upload mr-2"></i>发布全部
+                        </button>
+                        <button onclick="showSection('case-add')" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fa fa-plus mr-2"></i>添加案例
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">标题</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">分类</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">日期</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="case-table-body" class="divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="section-case-add" class="section hidden">
+                <div class="max-w-2xl mx-auto">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-6">添加案例</h1>
+                    <div class="bg-white rounded-xl shadow-md p-6 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">标题 <span class="text-red-500">*</span></label>
+                            <input type="text" id="case-title" placeholder="如：某大型企业并购重组项目" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">分类</label>
+                                <select id="case-category" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                                    <option value="企业法律服务">企业法律服务</option>
+                                    <option value="知识产权">知识产权</option>
+                                    <option value="建设工程">建设工程</option>
+                                    <option value="金融证券">金融证券</option>
+                                    <option value="行政法律">行政法律</option>
+                                    <option value="刑事辩护">刑事辩护</option>
+                                    <option value="房地产">房地产</option>
+                                    <option value="劳动争议">劳动争议</option>
+                                    <option value="婚姻家事">婚姻家事</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">日期</label>
+                                <input type="date" id="case-date" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">图片链接</label>
+                            <input type="text" id="case-image" placeholder="https://picsum.photos/seed/case1/800/500" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">结果</label>
+                            <input type="text" id="case-result" placeholder="如：胜诉" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">摘要</label>
+                            <textarea id="case-summary" rows="2" placeholder="请输入案例摘要" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">详细描述</label>
+                            <textarea id="case-description" rows="4" placeholder="请输入案例详细描述" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">客户评价</label>
+                            <textarea id="case-clientComment" rows="2" placeholder="如：专业的团队帮助我们成功完成了复杂的并购交易" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">客户姓名</label>
+                                <input type="text" id="case-clientName" placeholder="如：赵总" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">客户职位</label>
+                                <input type="text" id="case-clientTitle" placeholder="如：集团公司CEO" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">标签（每行一个）</label>
+                            <textarea id="case-tags" rows="2" placeholder="如：企业法律&#10;并购重组" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div class="flex space-x-4 pt-4">
+                            <button onclick="saveCase()" class="flex-1 bg-primary text-white py-3 rounded-lg hover:bg-primary/90">保存</button>
+                            <button onclick="clearCaseForm()" class="px-6 py-3 border rounded-lg hover:bg-gray-50">重置</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-party-list" class="section hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">拓泰党建列表</h1>
+                    <div class="flex space-x-3">
+                        <button onclick="publishAllFiles()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            <i class="fa fa-upload mr-2"></i>发布全部
+                        </button>
+                        <button onclick="showSection('party-add')" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fa fa-plus mr-2"></i>添加党建
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">标题</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">分类</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">日期</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="party-table-body" class="divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="section-party-add" class="section hidden">
+                <div class="max-w-2xl mx-auto">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-6">添加党建活动</h1>
+                    <div class="bg-white rounded-xl shadow-md p-6 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">标题 <span class="text-red-500">*</span></label>
+                            <input type="text" id="party-title" placeholder="如：党支部召开党员大会" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">分类</label>
+                                <select id="party-category" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                                    <option value="党建活动">党建活动</option>
+                                    <option value="党员风采">党员风采</option>
+                                    <option value="学习园地">学习园地</option>
+                                    <option value="工作动态">工作动态</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">日期</label>
+                                <input type="date" id="party-date" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">图片链接</label>
+                            <input type="text" id="party-image" placeholder="https://picsum.photos/seed/party1/800/500" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">摘要</label>
+                            <textarea id="party-summary" rows="2" placeholder="请输入活动摘要" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">详细内容</label>
+                            <textarea id="party-content" rows="4" placeholder="请输入活动详细内容" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
+                        </div>
+                        <div class="flex space-x-4 pt-4">
+                            <button onclick="saveParty()" class="flex-1 bg-primary text-white py-3 rounded-lg hover:bg-primary/90">保存</button>
+                            <button onclick="clearPartyForm()" class="px-6 py-3 border rounded-lg hover:bg-gray-50">重置</button>
                         </div>
                     </div>
                 </div>
@@ -184,816 +535,873 @@
             <div id="section-settings" class="section hidden">
                 <div class="max-w-2xl mx-auto">
                     <h1 class="text-2xl font-bold text-gray-800 mb-6">GitHub 设置</h1>
-
-                    <div class="bg-white rounded-xl shadow-md p-6 space-y-6">
+                    <div class="bg-white rounded-xl shadow-md p-6 space-y-4">
                         <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-r-lg">
-                            <p class="text-yellow-800">
-                                <i class="fa fa-exclamation-triangle mr-2"></i>
-                                <strong>首次使用需要配置：</strong>请先在 GitHub 创建 Personal Access Token
-                            </p>
+                            <p class="text-yellow-800 text-sm"><i class="fa fa-exclamation-triangle mr-2"></i><strong>首次使用需要配置：</strong>请先在 GitHub 创建 Personal Access Token</p>
                         </div>
-
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">GitHub Token <span class="text-red-500">*</span></label>
-                            <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                            <p class="text-xs text-gray-400 mt-1">
-                                <a href="https://github.com/settings/tokens" target="_blank" class="text-blue-500 hover:underline">点击此处创建 Token →</a>
-                                需要勾选 <strong>repo</strong> 权限
-                            </p>
+                            <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
                         </div>
-
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">仓库所有者 (Owner) <span class="text-red-500">*</span></label>
-                            <input type="text" id="gh-owner" placeholder="your-github-username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                            <p class="text-xs text-gray-400 mt-1">您的 GitHub 用户名</p>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">仓库所有者 (Owner)</label>
+                            <input type="text" id="gh-owner" placeholder="your-github-username" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
                         </div>
-
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">仓库名称 (Repo) <span class="text-red-500">*</span></label>
-                            <input type="text" id="gh-repo" placeholder="your-repo-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                            <p class="text-xs text-gray-400 mt-1">存放网站代码的仓库名称</p>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">仓库名称 (Repo)</label>
+                            <input type="text" id="gh-repo" placeholder="your-repo-name" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
                         </div>
-
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">分支 (Branch)</label>
-                            <input type="text" id="gh-branch" value="main" placeholder="main" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                            <p class="text-xs text-gray-400 mt-1">默认为 main</p>
+                            <input type="text" id="gh-branch" value="main" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
                         </div>
-
                         <div class="flex space-x-4 pt-4">
-                            <button onclick="saveGitHubSettings()" class="flex-1 bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-                                保存设置
-                            </button>
-                            <button onclick="testGitHubConnection()" class="px-6 py-3 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors">
-                                测试连接
-                            </button>
+                            <button onclick="saveGitHubSettings()" class="flex-1 bg-primary text-white py-3 rounded-lg hover:bg-primary/90">保存设置</button>
+                            <button onclick="testGitHubConnection()" class="px-6 py-3 border rounded-lg hover:bg-gray-50">测试连接</button>
                         </div>
-
-                        <div id="settings-status" class="hidden p-4 rounded-lg">
-                        </div>
-                    </div>
-
-                    <div class="mt-6 bg-blue-50 rounded-xl p-6">
-                        <h3 class="font-bold text-blue-800 mb-3"><i class="fa fa-question-circle mr-2"></i>如何获取 GitHub Token？</h3>
-                        <ol class="list-decimal list-inside space-y-2 text-blue-700 text-sm">
-                            <li>登录 GitHub，点击右上角头像 → <strong>Settings</strong></li>
-                            <li>左侧底部点击 <strong>Developer settings</strong></li>
-                            <li>点击 <strong>Personal access tokens</strong> → <strong>Tokens (classic)</strong></li>
-                            <li>点击 <strong>Generate new token (classic)</strong></li>
-                            <li>填写 Note，选择 <strong>No expiration</strong></li>
-                            <li>勾选 ✅ <strong>repo</strong>（全部勾选）</li>
-                            <li>点击 <strong>Generate token</strong> 并复制</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-
-            <div id="section-help" class="section hidden">
-                <div class="max-w-4xl mx-auto">
-                    <h1 class="text-2xl font-bold text-gray-800 mb-6">📖 详细操作指南</h1>
-
-                    <div class="space-y-6">
-                        <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
-                            <p class="text-green-800 font-medium">
-                                <i class="fa fa-check-circle mr-2"></i>
-                                现在您可以一键发布新闻了！配置好 GitHub 设置后，点击"🚀 一键发布"按钮即可自动更新网站。
-                            </p>
-                        </div>
-
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                                <span class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm mr-3">1</span>
-                                首次配置 GitHub 设置
-                            </h2>
-                            <ol class="list-decimal list-inside space-y-3 text-gray-600 ml-11">
-                                <li>点击左侧菜单 <strong>"GitHub设置"</strong></li>
-                                <li>按照页面说明创建 GitHub Token</li>
-                                <li>填写 Token、仓库所有者、仓库名称</li>
-                                <li>点击 <strong>"保存设置"</strong></li>
-                                <li>点击 <strong>"测试连接"</strong> 确保配置正确</li>
-                            </ol>
-                        </div>
-
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                                <span class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm mr-3">2</span>
-                                添加/编辑新闻
-                            </h2>
-                            <ol class="list-decimal list-inside space-y-3 text-gray-600 ml-11">
-                                <li>点击 <strong>"添加新闻"</strong> 按钮</li>
-                                <li>填写表单内容（标题、分类、日期等）</li>
-                                <li>点击 <strong>"保存新闻"</strong></li>
-                                <li>数据会保存在浏览器本地</li>
-                            </ol>
-                        </div>
-
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                                <span class="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm mr-3">3</span>
-                                🚀 一键发布（核心功能）
-                            </h2>
-                            <ol class="list-decimal list-inside space-y-3 text-gray-600 ml-11">
-                                <li>返回<strong>"新闻列表"</strong>页面</li>
-                                <li>点击右上角巨大的绿色按钮 <strong>"🚀 一键发布"</strong></li>
-                                <li>系统会自动：
-                                    <ul class="list-disc list-inside ml-6 mt-2 space-y-1 text-gray-500">
-                                        <li>将新闻数据更新到 <code class="bg-gray-100 px-1 rounded">js/news-data.js</code></li>
-                                        <li>提交到您的 GitHub 仓库</li>
-                                        <li>Netlify 会自动检测并重新部署网站</li>
-                                    </ul>
-                                </li>
-                                <li>等待 1-3 分钟，网站就会显示最新内容</li>
-                            </ol>
-                        </div>
-
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                                <span class="w-8 h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center text-sm mr-3">!</span>
-                                分类说明
-                            </h2>
-                            <div class="grid grid-cols-2 gap-4 ml-11">
-                                <div class="p-3 bg-blue-50 rounded-lg">
-                                    <strong class="text-blue-800">业务活动</strong>
-                                    <p class="text-sm text-blue-600 mt-1">律所业务相关的活动、合作、会议等</p>
-                                </div>
-                                <div class="p-3 bg-yellow-50 rounded-lg">
-                                    <strong class="text-yellow-800">荣誉奖励</strong>
-                                    <p class="text-sm text-yellow-600 mt-1">律所及律师获得的荣誉、表彰等</p>
-                                </div>
-                                <div class="p-3 bg-green-50 rounded-lg">
-                                    <strong class="text-green-800">学术研究</strong>
-                                    <p class="text-sm text-green-600 mt-1">法律研究、专业文章、出版著作等</p>
-                                </div>
-                                <div class="p-3 bg-purple-50 rounded-lg">
-                                    <strong class="text-purple-800">人文生活</strong>
-                                    <p class="text-sm text-purple-600 mt-1">律所文化、团队建设、员工生活等</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <h2 class="text-xl font-bold text-gray-800 mb-4">🔧 故障排除</h2>
-                            <div class="space-y-3">
-                                <div class="p-3 bg-gray-50 rounded-lg">
-                                    <p class="font-medium text-gray-800">发布失败？</p>
-                                    <p class="text-sm text-gray-600 mt-1">请检查 GitHub 设置是否正确，Token 是否有 repo 权限</p>
-                                </div>
-                                <div class="p-3 bg-gray-50 rounded-lg">
-                                    <p class="font-medium text-gray-800">网站没有更新？</p>
-                                    <p class="text-sm text-gray-600 mt-1">Netlify 需要 1-3 分钟重新部署，请稍等后刷新页面</p>
-                                </div>
-                            </div>
-                        </div>
+                        <div id="settings-status" class="hidden p-4 rounded-lg"></div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <div id="edit-modal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 p-6">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-gray-800">编辑新闻</h2>
-                <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
-                    <i class="fa fa-times text-xl"></i>
-                </button>
-            </div>
-            <input type="hidden" id="edit-id">
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">标题</label>
-                    <input type="text" id="modal-title" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">分类</label>
-                    <select id="modal-category" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                        <option value="业务活动">业务活动</option>
-                        <option value="荣誉奖励">荣誉奖励</option>
-                        <option value="学术研究">学术研究</option>
-                        <option value="人文生活">人文生活</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">日期</label>
-                    <input type="date" id="modal-date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">图片链接</label>
-                    <input type="text" id="modal-image" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">摘要</label>
-                    <textarea id="modal-summary" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none"></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">微信链接</label>
-                    <input type="text" id="modal-wechatUrl" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
-                </div>
-                <div class="flex space-x-3 pt-4">
-                    <button onclick="updateNews()" class="flex-1 bg-primary text-white py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-                        保存修改
-                    </button>
-                    <button onclick="closeEditModal()" class="px-6 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors">
-                        取消
-                    </button>
-                </div>
+    <div id="delete-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/50" onclick="closeDeleteModal()"></div>
+        <div class="relative bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">确认删除</h3>
+            <p class="text-gray-600 mb-6">确定要删除这条记录吗？此操作不可撤销。</p>
+            <div class="flex space-x-4">
+                <button onclick="confirmDelete()" class="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">删除</button>
+                <button onclick="closeDeleteModal()" class="flex-1 border border-gray-300 text-gray-600 py-2 rounded-lg hover:bg-gray-50">取消</button>
             </div>
         </div>
     </div>
 
-    <div id="delete-modal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-md mx-4 p-6">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fa fa-trash text-red-500 text-2xl"></i>
-                </div>
-                <h2 class="text-xl font-bold text-gray-800 mb-2">确认删除</h2>
-                <p class="text-gray-600 mb-6">确定要删除这篇新闻吗？</p>
-                <div class="flex space-x-3">
-                    <button onclick="confirmDelete()" class="flex-1 bg-red-500 text-white py-2 rounded-lg font-medium hover:bg-red-600 transition-colors">
-                        确认删除
-                    </button>
-                    <button onclick="closeDeleteModal()" class="flex-1 border border-gray-300 text-gray-600 py-2 rounded-lg hover:bg-gray-50 transition-colors">
-                        取消
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="toast" class="fixed bottom-6 right-6 px-6 py-3 bg-gray-800 text-white rounded-lg shadow-lg opacity-0 transition-opacity duration-300 z-50">
+    <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300" style="opacity: 0;">
         <span id="toast-message"></span>
     </div>
 
-    <div id="loading-overlay" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-xl p-8 text-center">
-            <div class="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
-            <p class="text-gray-700 font-medium" id="loading-message">正在发布...</p>
-        </div>
-    </div>
+    <script src="js/news-data.js?v=1"></script>
+    <script src="js/service-data.js?v=1"></script>
+    <script src="js/lawyer-data.js?v=3"></script>
+    <script src="js/case-data.js?v=1"></script>
+    <script src="js/party-data.js?v=1"></script>
 
-    <script src="js/news-data.js"></script>
     <script>
-        let deletingId = null;
+        // 全局变量声明 - 使用独特名称避免与全局属性冲突
+        let newsArticles = [];
+        let serviceList = [];
+        let lawyerList = [];
+        let caseList = [];
+        let partyActivities = [];
         let githubConfig = null;
+        let deletingId = null;
+        let deletingType = null;
+        let editingNewsId = null;
+        let editingServiceId = null;
+        let editingLawyerId = null;
+        let editingCaseId = null;
+        let editingPartyId = null;
+
+        // 管理员密码（请修改为您自己的密码）
+        const ADMIN_PASSWORD = 'Tuotai688131';
+
+        // 密码验证函数
+        function checkPassword() {
+            const input = document.getElementById('login-password').value;
+            const error = document.getElementById('login-error');
+            
+            if (input === ADMIN_PASSWORD) {
+                document.getElementById('login-overlay').style.display = 'none';
+                error.classList.add('hidden');
+            } else {
+                error.classList.remove('hidden');
+                document.getElementById('login-password').value = '';
+            }
+        }
+
+        // 按回车键登录
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('login-password').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+        });
+        
+        // 初始化数据 - 优先从 localStorage 加载，其次从外部文件
+        function initializeData() {
+            try {
+                // 优先从 localStorage 加载
+                const storedNews = localStorage.getItem('newsData');
+                const storedService = localStorage.getItem('serviceData');
+                const storedLawyer = localStorage.getItem('lawyerData');
+                const storedCase = localStorage.getItem('caseData');
+                const storedParty = localStorage.getItem('partyData');
+
+                newsArticles = storedNews ? JSON.parse(storedNews) :
+                    (typeof window.newsData !== 'undefined' && window.newsData !== null ? window.newsData : []);
+                serviceList = storedService ? JSON.parse(storedService) :
+                    (typeof window.serviceData !== 'undefined' && window.serviceData !== null ? window.serviceData : []);
+                caseList = storedCase ? JSON.parse(storedCase) :
+                    (typeof window.caseData !== 'undefined' && window.caseData !== null ? window.caseData : []);
+
+                // 无论数据来自哪里，都进行统一的格式转换
+                let rawLawyers = [];
+                if (storedLawyer) {
+                    rawLawyers = JSON.parse(storedLawyer);
+                } else if (typeof window.lawyerData !== 'undefined' && window.lawyerData !== null) {
+                    rawLawyers = window.lawyerData;
+                }
+                
+                // 统一转换格式，确保所有字段都是正确的类型
+                lawyerList = rawLawyers.map(l => ({
+                    ...l,
+                    expertise: Array.isArray(l.expertise) ? l.expertise : (l.expertise ? [l.expertise] : []),
+                    experience: Array.isArray(l.experience) ? l.experience : (l.experience ? [l.experience] : []),
+                    barAssociation: Array.isArray(l.barAssociation) ? l.barAssociation : [],
+                    socialRoles: Array.isArray(l.socialRoles) ? l.socialRoles : [],
+                    cases: Array.isArray(l.cases) ? l.cases : [],
+                    awards: Array.isArray(l.awards) ? l.awards : []
+                }));
+
+                // 优先从数据文件加载最新数据
+                partyActivities = (typeof window.partyData !== 'undefined' && window.partyData !== null ? window.partyData : []);
+
+                console.log('数据初始化完成:');
+                console.log('新闻:', newsArticles.length);
+                console.log('服务:', serviceList.length);
+                console.log('律师:', lawyerList.length);
+                console.log('案例:', caseList.length);
+                console.log('党建:', partyActivities.length);
+            } catch (e) {
+                console.error('数据初始化失败:', e);
+                lawyerList = typeof window.lawyerData !== 'undefined' && window.lawyerData !== null ? window.lawyerData : [];
+            }
+        }
 
         function loadGitHubConfig() {
             const saved = localStorage.getItem('githubConfig');
             if (saved) {
-                githubConfig = JSON.parse(saved);
-                document.getElementById('gh-token').value = githubConfig.token || '';
-                document.getElementById('gh-owner').value = githubConfig.owner || '';
-                document.getElementById('gh-repo').value = githubConfig.repo || '';
-                document.getElementById('gh-branch').value = githubConfig.branch || 'main';
+                try {
+                    githubConfig = JSON.parse(saved);
+                    document.getElementById('gh-token').value = githubConfig.token || '';
+                    document.getElementById('gh-owner').value = githubConfig.owner || '';
+                    document.getElementById('gh-repo').value = githubConfig.repo || '';
+                    document.getElementById('gh-branch').value = githubConfig.branch || 'main';
+                } catch (e) {}
             }
         }
 
         function saveGitHubSettings() {
-            const token = document.getElementById('gh-token').value.trim();
-            const owner = document.getElementById('gh-owner').value.trim();
-            const repo = document.getElementById('gh-repo').value.trim();
-            const branch = document.getElementById('gh-branch').value.trim() || 'main';
-
-            if (!token || !owner || !repo) {
-                showStatus('settings-status', 'error', '请填写所有必填字段');
-                return;
-            }
-
-            githubConfig = { token, owner, repo, branch };
+            githubConfig = {
+                token: document.getElementById('gh-token').value.trim(),
+                owner: document.getElementById('gh-owner').value.trim(),
+                repo: document.getElementById('gh-repo').value.trim(),
+                branch: document.getElementById('gh-branch').value.trim() || 'main'
+            };
             localStorage.setItem('githubConfig', JSON.stringify(githubConfig));
-            showStatus('settings-status', 'success', '设置已保存！');
+            showToast('设置已保存');
         }
 
         async function testGitHubConnection() {
-            if (!githubConfig) {
-                showStatus('settings-status', 'error', '请先保存设置');
-                return;
-            }
-
-            showLoading('正在测试连接...');
-
+            if (!githubConfig || !githubConfig.token) { showToast('请先填写 GitHub Token'); return; }
             try {
                 const response = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}`, {
-                    headers: {
-                        'Authorization': `token ${githubConfig.token}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
+                    headers: { 'Authorization': `token ${githubConfig.token}` }
                 });
-
                 if (response.ok) {
-                    const data = await response.json();
-                    showStatus('settings-status', 'success', `连接成功！仓库: ${data.full_name}`);
-                } else if (response.status === 401) {
-                    showStatus('settings-status', 'error', 'Token 无效，请检查 Token 是否正确');
-                } else if (response.status === 404) {
-                    showStatus('settings-status', 'error', '仓库不存在，请检查 owner 和 repo 是否正确');
+                    document.getElementById('settings-status').className = 'p-4 rounded-lg bg-green-100 text-green-800';
+                    document.getElementById('settings-status').textContent = '连接成功！';
                 } else {
-                    showStatus('settings-status', 'error', `连接失败: ${response.status}`);
+                    document.getElementById('settings-status').className = 'p-4 rounded-lg bg-red-100 text-red-800';
+                    document.getElementById('settings-status').textContent = '连接失败：' + response.status;
                 }
             } catch (error) {
-                showStatus('settings-status', 'error', `连接错误: ${error.message}`);
-            } finally {
-                hideLoading();
+                document.getElementById('settings-status').className = 'p-4 rounded-lg bg-red-100 text-red-800';
+                document.getElementById('settings-status').textContent = '连接失败';
             }
         }
 
-        async function publishToGitHub() {
-            if (!githubConfig) {
-                showStatus('publish-status', 'error', '请先配置 GitHub 设置');
-                showSection('settings');
-                return;
-            }
-
-            showLoading('正在准备发布...');
-
-            try {
-                const filePath = 'js/news-data.js';
-                const content = generateNewsDataJS();
-                const sha = await getFileSHA(filePath);
-
-                showLoading('正在上传到 GitHub...');
-
-                const response = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${filePath}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${githubConfig.token}`,
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/vnd.github.v3+json'
-                    },
-                    body: JSON.stringify({
-                        message: `📰 更新新闻数据 - ${new Date().toLocaleString('zh-CN')}`,
-                        content: btoa(unescape(encodeURIComponent(content))),
-                        sha: sha,
-                        branch: githubConfig.branch
-                    })
-                });
-
-                if (response.ok) {
-                    showStatus('publish-status', 'success', '🎉 发布成功！网站将在 1-3 分钟内自动更新！');
-                    hideLoading();
-                    showToast('发布成功！');
-                } else {
-                    const error = await response.json();
-                    throw new Error(error.message || '发布失败');
-                }
-            } catch (error) {
-                hideLoading();
-                if (error.message.includes('404')) {
-                    showStatus('publish-status', 'error', '文件获取失败，请确保 js/news-data.js 文件存在于仓库中');
-                } else {
-                    showStatus('publish-status', 'error', `发布失败: ${error.message}`);
-                }
-            }
-        }
-
-        async function publishAllFiles() {
-            if (!githubConfig) {
-                showStatus('publish-status', 'error', '请先配置 GitHub 设置');
-                showSection('settings');
-                return;
-            }
-
-            showLoading('正在准备同步全部文件...');
-
-            const filesToUpload = [
-                { path: 'index.html', type: 'text/html' },
-                { path: 'news-list.html', type: 'text/html' },
-                { path: 'news-detail.html', type: 'text/html' },
-                { path: 'lawyer-list.html', type: 'text/html' },
-                { path: 'lawyer-detail.html', type: 'text/html' },
-                { path: 'service-detail.html', type: 'text/html' },
-                { path: 'party-building-list.html', type: 'text/html' },
-                { path: 'party-building-detail.html', type: 'text/html' },
-                { path: 'admin.html', type: 'text/html' },
-                { path: 'js/news-data.js', type: 'text/javascript' },
-                { path: 'js/lawyer-data.js', type: 'text/javascript' },
-                { path: 'js/service-data.js', type: 'text/javascript' },
-                { path: 'js/case-data.js', type: 'text/javascript' },
-                { path: 'js/party-data.js', type: 'text/javascript' }
-            ];
-
-            let successCount = 0;
-            let failCount = 0;
-            let skippedCount = 0;
-            const errorMessages = [];
-
-            for (let i = 0; i < filesToUpload.length; i++) {
-                const file = filesToUpload[i];
-                showLoading(`正在上传 ${file.path} (${i + 1}/${filesToUpload.length})...`);
-
-                try {
-                    const response = await fetch(file.path);
-                    if (!response.ok) {
-                        skippedCount++;
-                        errorMessages.push(`${file.path}: 文件不存在或无法读取`);
-                        console.warn(`跳过 ${file.path}: 文件不存在`);
-                        continue;
-                    }
-                    const content = await response.text();
-                    const sha = await getFileSHA(file.path);
-
-                    const bodyData = {
-                        message: `🔄 更新 ${file.path} - ${new Date().toLocaleString('zh-CN')}`,
-                        content: btoa(unescape(encodeURIComponent(content))),
-                        branch: githubConfig.branch
-                    };
-                    
-                    if (sha) {
-                        bodyData.sha = sha;
-                    }
-
-                    const uploadResponse = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${file.path}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${githubConfig.token}`,
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/vnd.github.v3+json'
-                        },
-                        body: JSON.stringify(bodyData)
-                    });
-
-                    if (uploadResponse.ok) {
-                        successCount++;
-                    } else {
-                        const errorData = await uploadResponse.json();
-                        const errorMsg = errorData.message || `HTTP ${uploadResponse.status}`;
-                        failCount++;
-                        errorMessages.push(`${file.path}: ${errorMsg}`);
-                        console.error(`上传 ${file.path} 失败: ${errorMsg}`);
-                    }
-                } catch (error) {
-                    failCount++;
-                    const errorMsg = error.message || '未知错误';
-                    errorMessages.push(`${file.path}: ${errorMsg}`);
-                    console.error(`上传 ${file.path} 失败:`, error);
-                }
-            }
-
-            hideLoading();
-            
-            if (failCount === 0 && skippedCount === 0) {
-                showStatus('publish-status', 'success', `🎉 全部 ${successCount} 个文件同步成功！网站将在 1-3 分钟内自动更新！`);
-                showToast('全部文件同步成功！');
-            } else {
-                const statusMsg = [];
-                if (successCount > 0) statusMsg.push(`${successCount} 个成功`);
-                if (failCount > 0) statusMsg.push(`${failCount} 个失败`);
-                if (skippedCount > 0) statusMsg.push(`${skippedCount} 个跳过`);
-                
-                showStatus('publish-status', 'error', `⚠️ 同步完成: ${statusMsg.join(', ')}。查看浏览器控制台获取详细错误信息。`);
-                showToast(`同步完成: ${successCount}成功, ${failCount}失败, ${skippedCount}跳过`);
-                
-                if (errorMessages.length > 0) {
-                    console.error('=== 同步错误详情 ===');
-                    errorMessages.forEach(msg => console.error(msg));
-                    console.error('=== 错误详情结束 ===');
-                }
-            }
-        }
-
-        async function saveToLocalFile() {
-            const content = generateNewsDataJS();
-            const blob = new Blob([content], { type: 'text/javascript;charset=utf-8' });
-
-            if (window.showSaveFilePicker) {
-                try {
-                    const handle = await window.showSaveFilePicker({
-                        suggestedName: 'news-data.js',
-                        types: [{
-                            description: 'JavaScript Files',
-                            accept: { 'text/javascript': ['.js'] }
-                        }]
-                    });
-                    const writable = await handle.createWritable();
-                    await writable.write(blob);
-                    await writable.close();
-                    showToast('文件保存成功！');
-                } catch (error) {
-                    if (error.name !== 'AbortError') {
-                        downloadFile(content);
-                    }
-                }
-            } else {
-                downloadFile(content);
-            }
-        }
-
-        function downloadFile(content) {
-            const blob = new Blob([content], { type: 'text/javascript;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'news-data.js';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showToast('文件已下载！请将文件保存到项目 js/ 目录下覆盖原文件。');
-        }
-
-        async function getFileSHA(filePath) {
-            try {
-                const response = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${filePath}?ref=${githubConfig.branch}`, {
-                    headers: {
-                        'Authorization': `token ${githubConfig.token}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    return data.sha;
-                }
-                return null;
-            } catch (error) {
-                return null;
-            }
-        }
-
-        function generateNewsDataJS() {
-            const dataStr = JSON.stringify(newsData, null, 4);
-            return `var newsData = ${dataStr};
-
-function getAllNews() { return newsData; }
-function getNewsById(id) { return newsData.find(n => n.id === id); }
-function getNewsByCategory(category) { return newsData.filter(n => n.category === category); }`;
-        }
-
-        function showStatus(elementId, type, message) {
-            const element = document.getElementById(elementId);
-            element.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'text-green-800', 'text-red-800');
-
-            if (type === 'success') {
-                element.classList.add('bg-green-100', 'text-green-800');
-            } else {
-                element.classList.add('bg-red-100', 'text-red-800');
-            }
-
-            element.innerHTML = `<i class="fa fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} mr-2"></i>${message}`;
-        }
-
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.add('hidden');
-                section.classList.remove('active');
-            });
+        function showSection(sectionId, clearForm = true) {
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
             document.querySelectorAll('nav button').forEach(btn => {
                 btn.classList.remove('bg-primary', 'text-white');
                 btn.classList.add('text-gray-600', 'hover:bg-gray-100');
             });
-
             document.getElementById('section-' + sectionId).classList.remove('hidden');
-            document.getElementById('section-' + sectionId).classList.add('active');
-            document.getElementById('nav-' + sectionId).classList.remove('text-gray-600', 'hover:bg-gray-100');
-            document.getElementById('nav-' + sectionId).classList.add('bg-primary', 'text-white');
-
-            if (sectionId === 'list') {
-                renderNewsList();
-            }
-        }
-
-        function renderNewsList() {
-            const tbody = document.getElementById('news-table-body');
-            const news = newsData.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            tbody.innerHTML = news.map(item => `
-                <tr class="hover:bg-gray-50 transition-colors">
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="max-w-xs truncate">${item.title}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 py-1 text-xs rounded-full ${getCategoryClass(item.category)}">
-                            ${item.category}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.date}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-center">
-                        <div class="flex items-center justify-center space-x-2">
-                            <button onclick="editNews('${item.id}')" class="text-blue-500 hover:text-blue-700 p-2" title="编辑">
-                                <i class="fa fa-edit"></i>
-                            </button>
-                            <button onclick="deleteNewsConfirm('${item.id}')" class="text-red-500 hover:text-red-700 p-2" title="删除">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function getCategoryClass(category) {
-            const classes = {
-                '业务活动': 'bg-blue-100 text-blue-800',
-                '荣誉奖励': 'bg-yellow-100 text-yellow-800',
-                '学术研究': 'bg-green-100 text-green-800',
-                '人文生活': 'bg-purple-100 text-purple-800'
-            };
-            return classes[category] || 'bg-gray-100 text-gray-800';
-        }
-
-        function saveNews() {
-            const title = document.getElementById('edit-title').value.trim();
-            const category = document.getElementById('edit-category').value;
-            const date = document.getElementById('edit-date').value;
-            const image = document.getElementById('edit-image').value.trim();
-            const summary = document.getElementById('edit-summary').value.trim();
-            const wechatUrl = document.getElementById('edit-wechatUrl').value.trim();
-
-            if (!title) {
-                showToast('请输入新闻标题');
-                return;
-            }
-            if (!date) {
-                showToast('请选择日期');
-                return;
-            }
-            if (!wechatUrl) {
-                showToast('请输入微信链接');
-                return;
-            }
-
-            const newId = title.toLowerCase().replace(/[^\w\u4e00-\u9fa5]+/g, '-').replace(/-{2,}/g, '-').slice(0, 50);
-
-            newsData.push({
-                id: newId,
-                title,
-                category,
-                date,
-                image: image || `https://picsum.photos/seed/${encodeURIComponent(title)}/800/400`,
-                summary: summary || title,
-                wechatUrl
-            });
-
-            saveToLocalStorage();
-            clearForm();
-            showToast('新闻添加成功！建议点击"💾 保存到本地文件"下载更新后的文件。');
-            showSection('list');
-        }
-
-        function clearForm() {
-            document.getElementById('edit-title').value = '';
-            document.getElementById('edit-category').value = '业务活动';
-            document.getElementById('edit-date').value = '';
-            document.getElementById('edit-image').value = '';
-            document.getElementById('edit-summary').value = '';
-            document.getElementById('edit-wechatUrl').value = '';
-        }
-
-        function editNews(id) {
-            const news = newsData.find(n => n.id === id);
-            if (!news) return;
-
-            document.getElementById('edit-id').value = news.id;
-            document.getElementById('modal-title').value = news.title;
-            document.getElementById('modal-category').value = news.category;
-            document.getElementById('modal-date').value = news.date;
-            document.getElementById('modal-image').value = news.image;
-            document.getElementById('modal-summary').value = news.summary;
-            document.getElementById('modal-wechatUrl').value = news.wechatUrl;
-
-            document.getElementById('edit-modal').classList.remove('hidden');
-        }
-
-        function closeEditModal() {
-            document.getElementById('edit-modal').classList.add('hidden');
-        }
-
-        function updateNews() {
-            const id = document.getElementById('edit-id').value;
-            const index = newsData.findIndex(n => n.id === id);
-            if (index === -1) return;
-
-            newsData[index] = {
-                id: id,
-                title: document.getElementById('modal-title').value.trim(),
-                category: document.getElementById('modal-category').value,
-                date: document.getElementById('modal-date').value,
-                image: document.getElementById('modal-image').value.trim(),
-                summary: document.getElementById('modal-summary').value.trim(),
-                wechatUrl: document.getElementById('modal-wechatUrl').value.trim()
-            };
-
-            saveToLocalStorage();
-            closeEditModal();
-            showToast('新闻更新成功！记得点击"🚀 一键发布"同步到网站。');
-            renderNewsList();
-        }
-
-        function deleteNewsConfirm(id) {
-            deletingId = id;
-            document.getElementById('delete-modal').classList.remove('hidden');
-        }
-
-        function closeDeleteModal() {
-            deletingId = null;
-            document.getElementById('delete-modal').classList.add('hidden');
-        }
-
-        function confirmDelete() {
-            if (!deletingId) return;
-
-            newsData = newsData.filter(n => n.id !== deletingId);
-            saveToLocalStorage();
-            closeDeleteModal();
-            showToast('新闻删除成功！建议点击"💾 保存到本地文件"下载更新后的文件。');
-            renderNewsList();
-        }
-
-        function saveToLocalStorage() {
-            localStorage.setItem('newsData', JSON.stringify(newsData));
-        }
-
-        async function loadNewsFromGitHub() {
-            if (!githubConfig) {
-                return false;
-            }
-
-            try {
-                const filePath = 'js/news-data.js';
-                const response = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${filePath}?ref=${githubConfig.branch}`, {
-                    headers: {
-                        'Authorization': `token ${githubConfig.token}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    const content = decodeURIComponent(escape(atob(data.content)));
-                    const match = content.match(/var newsData\s*=\s*(\[[\s\S]*?\]);/);
-                    if (match) {
-                        try {
-                            newsData = JSON.parse(match[1]);
-                            saveToLocalStorage();
-                            return true;
-                        } catch (e) {
-                            console.log('Failed to parse news data from GitHub');
-                        }
-                    }
-                }
-            } catch (error) {
-                console.log('Failed to load from GitHub:', error);
-            }
-            return false;
-        }
-
-        async function syncFromGitHub() {
-            if (!githubConfig) {
-                showToast('请先配置 GitHub 设置');
-                showSection('settings');
-                return;
-            }
-
-            showLoading('正在从 GitHub 同步新闻数据...');
-            const success = await loadNewsFromGitHub();
-            hideLoading();
-
-            if (success) {
-                showToast('同步成功！已加载最新新闻数据');
-                renderNewsList();
-            } else {
-                showToast('同步失败，使用本地数据');
-            }
-        }
-
-        function loadFromLocalStorage() {
-            const saved = localStorage.getItem('newsData');
-            if (saved) {
-                try {
-                    newsData = JSON.parse(saved);
-                } catch (e) {
-                    console.log('Failed to load saved data');
-                }
-            }
+            const navBtn = document.getElementById('nav-' + sectionId);
+            if (navBtn) { navBtn.classList.remove('text-gray-600', 'hover:bg-gray-100'); navBtn.classList.add('bg-primary', 'text-white'); }
+            if (sectionId === 'news-list') renderNewsList();
+            if (sectionId === 'service-list') renderServiceList();
+            if (sectionId === 'lawyer-list') renderLawyerList();
+            if (sectionId === 'case-list') renderCaseList();
+            if (sectionId === 'party-list') renderPartyList();
+            if (sectionId === 'news-add' && clearForm) clearNewsForm();
+            if (sectionId === 'service-add' && clearForm) clearServiceForm();
+            if (sectionId === 'lawyer-add' && clearForm) clearLawyerForm();
+            if (sectionId === 'case-add' && clearForm) clearCaseForm();
+            if (sectionId === 'party-add' && clearForm) clearPartyForm();
+            // 保存当前栏目到 localStorage
+            localStorage.setItem('adminCurrentSection', sectionId);
         }
 
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-message').textContent = message;
             toast.style.opacity = '1';
-            setTimeout(() => {
-                toast.style.opacity = '0';
-            }, 3000);
+            setTimeout(() => { toast.style.opacity = '0'; }, 3000);
         }
 
-        function showLoading(message) {
-            document.getElementById('loading-message').textContent = message;
-            document.getElementById('loading-overlay').classList.remove('hidden');
+        function getCategoryClass(category) {
+            const classes = { '业务活动': 'bg-blue-100 text-blue-800', '荣誉奖励': 'bg-yellow-100 text-yellow-800', '学术研究': 'bg-green-100 text-green-800', '人文生活': 'bg-purple-100 text-purple-800', '党建活动': 'bg-red-100 text-red-800', '党员风采': 'bg-orange-100 text-orange-800', '学习园地': 'bg-indigo-100 text-indigo-800', '工作动态': 'bg-cyan-100 text-cyan-800' };
+            return classes[category] || 'bg-gray-100 text-gray-800';
         }
 
-        function hideLoading() {
-            document.getElementById('loading-overlay').classList.add('hidden');
+        function renderNewsList() {
+            const tbody = document.getElementById('news-table-body');
+            tbody.innerHTML = newsArticles.slice().sort((a, b) => new Date(b.date) - new Date(a.date)).map(item => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4"><div class="max-w-xs truncate">${item.title}</div></td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded-full ${getCategoryClass(item.category)}">${item.category}</span></td>
+                    <td class="px-6 py-4 text-sm text-gray-500">${item.date}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button onclick="editNews('${item.id}')" class="text-blue-500 hover:text-blue-700 p-2"><i class="fa fa-edit"></i></button>
+                        <button onclick="deleteItem('news', '${item.id}')" class="text-red-500 hover:text-red-700 p-2"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>`).join('') || '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-500">暂无数据</td></tr>';
         }
 
-        loadGitHubConfig();
-        showSection('list');
+        function clearNewsForm() {
+            document.getElementById('news-title').value = '';
+            document.getElementById('news-category').value = '业务活动';
+            document.getElementById('news-date').value = '';
+            document.getElementById('news-image').value = '';
+            document.getElementById('news-summary').value = '';
+            document.getElementById('news-wechatUrl').value = '';
+            editingNewsId = null;
+            document.querySelector('#section-news-add h1').textContent = '添加新闻';
+        }
 
-        setTimeout(async () => {
-            if (githubConfig) {
-                await loadNewsFromGitHub();
-                renderNewsList();
+        function saveNews() {
+            const title = document.getElementById('news-title').value.trim();
+            if (!title) { showToast('请输入标题'); return; }
+            if (editingNewsId) {
+                const index = newsArticles.findIndex(n => n.id === editingNewsId);
+                if (index !== -1) {
+                    newsArticles[index] = {
+                        ...newsArticles[index],
+                        title,
+                        category: document.getElementById('news-category').value,
+                        date: document.getElementById('news-date').value || newsArticles[index].date,
+                        image: document.getElementById('news-image').value.trim() || newsArticles[index].image,
+                        summary: document.getElementById('news-summary').value.trim() || title,
+                        wechatUrl: document.getElementById('news-wechatUrl').value.trim()
+                    };
+                }
+                saveToLocalStorage();
+                clearNewsForm();
+                showToast('新闻更新成功');
+                showSection('news-list');
+            } else {
+                const newId = title.toLowerCase().replace(/[^\w\u4e00-\u9fa5]+/g, '-').replace(/-{2,}/g, '-').slice(0, 50);
+                newsArticles.push({
+                    id: newId, title,
+                    category: document.getElementById('news-category').value,
+                    date: document.getElementById('news-date').value || new Date().toISOString().split('T')[0],
+                    image: document.getElementById('news-image').value.trim() || `https://picsum.photos/seed/${encodeURIComponent(title)}/800/400`,
+                    summary: document.getElementById('news-summary').value.trim() || title,
+                    wechatUrl: document.getElementById('news-wechatUrl').value.trim()
+                });
+                saveToLocalStorage();
+                clearNewsForm();
+                showToast('新闻添加成功');
+                showSection('news-list');
             }
-        }, 500);
+        }
+
+        function editNews(id) {
+            const news = newsArticles.find(n => n.id === id);
+            if (!news) { showToast('未找到该新闻'); return; }
+            editingNewsId = id;
+            document.getElementById('news-title').value = news.title;
+            document.getElementById('news-category').value = news.category;
+            document.getElementById('news-date').value = news.date;
+            document.getElementById('news-image').value = news.image;
+            document.getElementById('news-summary').value = news.summary;
+            document.getElementById('news-wechatUrl').value = news.wechatUrl || '';
+            document.querySelector('#section-news-add h1').textContent = '编辑新闻';
+            showSection('news-add', false);
+        }
+
+        function renderServiceList() {
+            const tbody = document.getElementById('service-table-body');
+            tbody.innerHTML = serviceList.map(item => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium">${item.name}</td>
+                    <td class="px-6 py-4"><i class="fa ${item.icon} text-gray-600"></i></td>
+                    <td class="px-6 py-4"><div class="max-w-xs truncate">${item.description}</div></td>
+                    <td class="px-6 py-4 text-center">
+                        <button onclick="editService('${item.id}')" class="text-blue-500 hover:text-blue-700 p-2"><i class="fa fa-edit"></i></button>
+                        <button onclick="deleteItem('service', '${item.id}')" class="text-red-500 hover:text-red-700 p-2"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>`).join('') || '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-500">暂无数据</td></tr>';
+        }
+
+        function clearServiceForm() {
+            document.getElementById('service-name').value = '';
+            document.getElementById('service-icon').value = '';
+            document.getElementById('service-description').value = '';
+            document.getElementById('service-details').value = '';
+            editingServiceId = null;
+            document.querySelector('#section-service-add h1').textContent = '添加专业领域';
+        }
+
+        function saveService() {
+            const name = document.getElementById('service-name').value.trim();
+            if (!name) { showToast('请输入名称'); return; }
+            const slug = name.toLowerCase().replace(/[^\w\u4e00-\u9fa5]+/g, '-');
+            const details = document.getElementById('service-details').value.split('\n').filter(d => d.trim());
+            if (editingServiceId) {
+                const index = serviceList.findIndex(s => s.id === editingServiceId);
+                if (index !== -1) {
+                    serviceList[index] = {
+                        ...serviceList[index],
+                        name, slug,
+                        icon: document.getElementById('service-icon').value.trim() || serviceList[index].icon,
+                        description: document.getElementById('service-description').value.trim(),
+                        details
+                    };
+                }
+                saveToLocalStorage();
+                clearServiceForm();
+                showToast('服务更新成功');
+                showSection('service-list');
+            } else {
+                serviceList.push({
+                    id: String(serviceList.length + 1), name, slug,
+                    icon: document.getElementById('service-icon').value.trim() || 'fa-briefcase',
+                    description: document.getElementById('service-description').value.trim(),
+                    details
+                });
+                saveToLocalStorage();
+                clearServiceForm();
+                showToast('服务添加成功');
+                showSection('service-list');
+            }
+        }
+
+        function editService(id) {
+            const service = serviceList.find(s => s.id === id);
+            if (!service) { showToast('未找到该服务'); return; }
+            editingServiceId = id;
+            document.getElementById('service-name').value = service.name;
+            document.getElementById('service-icon').value = service.icon;
+            document.getElementById('service-description').value = service.description;
+            document.getElementById('service-details').value = (service.details || []).join('\n');
+            document.querySelector('#section-service-add h1').textContent = '编辑专业领域';
+            showSection('service-add', false);
+        }
+
+        function renderLawyerList() {
+            const tbody = document.getElementById('lawyer-table-body');
+            tbody.innerHTML = lawyerList.map(item => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium">${item.name}</td>
+                    <td class="px-6 py-4 text-gray-600">${item.title}</td>
+                    <td class="px-6 py-4 text-gray-500">${item.email}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button onclick="editLawyer('${item.id}')" class="text-blue-500 hover:text-blue-700 p-2"><i class="fa fa-edit"></i></button>
+                        <button onclick="deleteItem('lawyer', '${item.id}')" class="text-red-500 hover:text-red-700 p-2"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>`).join('') || '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-500">暂无数据</td></tr>';
+        }
+
+        function clearLawyerForm() {
+            document.getElementById('lawyer-name').value = '';
+            document.getElementById('lawyer-title').value = '';
+            document.getElementById('lawyer-photo').value = '';
+            document.getElementById('lawyer-email').value = '';
+            document.getElementById('lawyer-contact').value = '';
+            document.getElementById('lawyer-introduction').value = '';
+            document.getElementById('lawyer-expertise').value = '';
+            document.getElementById('lawyer-experience').value = '';
+            document.getElementById('lawyer-bar-association').value = '';
+            document.getElementById('lawyer-social-roles').value = '';
+            document.getElementById('lawyer-cases').value = '';
+            document.getElementById('lawyer-awards').value = '';
+            editingLawyerId = null;
+            document.querySelector('#section-lawyer-add h1').textContent = '添加律师';
+        }
+
+        function saveLawyer() {
+            const name = document.getElementById('lawyer-name').value.trim();
+            if (!name) { showToast('请输入姓名'); return; }
+            const expertise = document.getElementById('lawyer-expertise').value.split('\n').filter(s => s.trim());
+            const experience = document.getElementById('lawyer-experience').value.split('\n').filter(s => s.trim());
+            const barAssociation = document.getElementById('lawyer-bar-association').value.split('\n').filter(s => s.trim());
+            const socialRoles = document.getElementById('lawyer-social-roles').value.split('\n').filter(s => s.trim());
+            const cases = document.getElementById('lawyer-cases').value.split('\n').filter(s => s.trim());
+            const awards = document.getElementById('lawyer-awards').value.split('\n').filter(s => s.trim());
+            if (editingLawyerId) {
+                const index = lawyerList.findIndex(l => l.id === editingLawyerId);
+                if (index !== -1) {
+                    const oldLawyer = lawyerList[index];
+                    lawyerList[index] = {
+                        ...oldLawyer,
+                        name,
+                        title: document.getElementById('lawyer-title').value.trim() || '',
+                        photo: document.getElementById('lawyer-photo').value.trim() || '',
+                        email: document.getElementById('lawyer-email').value.trim() || '',
+                        contact: document.getElementById('lawyer-contact').value.trim() || '',
+                        introduction: document.getElementById('lawyer-introduction').value.trim() || '',
+                        expertise: expertise,
+                        experience: experience,
+                        barAssociation: barAssociation,
+                        socialRoles: socialRoles,
+                        cases: cases,
+                        awards: awards
+                    };
+                    
+                    saveToLocalStorage();
+                    clearLawyerForm();
+                    showToast('律师更新成功');
+                    renderLawyerList();
+                    showSection('lawyer-list');
+                } else {
+                    showToast('未找到该律师，更新失败');
+                }
+            } else {
+                // 生成唯一 ID，确保与初始数据格式一致（lawyer-X）
+                const maxId = lawyerList.length > 0 
+                    ? Math.max(...lawyerList.map(l => {
+                        const match = l.id.match(/^lawyer-(\d+)$/);
+                        return match ? parseInt(match[1]) : 0;
+                      }))
+                    : 0;
+                const newId = `lawyer-${maxId + 1}`;
+                
+                lawyerList.push({
+                    id: newId,
+                    name,
+                    title: document.getElementById('lawyer-title').value.trim() || '律师',
+                    photo: document.getElementById('lawyer-photo').value.trim() || `https://picsum.photos/seed/lawyer${maxId + 1}/400/500`,
+                    email: document.getElementById('lawyer-email').value.trim(),
+                    contact: document.getElementById('lawyer-contact').value.trim(),
+                    introduction: document.getElementById('lawyer-introduction').value.trim(),
+                    expertise,
+                    experience,
+                    barAssociation,
+                    socialRoles,
+                    cases,
+                    awards
+                });
+                saveToLocalStorage();
+                clearLawyerForm();
+                showToast('律师添加成功');
+                showSection('lawyer-list');
+            }
+        }
+
+        function editLawyer(id) {
+            // 直接从 lawyerList 中查找（lawyerList 始终与 localStorage 同步）
+            const lawyer = lawyerList.find(l => l.id === id);
+            
+            if (!lawyer) {
+                showToast('未找到该律师');
+                return;
+            }
+            
+            editingLawyerId = id;
+            document.getElementById('lawyer-name').value = lawyer.name || '';
+            document.getElementById('lawyer-title').value = lawyer.title || '';
+            document.getElementById('lawyer-photo').value = lawyer.photo || '';
+            document.getElementById('lawyer-email').value = lawyer.email || '';
+            document.getElementById('lawyer-contact').value = lawyer.contact || '';
+            document.getElementById('lawyer-introduction').value = lawyer.introduction || '';
+            document.getElementById('lawyer-expertise').value = Array.isArray(lawyer.expertise) ? lawyer.expertise.join('\n') : '';
+            document.getElementById('lawyer-experience').value = Array.isArray(lawyer.experience) ? lawyer.experience.join('\n') : '';
+            document.getElementById('lawyer-bar-association').value = Array.isArray(lawyer.barAssociation) ? lawyer.barAssociation.join('\n') : '';
+            document.getElementById('lawyer-social-roles').value = Array.isArray(lawyer.socialRoles) ? lawyer.socialRoles.join('\n') : '';
+            document.getElementById('lawyer-cases').value = Array.isArray(lawyer.cases) ? lawyer.cases.join('\n') : '';
+            document.getElementById('lawyer-awards').value = Array.isArray(lawyer.awards) ? lawyer.awards.join('\n') : '';
+            document.querySelector('#section-lawyer-add h1').textContent = '编辑律师';
+            showSection('lawyer-add', false);
+        }
+
+        function renderCaseList() {
+            const tbody = document.getElementById('case-table-body');
+            tbody.innerHTML = caseList.slice().sort((a, b) => new Date(b.date) - new Date(a.date)).map(item => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4"><div class="max-w-xs truncate">${item.title}</div></td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded-full ${getCategoryClass(item.category)}">${item.category}</span></td>
+                    <td class="px-6 py-4 text-sm text-gray-500">${item.date}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button onclick="editCase('${item.id}')" class="text-blue-500 hover:text-blue-700 p-2"><i class="fa fa-edit"></i></button>
+                        <button onclick="deleteItem('case', '${item.id}')" class="text-red-500 hover:text-red-700 p-2"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>`).join('') || '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-500">暂无数据</td></tr>';
+        }
+
+        function clearCaseForm() {
+            document.getElementById('case-title').value = '';
+            document.getElementById('case-category').value = '企业法律服务';
+            document.getElementById('case-image').value = '';
+            document.getElementById('case-date').value = '';
+            document.getElementById('case-result').value = '';
+            document.getElementById('case-summary').value = '';
+            document.getElementById('case-description').value = '';
+            document.getElementById('case-clientComment').value = '';
+            document.getElementById('case-clientName').value = '';
+            document.getElementById('case-clientTitle').value = '';
+            document.getElementById('case-tags').value = '';
+            editingCaseId = null;
+            document.querySelector('#section-case-add h1').textContent = '添加案例';
+        }
+
+        function saveCase() {
+            const title = document.getElementById('case-title').value.trim();
+            if (!title) { showToast('请输入标题'); return; }
+            const clientComment = document.getElementById('case-clientComment').value.trim();
+            const clientName = document.getElementById('case-clientName').value.trim();
+            const clientTitle = document.getElementById('case-clientTitle').value.trim();
+            const tags = document.getElementById('case-tags').value.split('\n').filter(t => t.trim());
+            if (editingCaseId) {
+                const index = caseList.findIndex(c => c.id === editingCaseId);
+                if (index !== -1) {
+                    caseList[index] = {
+                        ...caseList[index],
+                        title,
+                        category: document.getElementById('case-category').value,
+                        image: document.getElementById('case-image').value.trim() || caseList[index].image,
+                        date: document.getElementById('case-date').value || caseList[index].date,
+                        result: document.getElementById('case-result').value.trim(),
+                        summary: document.getElementById('case-summary').value.trim() || title,
+                        description: document.getElementById('case-description').value.trim(),
+                        clientComment,
+                        clientName,
+                        clientTitle,
+                        tags
+                    };
+                }
+                saveToLocalStorage();
+                clearCaseForm();
+                showToast('案例更新成功');
+                showSection('case-list');
+            } else {
+                caseList.push({
+                    id: String(caseList.length + 1), title,
+                    category: document.getElementById('case-category').value,
+                    image: document.getElementById('case-image').value.trim() || `https://picsum.photos/seed/case${caseList.length + 1}/800/500`,
+                    date: document.getElementById('case-date').value || new Date().toISOString().split('T')[0],
+                    result: document.getElementById('case-result').value.trim(),
+                    summary: document.getElementById('case-summary').value.trim() || title,
+                    description: document.getElementById('case-description').value.trim(),
+                    clientComment,
+                    clientName,
+                    clientTitle,
+                    tags
+                });
+                saveToLocalStorage();
+                clearCaseForm();
+                showToast('案例添加成功');
+                showSection('case-list');
+            }
+        }
+
+        function editCase(id) {
+            const caseItem = caseList.find(c => c.id === id);
+            if (!caseItem) { showToast('未找到该案例'); return; }
+            editingCaseId = id;
+            document.getElementById('case-title').value = caseItem.title;
+            document.getElementById('case-category').value = caseItem.category;
+            document.getElementById('case-image').value = caseItem.image;
+            document.getElementById('case-date').value = caseItem.date;
+            document.getElementById('case-result').value = caseItem.result || '';
+            document.getElementById('case-summary').value = caseItem.summary || '';
+            document.getElementById('case-description').value = caseItem.description || '';
+            document.getElementById('case-clientComment').value = caseItem.clientComment || '';
+            document.getElementById('case-clientName').value = caseItem.clientName || '';
+            document.getElementById('case-clientTitle').value = caseItem.clientTitle || '';
+            document.getElementById('case-tags').value = (caseItem.tags || []).join('\n');
+            document.querySelector('#section-case-add h1').textContent = '编辑案例';
+            showSection('case-add', false);
+        }
+
+        function renderPartyList() {
+            const tbody = document.getElementById('party-table-body');
+            tbody.innerHTML = partyActivities.slice().sort((a, b) => new Date(b.date) - new Date(a.date)).map(item => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4"><div class="max-w-xs truncate">${item.title}</div></td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded-full ${getCategoryClass(item.category)}">${item.category}</span></td>
+                    <td class="px-6 py-4 text-sm text-gray-500">${item.date}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button onclick="editParty('${item.id}')" class="text-blue-500 hover:text-blue-700 p-2"><i class="fa fa-edit"></i></button>
+                        <button onclick="deleteItem('party', '${item.id}')" class="text-red-500 hover:text-red-700 p-2"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>`).join('') || '<tr><td colspan="4" class="px-6 py-8 text-center text-gray-500">暂无数据</td></tr>';
+        }
+
+        function clearPartyForm() {
+            document.getElementById('party-title').value = '';
+            document.getElementById('party-category').value = '党建活动';
+            document.getElementById('party-image').value = '';
+            document.getElementById('party-date').value = '';
+            document.getElementById('party-summary').value = '';
+            document.getElementById('party-content').value = '';
+            editingPartyId = null;
+            document.querySelector('#section-party-add h1').textContent = '添加党建活动';
+        }
+
+        function saveParty() {
+            const title = document.getElementById('party-title').value.trim();
+            if (!title) { showToast('请输入标题'); return; }
+            if (editingPartyId) {
+                const index = partyActivities.findIndex(p => p.id === editingPartyId);
+                if (index !== -1) {
+                    partyActivities[index] = {
+                        ...partyActivities[index],
+                        title,
+                        category: document.getElementById('party-category').value,
+                        image: document.getElementById('party-image').value.trim() || partyActivities[index].image,
+                        date: document.getElementById('party-date').value || partyActivities[index].date,
+                        summary: document.getElementById('party-summary').value.trim() || title,
+                        content: document.getElementById('party-content').value.trim()
+                    };
+                }
+                saveToLocalStorage();
+                clearPartyForm();
+                showToast('党建更新成功');
+                showSection('party-list');
+            } else {
+                partyActivities.push({
+                    id: String(partyActivities.length + 1), title,
+                    category: document.getElementById('party-category').value,
+                    image: document.getElementById('party-image').value.trim() || `https://picsum.photos/seed/party${partyActivities.length + 1}/800/500`,
+                    date: document.getElementById('party-date').value || new Date().toISOString().split('T')[0],
+                    summary: document.getElementById('party-summary').value.trim() || title,
+                    content: document.getElementById('party-content').value.trim()
+                });
+                saveToLocalStorage();
+                clearPartyForm();
+                showToast('党建添加成功');
+                showSection('party-list');
+            }
+        }
+
+        function editParty(id) {
+            const party = partyActivities.find(p => p.id === id);
+            if (!party) { showToast('未找到该党建'); return; }
+            editingPartyId = id;
+            document.getElementById('party-title').value = party.title;
+            document.getElementById('party-category').value = party.category;
+            document.getElementById('party-image').value = party.image;
+            document.getElementById('party-date').value = party.date;
+            document.getElementById('party-summary').value = party.summary;
+            document.getElementById('party-content').value = party.content;
+            document.querySelector('#section-party-add h1').textContent = '编辑党建活动';
+            showSection('party-add', false);
+        }
+
+        function deleteItem(type, id) {
+            deletingId = id;
+            deletingType = type;
+            document.getElementById('delete-modal').classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            deletingId = null;
+            deletingType = null;
+            document.getElementById('delete-modal').classList.add('hidden');
+        }
+
+        function confirmDelete() {
+            if (!deletingId || !deletingType) return;
+            if (deletingType === 'news') newsArticles = newsArticles.filter(n => n.id !== deletingId);
+            else if (deletingType === 'service') serviceList = serviceList.filter(s => s.id !== deletingId);
+            else if (deletingType === 'lawyer') lawyerList = lawyerList.filter(l => l.id !== deletingId);
+            else if (deletingType === 'case') caseList = caseList.filter(c => c.id !== deletingId);
+            else if (deletingType === 'party') partyActivities = partyActivities.filter(p => p.id !== deletingId);
+            saveToLocalStorage();
+            closeDeleteModal();
+            showToast('删除成功');
+            if (deletingType === 'news') renderNewsList();
+            else if (deletingType === 'service') renderServiceList();
+            else if (deletingType === 'lawyer') renderLawyerList();
+            else if (deletingType === 'case') renderCaseList();
+            else if (deletingType === 'party') renderPartyList();
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('newsData', JSON.stringify(newsArticles));
+            sessionStorage.setItem('newsData', JSON.stringify(newsArticles));
+            
+            localStorage.setItem('serviceData', JSON.stringify(serviceList));
+            sessionStorage.setItem('serviceData', JSON.stringify(serviceList));
+            
+            localStorage.setItem('lawyerData', JSON.stringify(lawyerList));
+            sessionStorage.setItem('lawyerData', JSON.stringify(lawyerList));
+            
+            localStorage.setItem('caseData', JSON.stringify(caseList));
+            sessionStorage.setItem('caseData', JSON.stringify(caseList));
+            
+            localStorage.setItem('partyData', JSON.stringify(partyActivities));
+            sessionStorage.setItem('partyData', JSON.stringify(partyActivities));
+        }
+
+        async function syncAllFromGitHub() {
+            showToast('同步功能开发中...');
+        }
+
+        // 图片上传相关函数
+        let selectedImageFile = null;
+
+        function previewImage(input) {
+            const file = input.files[0];
+            if (file) {
+                selectedImageFile = file;
+                document.getElementById('image-name').textContent = file.name;
+                document.getElementById('upload-btn').classList.remove('hidden');
+                document.getElementById('upload-result').classList.add('hidden');
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview-img').src = e.target.result;
+                    document.getElementById('image-preview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function uploadImage() {
+            if (!selectedImageFile) {
+                showToast('请先选择图片');
+                return;
+            }
+            if (!githubConfig || !githubConfig.token) {
+                showToast('请先配置 GitHub 设置');
+                showSection('settings');
+                return;
+            }
+            const uploadBtn = document.getElementById('upload-btn');
+            uploadBtn.disabled = true;
+            uploadBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>上传中...';
+            try {
+                const reader = new FileReader();
+                const fileContent = await new Promise((resolve, reject) => {
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(selectedImageFile);
+                });
+                const base64Content = fileContent.split(',')[1];
+                const encoded = btoa(unescape(encodeURIComponent(base64Content)));
+                const now = new Date();
+                const timestamp = now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + String(now.getHours()).padStart(2, '0') + String(now.getMinutes()).padStart(2, '0') + String(now.getSeconds()).padStart(2, '0');
+                const fileName = selectedImageFile.name.replace(/[^a-zA-Z0-9.]/g, '_');
+                const filePath = 'images/' + timestamp + '_' + fileName;
+                const shaResponse = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${filePath}?ref=${githubConfig.branch}`, { headers: { 'Authorization': `token ${githubConfig.token}` } });
+                let sha = null;
+                if (shaResponse.ok) {
+                    const shaData = await shaResponse.json();
+                    sha = shaData.sha;
+                }
+                const bodyData = { message: `Upload image: ${filePath}`, content: encoded, branch: githubConfig.branch };
+                if (sha) bodyData.sha = sha;
+                const uploadResponse = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${filePath}`, { method: 'PUT', headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(bodyData) });
+                if (uploadResponse.ok) {
+                    const imageUrl = `https://raw.githubusercontent.com/${githubConfig.owner}/${githubConfig.repo}/${githubConfig.branch}/${filePath}`;
+                    document.getElementById('image-url').value = imageUrl;
+                    document.getElementById('upload-result').classList.remove('hidden');
+                    showToast('图片上传成功！');
+                } else {
+                    showToast('图片上传失败');
+                }
+            } catch (error) {
+                showToast('图片上传失败：' + error.message);
+            } finally {
+                uploadBtn.disabled = false;
+                uploadBtn.innerHTML = '<i class="fa fa-cloud-upload mr-2"></i>上传到 GitHub';
+            }
+        }
+
+        function copyImageUrl() {
+            const urlInput = document.getElementById('image-url');
+            urlInput.select();
+            document.execCommand('copy');
+            showToast('链接已复制到剪贴板');
+        }
+
+        async function publishAllFiles() {
+            if (!githubConfig || !githubConfig.token) {
+                showToast('请先配置 GitHub 设置');
+                showSection('settings');
+                return;
+            }
+            const files = [
+                { path: 'js/news-data.js', data: newsArticles, varName: 'newsData' },
+                { path: 'js/service-data.js', data: serviceList, varName: 'serviceData' },
+                { path: 'js/lawyer-data.js', data: lawyerList, varName: 'lawyerData' },
+                { path: 'js/case-data.js', data: caseList, varName: 'caseData' },
+                { path: 'js/party-data.js', data: partyActivities, varName: 'partyData' },
+                { path: 'js/testimonial-data.js', data: testimonials, varName: 'testimonialData' },
+                { path: 'js/category-data.js', data: categories, varName: 'categoryData' }
+            ];
+            let successCount = 0;
+            let failCount = 0;
+            for (const file of files) {
+                try {
+                    const content = `var ${file.varName} = ${JSON.stringify(file.data, null, 4)};`;
+                    const encoded = btoa(unescape(encodeURIComponent(content)));
+                    const shaResponse = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${file.path}?ref=${githubConfig.branch}`, {
+                        headers: { 'Authorization': `token ${githubConfig.token}` }
+                    });
+                    let sha = null;
+                    if (shaResponse.ok) {
+                        const shaData = await shaResponse.json();
+                        sha = shaData.sha;
+                    }
+                    const bodyData = { message: `Update ${file.path}`, content: encoded, branch: githubConfig.branch };
+                    if (sha) bodyData.sha = sha;
+                    const uploadResponse = await fetch(`https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${file.path}`, {
+                        method: 'PUT',
+                        headers: { 'Authorization': `token ${githubConfig.token}`, 'Content-Type': 'application/json' },
+                        body: JSON.stringify(bodyData)
+                    });
+                    if (uploadResponse.ok) successCount++;
+                    else failCount++;
+                } catch (error) { failCount++; }
+            }
+            if (failCount === 0) {
+                document.getElementById('publish-status').className = 'mb-4 p-4 rounded-lg bg-green-100 text-green-800';
+                document.getElementById('publish-status').textContent = `🎉 全部 ${successCount} 个文件同步成功！`;
+            } else {
+                document.getElementById('publish-status').className = 'mb-4 p-4 rounded-lg bg-red-100 text-red-800';
+                document.getElementById('publish-status').textContent = `同步完成: ${successCount} 成功, ${failCount} 失败`;
+            }
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeData();
+            loadGitHubConfig();
+            // 从 localStorage 读取上次的栏目，默认显示新闻列表
+            const lastSection = localStorage.getItem('adminCurrentSection') || 'news-list';
+            showSection(lastSection);
+            
+            // 限制日期选择器不能选择未来日期
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                input.setAttribute('max', today);
+            });
+            
+            console.log('Admin page loaded successfully');
+            console.log('newsArticles length:', newsArticles.length);
+            console.log('serviceList length:', serviceList.length);
+            console.log('lawyerList length:', lawyerList.length);
+            console.log('caseList length:', caseList.length);
+            console.log('partyActivities length:', partyActivities.length);
+            
+        });
     </script>
 </body>
 </html>

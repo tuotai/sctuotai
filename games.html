@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>棋类游戏 - 四川拓泰律师事务所</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', sans-serif;
+        }
+        .game-card {
+            transition: all 0.3s ease;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .chesscn-board-container {
+            position: relative;
+            background: linear-gradient(135deg, #DEB887 0%, #D2691E 50%, #CD853F 100%);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .chesscn-board {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 0;
+            position: relative;
+        }
+        .chesscn-intersection {
+            width: 48px;
+            height: 48px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .chesscn-intersection::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        .chesscn-intersection::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        .chesscn-intersection.has-point::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 50%;
+            z-index: 2;
+        }
+        .diagonal-top-left::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            border-left: 2px solid rgba(0, 0, 0, 0.4);
+            border-top: 2px solid rgba(0, 0, 0, 0.4);
+            top: 2px;
+            left: 2px;
+            z-index: 1;
+        }
+        .diagonal-bottom-right::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            border-right: 2px solid rgba(0, 0, 0, 0.4);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+            bottom: 2px;
+            right: 2px;
+            z-index: 1;
+        }
+        .chesscn-stone {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+            z-index: 10;
+            position: relative;
+        }
+        .chesscn-stone.red {
+            background: linear-gradient(135deg, #FFFAFA 0%, #FFF8DC 50%, #F5F5DC 100%);
+            border: 3px solid #DC143C;
+            color: #DC143C;
+            box-shadow: 0 3px 8px rgba(220, 20, 60, 0.4);
+        }
+        .chesscn-stone.black {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 50%, #E8E8E8 100%);
+            border: 3px solid #1a1a1a;
+            color: #1a1a1a;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+        .chesscn-stone.selected {
+            transform: scale(1.15);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+            z-index: 20;
+        }
+        .chesscn-stone.legal {
+            opacity: 0.5;
+        }
+        .chuhe-hanjie {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.5);
+            transform: translateY(-50%);
+            z-index: 5;
+        }
+        .chuhe-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.7);
+            z-index: 6;
+            letter-spacing: 12px;
+            white-space: nowrap;
+        }
+        .go-board {
+            background: linear-gradient(135deg, #DEB887 0%, #D2691E 100%);
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .go-stone {
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+        .go-stone.black {
+            background: radial-gradient(circle at 30% 30%, #4a4a4a, #1a1a1a);
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .go-stone.white {
+            background: radial-gradient(circle at 30% 30%, #ffffff, #d0d0d0);
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="images/0000.jpg" alt="四川拓泰律师事务所" class="h-10">
+                </div>
+                <a href="index.html" class="text-sm text-gray-600 hover:text-primary transition-colors flex items-center space-x-2">
+                    <i class="fa fa-arrow-left"></i>
+                    <span>返回首页</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 游戏区域 -->
+    <section class="py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">棋类游戏</h2>
+                <p class="text-gray-600">体验经典棋类游戏</p>
+            </div>
+
+            <!-- 五子棋 -->
+            <div class="game-card bg-white rounded-xl shadow-lg p-8 border border-black mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-amber-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fa-solid fa-gamepad text-amber-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">五子棋</h3>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="gomoku-ai-btn" onclick="setGomokuMode('ai')" class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium">
+                            人机对战
+                        </button>
+                        <button id="gomoku-human-btn" onclick="setGomokuMode('human')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300">
+                            人人对战
+                        </button>
+                        <button id="gomoku-online-btn" onclick="setGomokuMode('online')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300">
+                            网络对战
+                        </button>
+                    </div>
+                </div>
+                <p id="gomoku-mode-text" class="text-gray-600 mb-4 text-center">人机对战五子棋（你执黑棋先行）</p>
+                <div id="gomoku-difficulty-selector" class="flex justify-center items-center space-x-2 mb-4">
+                    <span class="text-sm text-gray-600">难度：</span>
+                    <button onclick="setGomokuDifficulty(1)" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300">1</button>
+                    <button onclick="setGomokuDifficulty(2)" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300">2</button>
+                    <button onclick="setGomokuDifficulty(3)" class="px-3 py-1 bg-green-600 text-white rounded text-xs">3</button>
+                    <button onclick="setGomokuDifficulty(4)" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300">4</button>
+                    <button onclick="setGomokuDifficulty(5)" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300">5</button>
+                </div>
+                <div class="flex justify-center space-x-6 mb-4">
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">黑棋</p>
+                        <p id="gomoku-black-wins" class="font-bold text-gray-800">0</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">白棋</p>
+                        <p id="gomoku-white-wins" class="font-bold text-gray-800">0</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">胜率</p>
+                        <p id="gomoku-rate" class="font-bold text-blue-600">0%</p>
+                    </div>
+                </div>
+                <div class="flex justify-center mb-6">
+                    <div id="gomoku-board" class="grid grid-cols-15 gap-0.5 bg-amber-200 p-4 rounded-xl shadow-lg" style="background: linear-gradient(145deg, #f5d78e, #e6c97a); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 4px 4px 12px rgba(0,0,0,0.3), -2px -2px 8px rgba(255,255,255,0.2); border: 3px solid #d4a853;"></div>
+                </div>
+                <div class="flex justify-center space-x-4">
+                    <button onclick="resetGomoku()" class="px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors">
+                        重新开始
+                    </button>
+                    <button onclick="clearGomokuStats()" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                        重置统计
+                    </button>
+                </div>
+                <div id="gomoku-status" class="text-center mt-4 text-lg text-gray-600">
+                    黑棋回合
+                </div>
+            </div>
+
+            <!-- 中国象棋 -->
+            <div class="game-card bg-white rounded-xl shadow-lg p-8 border border-black">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fa-solid fa-chess text-red-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">中国象棋</h3>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="chesscn-ai-btn" onclick="setChessCNMode('ai')" class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium">
+                            人机对战
+                        </button>
+                        <button id="chesscn-human-btn" onclick="setChessCNMode('human')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300">
+                            人人对战
+                        </button>
+                        <button id="chesscn-online-btn" onclick="setChessCNMode('online')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300">
+                            网络对战
+                        </button>
+                    </div>
+                </div>
+                <p id="chesscn-mode-text" class="text-gray-600 mb-4 text-center">人机对战中国象棋（你执红方先行）</p>
+                <div id="chesscn-difficulty-selector" class="flex justify-center items-center space-x-2 mb-4">
+                    <span class="text-sm text-gray-600">难度：</span>
+                    <button onclick="setChessCNDifficulty(1)" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300">1</button>
+                    <button onclick="setChessCNDifficulty(2)" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300">2</button>
+                    <button onclick="setChessCNDifficulty(3)" class="px-3 py-1 bg-green-600 text-white rounded text-xs">3</button>
+                    <button onclick="setChessCNDifficulty(4)" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300">4</button>
+                    <button onclick="setChessCNDifficulty(5)" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300">5</button>
+                </div>
+                <div class="flex justify-center space-x-6 mb-4">
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">红方</p>
+                        <p id="chesscn-red-wins" class="font-bold text-red-600">0</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">黑方</p>
+                        <p id="chesscn-black-wins" class="font-bold text-gray-800">0</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">胜率</p>
+                        <p id="chesscn-rate" class="font-bold text-blue-600">0%</p>
+                    </div>
+                </div>
+                <div class="flex justify-center mb-6">
+                    <div id="chesscn-container" class="chesscn-board-container">
+                        <div id="chesscn-board" class="chesscn-board"></div>
+                        <div class="chuhe-hanjie"></div>
+                        <div class="chuhe-text">楚河　汉界</div>
+                    </div>
+                </div>
+                <div class="flex justify-center space-x-4">
+                    <button onclick="resetChessCN()" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                        重新开始
+                    </button>
+                </div>
+                <div id="chesscn-status" class="text-center mt-4 text-lg text-gray-600">
+                    红方回合
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <img src="images/0000.jpg" alt="四川拓泰律师事务所" class="h-16 mx-auto mb-4">
+                <p class="text-gray-400">四川拓泰律师事务所</p>
+                <p class="text-gray-500 text-sm mt-2">版权所有 © 2024</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== 中国象棋 ====================
+        const PIECES_CN = {
+            r: '車', n: '馬', b: '象', a: '士', k: '将', c: '炮', p: '卒',
+            R: '車', N: '馬', B: '相', A: '仕', K: '帅', C: '砲', P: '兵'
+        };
+        let chessCNBoard = [];
+        let chessCNPlayer = 'red';
+        let chessCNSelected = null;
+        let chessCNGameOver = false;
+        let chessCNMode = 'ai'; // 'human' 或 'ai'
+        let chessCNDifficulty = 3; // 1-5，默认为3（中等难度）
+        let chessCNRedWins = parseInt(localStorage.getItem('chessCNRedWins') || '0');
+        let chessCNBlackWins = parseInt(localStorage.getItem('chessCNBlackWins') || '0');
+
+        function setChessCNMode(mode) {
+            chessCNMode = mode;
+            const difficultySelector = document.getElementById('chesscn-difficulty-selector');
+            
+            if (mode === 'human') {
+                document.getElementById('chesscn-human-btn').className = 'px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium';
+                document.getElementById('chesscn-ai-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('chesscn-online-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('chesscn-mode-text').textContent = '人人对战中国传统象棋（红方先行）';
+                difficultySelector.style.display = 'none';
+            } else if (mode === 'online') {
+                document.getElementById('chesscn-human-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('chesscn-ai-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('chesscn-online-btn').className = 'px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium';
+                document.getElementById('chesscn-mode-text').textContent = '网络对战中国象棋 - 连接中...';
+                difficultySelector.style.display = 'none';
+            } else {
+                document.getElementById('chesscn-human-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('chesscn-ai-btn').className = 'px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium';
+                document.getElementById('chesscn-online-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('chesscn-mode-text').textContent = '人机对战中国象棋（你执红方先行）';
+                difficultySelector.style.display = 'flex';
+            }
+            resetChessCN();
+        }
+
+        function setChessCNDifficulty(level) {
+            chessCNDifficulty = level;
+            const buttons = document.querySelectorAll('#chesscn-difficulty-selector button');
+            buttons.forEach((btn, index) => {
+                if (index + 1 === level) {
+                    btn.className = 'px-3 py-1 bg-green-600 text-white rounded text-xs';
+                } else {
+                    btn.className = 'px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300';
+                }
+            });
+        }
+
+        function initChessCN() {
+            const board = document.getElementById('chesscn-board');
+            board.innerHTML = '';
+            
+            // 初始化棋盘数据 (10行9列)
+            // 索引0是最上面一行（红方底线），索引9是最下面一行（黑方底线）
+            chessCNBoard = [
+                ['R','N','B','A','K','A','B','N','R'],  // 红方底线：車、馬、相、仕、帅、仕、相、馬、車
+                ['','','','','','','','',''],           // 空行
+                ['','','','','','','','',''],           // 空行
+                ['','C','','','','','','C',''],         // 红方炮位
+                ['','','','','','','','',''],           // 空行
+                ['P','','P','','P','','P','','P'],      // 红方兵位
+                ['','','','','','','','',''],           // 空行（楚河汉界下方）
+                ['p','','p','','p','','p','','p'],      // 黑方卒位
+                ['','c','','','','','','c',''],         // 黑方炮位
+                ['r','n','b','a','k','a','b','n','r']   // 黑方底线：車、馬、象、士、将、士、象、馬、車
+            ];
+            
+            // 创建交叉点
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const intersection = document.createElement('div');
+                    intersection.className = 'chesscn-intersection';
+                    
+                    // 添加交叉点标记（棋盘上的小圆点）
+                    if (hasIntersectionPoint(i, j)) {
+                        intersection.classList.add('has-point');
+                    }
+                    
+                    // 添加象田斜线
+                    if (isDiagonalCell(i, j)) {
+                        if (isTopLeftDiagonal(i, j)) {
+                            intersection.classList.add('diagonal-top-left');
+                        } else {
+                            intersection.classList.add('diagonal-bottom-right');
+                        }
+                    }
+                    
+                    // 添加棋子
+                    const piece = chessCNBoard[i][j];
+                    if (piece) {
+                        const stone = document.createElement('div');
+                        stone.className = `chesscn-stone ${piece === piece.toUpperCase() ? 'red' : 'black'}`;
+                        stone.textContent = PIECES_CN[piece];
+                        stone.dataset.row = i;
+                        stone.dataset.col = j;
+                        stone.addEventListener('click', () => selectChessCN(i, j));
+                        intersection.appendChild(stone);
+                    }
+                    
+                    intersection.dataset.row = i;
+                    intersection.dataset.col = j;
+                    intersection.addEventListener('click', () => selectChessCN(i, j));
+                    board.appendChild(intersection);
+                }
+            }
+            
+            chessCNPlayer = 'red';
+            chessCNGameOver = false;
+            updateChessCNStats();
+            updateChessCNStatus();
+        }
+
+        function hasIntersectionPoint(row, col) {
+            // 棋盘上的星位点
+            const points = [
+                [0, 0], [0, 2], [0, 4], [0, 6], [0, 8],
+                [2, 1], [2, 3], [2, 5], [2, 7],
+                [3, 0], [3, 2], [3, 4], [3, 6], [3, 8],
+                [4, 1], [4, 3], [4, 5], [4, 7],
+                [5, 0], [5, 2], [5, 4], [5, 6], [5, 8],
+                [6, 1], [6, 3], [6, 5], [6, 7],
+                [7, 0], [7, 2], [7, 4], [7, 6], [7, 8],
+                [8, 1], [8, 3], [8, 5], [8, 7],
+                [9, 0], [9, 2], [9, 4], [9, 6], [9, 8]
+            ];
+            return points.some(([r, c]) => r === row && c === col);
+        }
+
+        function isDiagonalCell(row, col) {
+            // 象田位置
+            const diagonalPositions = [
+                [2, 0], [2, 2], [2, 4], [2, 6], [2, 8],
+                [3, 1], [3, 3], [3, 5], [3, 7],
+                [6, 1], [6, 3], [6, 5], [6, 7],
+                [7, 0], [7, 2], [7, 4], [7, 6], [7, 8]
+            ];
+            return diagonalPositions.some(([r, c]) => r === row && c === col);
+        }
+
+        function isTopLeftDiagonal(row, col) {
+            // 左上角斜线
+            const topLeft = [
+                [2, 0], [2, 4], [2, 8],
+                [3, 1], [3, 3], [3, 5], [3, 7],
+                [6, 1], [6, 3], [6, 5], [6, 7],
+                [7, 0], [7, 4], [7, 8]
+            ];
+            return topLeft.some(([r, c]) => r === row && c === col);
+        }
+
+        function selectChessCN(row, col) {
+            if (chessCNGameOver) return;
+            // 人机对战模式下，玩家只能操作红方
+            if (chessCNMode === 'ai' && chessCNPlayer === 'black') return;
+            
+            const piece = chessCNBoard[row][col];
+            const isRed = piece === piece.toUpperCase();
+            
+            clearSelection();
+            
+            if (chessCNSelected) {
+                const [sr, sc] = chessCNSelected;
+                if (canChessCNMove(sr, sc, row, col)) {
+                    movePiece(sr, sc, row, col);
+                    chessCNSelected = null;
+                    chessCNPlayer = chessCNPlayer === 'red' ? 'black' : 'red';
+                    renderChessCN();
+                    checkChessCNWin();
+                    
+                    // 人机对战模式下，电脑回合
+                    if (chessCNMode === 'ai' && chessCNPlayer === 'black' && !chessCNGameOver) {
+                        setTimeout(computerChessCNMove, 800);
+                    }
+                } else if (piece && ((chessCNPlayer === 'red' && isRed) || (chessCNPlayer === 'black' && !isRed))) {
+                    chessCNSelected = [row, col];
+                    highlightLegalMoves(row, col);
+                    renderChessCN();
+                } else {
+                    chessCNSelected = null;
+                }
+            } else if (piece && ((chessCNPlayer === 'red' && isRed) || (chessCNPlayer === 'black' && !isRed))) {
+                chessCNSelected = [row, col];
+                highlightLegalMoves(row, col);
+                renderChessCN();
+            }
+        }
+
+        function clearSelection() {
+            const stones = document.querySelectorAll('.chesscn-stone');
+            stones.forEach(stone => stone.classList.remove('selected', 'legal'));
+        }
+
+        function highlightLegalMoves(row, col) {
+            const piece = chessCNBoard[row][col];
+            if (!piece) return;
+            
+            for (let r = 0; r < 10; r++) {
+                for (let c = 0; c < 9; c++) {
+                    if (canChessCNMove(row, col, r, c)) {
+                        const cell = document.querySelector(`[data-row="${r}"][data-col="${c}"]`);
+                        if (cell) {
+                            const stone = cell.querySelector('.chesscn-stone');
+                            if (stone) {
+                                stone.classList.add('legal');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function movePiece(sr, sc, tr, tc) {
+            chessCNBoard[tr][tc] = chessCNBoard[sr][sc];
+            chessCNBoard[sr][sc] = '';
+        }
+
+        function canChessCNMove(sr, sc, tr, tc) {
+            if (sr === tr && sc === tc) return false;
+            
+            const piece = chessCNBoard[sr][sc];
+            const target = chessCNBoard[tr][tc];
+            
+            if (!piece) return false;
+            if (target && ((piece === piece.toUpperCase()) === (target === target.toUpperCase()))) {
+                return false;
+            }
+            
+            const dr = tr - sr;
+            const dc = tc - sc;
+            const isRed = piece === piece.toUpperCase();
+            
+            switch (piece.toLowerCase()) {
+                case 'k': // 将/帅
+                    if (tc < 3 || tc > 5) return false;
+                    if (isRed && tr > 2) return false;
+                    if (!isRed && tr < 7) return false;
+                    return Math.abs(dr) + Math.abs(dc) === 1;
+                    
+                case 'a': // 士/仕
+                    if (Math.abs(dr) !== 1 || Math.abs(dc) !== 1) return false;
+                    if (isRed && tr > 2) return false;
+                    if (!isRed && tr < 7) return false;
+                    if (tc < 3 || tc > 5) return false;
+                    return true;
+                    
+                case 'b': // 象/相
+                    if (Math.abs(dr) !== 2 || Math.abs(dc) !== 2) return false;
+                    if (isRed && tr > 4) return false;
+                    if (!isRed && tr < 5) return false;
+                    if (chessCNBoard[(sr + tr) / 2][(sc + tc) / 2]) return false;
+                    return true;
+                    
+                case 'n': // 马
+                    if (Math.abs(dr) + Math.abs(dc) !== 3) return false;
+                    const blockR = sr + (dr > 0 ? 1 : dr < 0 ? -1 : 0);
+                    const blockC = sc + (dc > 0 ? 1 : dc < 0 ? -1 : 0);
+                    if (chessCNBoard[blockR][blockC]) return false;
+                    return true;
+                    
+                case 'r': // 车
+                    if (dr !== 0 && dc !== 0) return false;
+                    const rStep = dr === 0 ? 0 : dr / Math.abs(dr);
+                    const cStep = dc === 0 ? 0 : dc / Math.abs(dc);
+                    for (let i = 1; i < Math.max(Math.abs(dr), Math.abs(dc)); i++) {
+                        if (chessCNBoard[sr + i * rStep][sc + i * cStep]) return false;
+                    }
+                    return true;
+                    
+                case 'c': // 炮
+                    if (dr !== 0 && dc !== 0) return false;
+                    let jumped = 0;
+                    const crStep = dr === 0 ? 0 : dr / Math.abs(dr);
+                    const ccStep = dc === 0 ? 0 : dc / Math.abs(dc);
+                    for (let i = 1; i < Math.max(Math.abs(dr), Math.abs(dc)); i++) {
+                        if (chessCNBoard[sr + i * crStep][sc + i * ccStep]) jumped++;
+                    }
+                    if (!target) return jumped === 0;
+                    return jumped === 1;
+                    
+                case 'p': // 卒/兵
+                    if (isRed) {
+                        if (sr > 4) {
+                            return dc === 0 && dr === 1;
+                        }
+                        return (dc === 0 && dr === 1) || (dr === 0 && Math.abs(dc) === 1);
+                    } else {
+                        if (sr < 5) {
+                            return dc === 0 && dr === -1;
+                        }
+                        return (dc === 0 && dr === -1) || (dr === 0 && Math.abs(dc) === 1);
+                    }
+                    
+                default:
+                    return false;
+            }
+        }
+
+        function computerChessCNMove() {
+            if (chessCNGameOver) return;
+            
+            let bestMoves = [];
+            let bestScore = -Infinity;
+            let allMoves = [];
+            
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const piece = chessCNBoard[i][j];
+                    if (piece && piece === piece.toLowerCase()) {
+                        for (let r = 0; r < 10; r++) {
+                            for (let c = 0; c < 9; c++) {
+                                if (canChessCNMove(i, j, r, c)) {
+                                    let score = 0;
+                                    const target = chessCNBoard[r][c];
+                                    
+                                    if (target) {
+                                        const targetValue = getPieceValue(target);
+                                        score += targetValue * 10;
+                                    }
+                                    
+                                    score += getPieceValue(piece);
+                                    
+                                    if (piece.toLowerCase() === 'k') {
+                                        score += 1000;
+                                    }
+                                    
+                                    allMoves.push({from: [i, j], to: [r, c], score: score});
+                                    
+                                    if (score > bestScore) {
+                                        bestScore = score;
+                                        bestMoves = [{from: [i, j], to: [r, c]}];
+                                    } else if (score === bestScore) {
+                                        bestMoves.push({from: [i, j], to: [r, c]});
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if (bestMoves.length === 0) {
+                chessCNGameOver = true;
+                document.getElementById('chesscn-status').textContent = '🎉 红方获胜！';
+                return;
+            }
+            
+            // 根据难度选择落子
+            let selectedMove;
+            
+            if (chessCNDifficulty === 1) {
+                // 难度1：几乎随机
+                if (bestScore < 30 && allMoves.length > 0) {
+                    selectedMove = allMoves[Math.floor(Math.random() * allMoves.length)];
+                } else {
+                    selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
+                }
+            } else if (chessCNDifficulty === 2) {
+                // 难度2：简单策略，有一定随机性
+                if (Math.random() < 0.3 && allMoves.length > 0) {
+                    selectedMove = allMoves[Math.floor(Math.random() * allMoves.length)];
+                } else {
+                    selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
+                }
+            } else if (chessCNDifficulty === 3) {
+                // 难度3：中等策略，偶尔随机
+                if (Math.random() < 0.1 && bestMoves.length > 1) {
+                    selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
+                } else {
+                    selectedMove = bestMoves[0];
+                }
+            } else if (chessCNDifficulty === 4) {
+                // 难度4：较强策略，很少随机
+                selectedMove = bestMoves[0];
+            } else {
+                // 难度5：最优策略，总是选择最佳位置
+                selectedMove = bestMoves[0];
+            }
+            
+            movePiece(selectedMove.from[0], selectedMove.from[1], selectedMove.to[0], selectedMove.to[1]);
+            chessCNPlayer = 'red';
+            renderChessCN();
+            checkChessCNWin();
+        }
+
+        function getPieceValue(piece) {
+            const values = { 'k': 1000, 'a': 50, 'b': 50, 'n': 80, 'r': 100, 'c': 90, 'p': 20 };
+            return values[piece.toLowerCase()] || 0;
+        }
+
+        function checkChessCNWin() {
+            let redKing = false, blackKing = false;
+            
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 9; j++) {
+                    if (chessCNBoard[i][j] === 'K') redKing = true;
+                    if (chessCNBoard[i][j] === 'k') blackKing = true;
+                }
+            }
+            
+            if (!blackKing) {
+                chessCNGameOver = true;
+                chessCNRedWins++;
+                localStorage.setItem('chessCNRedWins', chessCNRedWins.toString());
+                document.getElementById('chesscn-status').textContent = chessCNMode === 'ai' ? '🎉 恭喜你获胜！' : '🎉 红方获胜！';
+                updateChessCNStats();
+                return true;
+            }
+            if (!redKing) {
+                chessCNGameOver = true;
+                chessCNBlackWins++;
+                localStorage.setItem('chessCNBlackWins', chessCNBlackWins.toString());
+                document.getElementById('chesscn-status').textContent = chessCNMode === 'ai' ? '🤖 电脑获胜！' : '🎉 黑方获胜！';
+                updateChessCNStats();
+                return true;
+            }
+            return false;
+        }
+
+        function updateChessCNStats() {
+            document.getElementById('chesscn-red-wins').textContent = chessCNRedWins;
+            document.getElementById('chesscn-black-wins').textContent = chessCNBlackWins;
+            const total = chessCNRedWins + chessCNBlackWins;
+            const rate = total > 0 ? Math.round((chessCNRedWins / total) * 100) : 0;
+            document.getElementById('chesscn-rate').textContent = rate + '%';
+        }
+
+        function chessCNAIMove() {
+            if (chessCNGameOver) return;
+            
+            // 收集所有黑方棋子及其可移动位置
+            const possibleMoves = [];
+            
+            for (let sr = 0; sr < 10; sr++) {
+                for (let sc = 0; sc < 9; sc++) {
+                    const piece = chessCNBoard[sr][sc];
+                    if (piece && piece === piece.toLowerCase()) { // 黑方棋子
+                        for (let dr = 0; dr < 10; dr++) {
+                            for (let dc = 0; dc < 9; dc++) {
+                                if (canChessCNMove(sr, sc, dr, dc)) {
+                                    possibleMoves.push({ from: [sr, sc], to: [dr, dc] });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if (possibleMoves.length > 0) {
+                // 随机选择一个移动
+                const randomIndex = Math.floor(Math.random() * possibleMoves.length);
+                const move = possibleMoves[randomIndex];
+                movePiece(move.from[0], move.from[1], move.to[0], move.to[1]);
+                chessCNPlayer = 'red';
+                renderChessCN();
+                checkChessCNWin();
+            }
+        }
+
+        function renderChessCN() {
+            const board = document.getElementById('chesscn-board');
+            board.innerHTML = '';
+            
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const intersection = document.createElement('div');
+                    intersection.className = 'chesscn-intersection';
+                    
+                    if (hasIntersectionPoint(i, j)) {
+                        intersection.classList.add('has-point');
+                    }
+                    
+                    if (isDiagonalCell(i, j)) {
+                        if (isTopLeftDiagonal(i, j)) {
+                            intersection.classList.add('diagonal-top-left');
+                        } else {
+                            intersection.classList.add('diagonal-bottom-right');
+                        }
+                    }
+                    
+                    const piece = chessCNBoard[i][j];
+                    if (piece) {
+                        const stone = document.createElement('div');
+                        stone.className = `chesscn-stone ${piece === piece.toUpperCase() ? 'red' : 'black'}`;
+                        
+                        if (chessCNSelected && chessCNSelected[0] === i && chessCNSelected[1] === j) {
+                            stone.classList.add('selected');
+                        }
+                        
+                        stone.textContent = PIECES_CN[piece];
+                        stone.dataset.row = i;
+                        stone.dataset.col = j;
+                        stone.addEventListener('click', () => selectChessCN(i, j));
+                        intersection.appendChild(stone);
+                    }
+                    
+                    intersection.dataset.row = i;
+                    intersection.dataset.col = j;
+                    intersection.addEventListener('click', () => selectChessCN(i, j));
+                    board.appendChild(intersection);
+                }
+            }
+            
+            if (chessCNSelected) {
+                highlightLegalMoves(chessCNSelected[0], chessCNSelected[1]);
+            }
+            
+            updateChessCNStatus();
+        }
+
+        function updateChessCNStatus() {
+            if (!chessCNGameOver) {
+                document.getElementById('chesscn-status').textContent = chessCNPlayer === 'red' ? '红方回合' : '黑方回合';
+            }
+        }
+
+        function resetChessCN() {
+            chessCNSelected = null;
+            initChessCN();
+        }
+
+        // ==================== 五子棋 ====================
+        const GOMOKU_SIZE = 15;
+        let gomokuBoard = [];
+        let gomokuPlayer = 'black';
+        let gomokuGameOver = false;
+        let gomokuBlackWins = parseInt(localStorage.getItem('gomokuBlackWins') || '0');
+        let gomokuWhiteWins = parseInt(localStorage.getItem('gomokuWhiteWins') || '0');
+        let gomokuMode = 'ai'; // 'human' 或 'ai'
+        let gomokuDifficulty = 3; // 1-5，默认为3（中等难度）
+
+        let currentRoomId = null;
+        let onlineRole = null;
+
+        function setGomokuMode(mode) {
+            gomokuMode = mode;
+            const difficultySelector = document.getElementById('gomoku-difficulty-selector');
+            
+            if (mode === 'human') {
+                document.getElementById('gomoku-human-btn').className = 'px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium';
+                document.getElementById('gomoku-ai-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('gomoku-online-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('gomoku-mode-text').textContent = '人人对战五子棋（黑棋先行）';
+                disconnectOnline();
+                difficultySelector.style.display = 'none';
+            } else if (mode === 'online') {
+                document.getElementById('gomoku-human-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('gomoku-ai-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('gomoku-online-btn').className = 'px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium';
+                document.getElementById('gomoku-mode-text').textContent = '网络对战五子棋 - 连接中...';
+                connectOnline('gomoku');
+                difficultySelector.style.display = 'none';
+            } else {
+                document.getElementById('gomoku-human-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('gomoku-ai-btn').className = 'px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium';
+                document.getElementById('gomoku-online-btn').className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300';
+                document.getElementById('gomoku-mode-text').textContent = '人机对战五子棋（你执黑棋先行）';
+                disconnectOnline();
+                difficultySelector.style.display = 'flex';
+            }
+            resetGomoku();
+        }
+
+        function setGomokuDifficulty(level) {
+            gomokuDifficulty = level;
+            const buttons = document.querySelectorAll('#gomoku-difficulty-selector button');
+            buttons.forEach((btn, index) => {
+                if (index + 1 === level) {
+                    btn.className = 'px-3 py-1 bg-green-600 text-white rounded text-xs';
+                } else {
+                    btn.className = 'px-3 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300';
+                }
+            });
+        }
+
+        let onlinePolling = null;
+        let myColor = 'black';
+
+        function connectOnline(gameType) {
+            disconnectOnline();
+            
+            currentRoomId = 'RM' + Math.random().toString(36).substr(2, 4).toUpperCase();
+            onlineRole = 'player1';
+            myColor = 'black';
+            
+            showRoomModal(gameType);
+        }
+
+        function disconnectOnline() {
+            if (onlinePolling) {
+                clearInterval(onlinePolling);
+                onlinePolling = null;
+            }
+            currentRoomId = null;
+            onlineRole = null;
+            myColor = 'black';
+        }
+
+        function showRoomModal(gameType) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-xl p-6 w-96 max-w-full mx-4">
+                    <h3 class="text-xl font-bold mb-4">网络对战</h3>
+                    <div class="bg-gray-100 rounded-lg p-4 mb-4">
+                        <p class="text-sm text-gray-600 mb-2">您的房间号</p>
+                        <p class="text-2xl font-bold text-green-600">${currentRoomId}</p>
+                    </div>
+                    <p class="text-sm text-gray-500 text-center mb-4">请在另一个浏览器窗口打开此页面，输入相同房间号加入</p>
+                    <button onclick="startOnlineGame('${gameType}')" class="w-full py-3 bg-green-600 text-white rounded-lg mb-3">我是黑棋（先手）</button>
+                    <div class="mb-4">
+                        <p class="text-sm text-gray-600 mb-2">加入房间（执白棋）</p>
+                        <input type="text" id="join-room-input" placeholder="输入房间号" class="w-full px-4 py-2 border border-gray-300 rounded-lg mb-2" />
+                        <button onclick="joinAsWhite()" class="w-full py-2 bg-blue-600 text-white rounded-lg">加入</button>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove(); disconnectOnline(); setGomokuMode('ai')" class="w-full py-2 text-gray-500 hover:text-gray-700">关闭</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function startOnlineGame(gameType) {
+            document.querySelector('.fixed.inset-0')?.remove();
+            onlineRole = 'player1';
+            myColor = 'black';
+            gomokuPlayer = 'black';
+            document.getElementById('gomoku-mode-text').textContent = `网络对战五子棋 - 房间号: ${currentRoomId}，您执黑棋`;
+            resetGomoku();
+            startOnlinePolling();
+        }
+
+        function joinAsWhite() {
+            const roomId = document.getElementById('join-room-input').value.trim().toUpperCase();
+            if (roomId) {
+                currentRoomId = roomId;
+                onlineRole = 'player2';
+                myColor = 'white';
+                gomokuPlayer = 'black'; // 黑棋先下
+                document.querySelector('.fixed.inset-0')?.remove();
+                document.getElementById('gomoku-mode-text').textContent = `网络对战五子棋 - 房间号: ${currentRoomId}，您执白棋`;
+                resetGomoku();
+                startOnlinePolling();
+            }
+        }
+
+        function startOnlinePolling() {
+            onlinePolling = setInterval(() => {
+                if (!currentRoomId || gomokuMode !== 'online') return;
+                
+                try {
+                    const key = 'gomoku_' + currentRoomId;
+                    const stored = localStorage.getItem(key);
+                    if (stored) {
+                        const data = JSON.parse(stored);
+                        if (data.player !== onlineRole) {
+                            // 检查是否有新落子
+                            let hasNewMove = false;
+                            for (let i = 0; i < GOMOKU_SIZE; i++) {
+                                for (let j = 0; j < GOMOKU_SIZE; j++) {
+                                    if (gomokuBoard[i][j] !== data.board[i][j]) {
+                                        hasNewMove = true;
+                                        break;
+                                    }
+                                }
+                                if (hasNewMove) break;
+                            }
+                            
+                            if (hasNewMove) {
+                                gomokuBoard = JSON.parse(JSON.stringify(data.board));
+                                gomokuPlayer = data.nextTurn;
+                                gomokuGameOver = data.gameOver;
+                                
+                                renderGomokuBoard();
+                                updateGomokuStatus();
+                                
+                                if (data.gameOver) {
+                                    document.getElementById('gomoku-status').textContent = data.winner === myColor ? '🎉 恭喜获胜！' : '😢 对手获胜！';
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.error('轮询失败:', e);
+                }
+            }, 300);
+        }
+
+        function sendGomokuMove(row, col) {
+            if (!currentRoomId || gomokuMode !== 'online') return;
+            
+            const winner = checkGomokuWin(row, col) ? myColor : null;
+            const nextTurn = gomokuPlayer === 'black' ? 'white' : 'black';
+            
+            const data = {
+                roomId: currentRoomId,
+                board: JSON.parse(JSON.stringify(gomokuBoard)),
+                player: onlineRole,
+                nextTurn: nextTurn,
+                winner: winner,
+                gameOver: winner !== null
+            };
+            const key = 'gomoku_' + currentRoomId;
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function renderGomokuBoard() {
+            const board = document.getElementById('gomoku-board');
+            board.innerHTML = '';
+            for (let i = 0; i < GOMOKU_SIZE; i++) {
+                for (let j = 0; j < GOMOKU_SIZE; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'w-5 h-5 flex items-center justify-center relative cursor-pointer';
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    
+                    if (gomokuBoard[i][j]) {
+                        const stone = document.createElement('div');
+                        stone.style.width = '20px';
+                        stone.style.height = '20px';
+                        stone.style.borderRadius = '50%';
+                        stone.style.boxShadow = gomokuBoard[i][j] === 'black' 
+                            ? 'inset 2px 2px 4px rgba(255,255,255,0.1), inset -2px -2px 4px rgba(0,0,0,0.5), 2px 2px 4px rgba(0,0,0,0.3)' 
+                            : 'inset 2px 2px 4px rgba(255,255,255,0.8), inset -2px -2px 4px rgba(0,0,0,0.1), 2px 2px 4px rgba(0,0,0,0.2)';
+                        stone.style.background = gomokuBoard[i][j] === 'black' 
+                            ? 'radial-gradient(circle at 30% 30%, #4a4a4a, #1a1a1a)' 
+                            : 'radial-gradient(circle at 30% 30%, #ffffff, #e0e0e0)';
+                        cell.appendChild(stone);
+                    }
+                    
+                    board.appendChild(cell);
+                }
+            }
+        }
+
+        function initGomoku() {
+            const board = document.getElementById('gomoku-board');
+            board.innerHTML = '';
+            board.style.gridTemplateColumns = `repeat(${GOMOKU_SIZE}, 1fr)`;
+            
+            gomokuBoard = Array(GOMOKU_SIZE).fill(null).map(() => Array(GOMOKU_SIZE).fill(null));
+            // 网络对战模式下，根据角色决定先手
+            if (gomokuMode === 'online' && onlineRole) {
+                gomokuPlayer = onlineRole === 'player1' ? 'black' : 'white';
+            } else {
+                gomokuPlayer = 'black';
+            }
+            gomokuGameOver = false;
+            
+            updateGomokuStats();
+            
+            for (let i = 0; i < GOMOKU_SIZE; i++) {
+                for (let j = 0; j < GOMOKU_SIZE; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'w-6 h-6 flex items-center justify-center cursor-pointer relative';
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    cell.addEventListener('click', () => placeGomokuStone(i, j));
+                    
+                    // 添加网格线
+                    cell.style.borderRight = j < GOMOKU_SIZE - 1 ? '1px solid rgba(0,0,0,0.3)' : 'none';
+                    cell.style.borderBottom = i < GOMOKU_SIZE - 1 ? '1px solid rgba(0,0,0,0.3)' : 'none';
+                    
+                    // 星位点
+                    if ((i === 3 || i === 7 || i === 11) && (j === 3 || j === 7 || j === 11)) {
+                        const star = document.createElement('div');
+                        star.className = 'w-2 h-2 bg-amber-800 rounded-full absolute z-10';
+                        cell.appendChild(star);
+                    }
+                    
+                    board.appendChild(cell);
+                }
+            }
+            
+            updateGomokuStatus();
+        }
+
+        function placeGomokuStone(row, col, isAI = false) {
+            if (gomokuGameOver) return;
+            if (gomokuBoard[row][col]) return;
+            
+            // 网络对战模式下，检查是否轮到自己
+            if (gomokuMode === 'online') {
+                if (gomokuPlayer !== myColor) {
+                    return; // 不是自己的回合
+                }
+            }
+            
+            // 人机对战模式下，玩家只能执黑棋
+            if (!isAI && gomokuMode === 'ai' && gomokuPlayer !== 'black') return;
+            
+            gomokuBoard[row][col] = gomokuPlayer;
+            
+            const cell = document.querySelector(`#gomoku-board [data-row="${row}"][data-col="${col}"]`);
+            const stone = document.createElement('div');
+            stone.style.width = '20px';
+            stone.style.height = '20px';
+            stone.style.borderRadius = '50%';
+            stone.style.boxShadow = gomokuPlayer === 'black' 
+                ? 'inset 2px 2px 4px rgba(255,255,255,0.1), inset -2px -2px 4px rgba(0,0,0,0.5), 2px 2px 4px rgba(0,0,0,0.3)' 
+                : 'inset 2px 2px 4px rgba(255,255,255,0.8), inset -2px -2px 4px rgba(0,0,0,0.1), 2px 2px 4px rgba(0,0,0,0.2)';
+            stone.style.background = gomokuPlayer === 'black' 
+                ? 'radial-gradient(circle at 30% 30%, #4a4a4a, #1a1a1a)' 
+                : 'radial-gradient(circle at 30% 30%, #ffffff, #e0e0e0)';
+            cell.appendChild(stone);
+            
+            // 网络对战模式下发送落子信息
+            if (gomokuMode === 'online') {
+                sendGomokuMove(row, col);
+            }
+            
+            if (checkGomokuWin(row, col)) {
+                gomokuGameOver = true;
+                if (gomokuPlayer === 'black') {
+                    gomokuBlackWins++;
+                    localStorage.setItem('gomokuBlackWins', gomokuBlackWins.toString());
+                    document.getElementById('gomoku-status').textContent = gomokuMode === 'ai' ? '🎉 恭喜你获胜！' : (gomokuMode === 'online' ? '🎉 恭喜获胜！' : '🎉 黑棋获胜！');
+                } else {
+                    gomokuWhiteWins++;
+                    localStorage.setItem('gomokuWhiteWins', gomokuWhiteWins.toString());
+                    document.getElementById('gomoku-status').textContent = gomokuMode === 'ai' ? '🤖 电脑获胜！' : (gomokuMode === 'online' ? '😢 对手获胜！' : '🎉 白棋获胜！');
+                }
+                updateGomokuStats();
+                return;
+            }
+            
+            gomokuPlayer = gomokuPlayer === 'black' ? 'white' : 'black';
+            updateGomokuStatus();
+            
+            // 人机对战模式下，电脑回合（只有玩家下完后才触发）
+            if (!isAI && gomokuMode === 'ai' && gomokuPlayer === 'white' && !gomokuGameOver) {
+                setTimeout(gomokuAIMove, 500);
+            }
+        }
+
+        function gomokuAIMove() {
+            if (gomokuGameOver) return;
+            
+            // 根据难度调整AI行为
+            let bestScore = -Infinity;
+            let bestMoves = [];
+            let allMoves = [];
+            
+            for (let i = 0; i < GOMOKU_SIZE; i++) {
+                for (let j = 0; j < GOMOKU_SIZE; j++) {
+                    if (!gomokuBoard[i][j]) {
+                        const score = evaluateGomokuPosition(i, j);
+                        const move = {row: i, col: j, score: score};
+                        allMoves.push(move);
+                        
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestMoves = [move];
+                        } else if (score === bestScore) {
+                            bestMoves.push(move);
+                        }
+                    }
+                }
+            }
+            
+            // 根据难度选择落子
+            let selectedMove;
+            
+            if (gomokuDifficulty === 1) {
+                // 难度1：几乎随机，只考虑非常明显的威胁
+                if (bestScore < 50 && allMoves.length > 0) {
+                    selectedMove = allMoves[Math.floor(Math.random() * allMoves.length)];
+                } else {
+                    selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
+                }
+            } else if (gomokuDifficulty === 2) {
+                // 难度2：简单策略，有一定随机性
+                if (Math.random() < 0.3 && allMoves.length > 0) {
+                    selectedMove = allMoves[Math.floor(Math.random() * allMoves.length)];
+                } else {
+                    selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
+                }
+            } else if (gomokuDifficulty === 3) {
+                // 难度3：中等策略，偶尔随机
+                if (Math.random() < 0.1 && bestMoves.length > 1) {
+                    selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
+                } else {
+                    selectedMove = bestMoves[0];
+                }
+            } else if (gomokuDifficulty === 4) {
+                // 难度4：较强策略，很少随机
+                selectedMove = bestMoves[0];
+            } else {
+                // 难度5：最优策略，总是选择最佳位置
+                selectedMove = bestMoves[0];
+            }
+            
+            if (selectedMove) {
+                placeGomokuStone(selectedMove.row, selectedMove.col, true);
+            }
+        }
+
+        function evaluateGomokuPosition(row, col) {
+            let score = 0;
+            const directions = [[0, 1], [1, 0], [1, 1], [1, -1]];
+            
+            // 中心位置加分
+            const centerDist = Math.sqrt(Math.pow(row - 7, 2) + Math.pow(col - 7, 2));
+            score += Math.max(0, 10 - centerDist);
+            
+            // 检查各方向的连子情况
+            for (const [dr, dc] of directions) {
+                let count = 0;
+                let empty = 0;
+                
+                // 检查正向
+                for (let i = 1; i <= 4; i++) {
+                    const nr = row + dr * i;
+                    const nc = col + dc * i;
+                    if (nr < 0 || nr >= GOMOKU_SIZE || nc < 0 || nc >= GOMOKU_SIZE) break;
+                    if (gomokuBoard[nr][nc] === 'white') count++;
+                    else if (gomokuBoard[nr][nc] === null) { empty++; break; }
+                    else break;
+                }
+                
+                // 检查反向
+                for (let i = 1; i <= 4; i++) {
+                    const nr = row - dr * i;
+                    const nc = col - dc * i;
+                    if (nr < 0 || nr >= GOMOKU_SIZE || nc < 0 || nc >= GOMOKU_SIZE) break;
+                    if (gomokuBoard[nr][nc] === 'white') count++;
+                    else if (gomokuBoard[nr][nc] === null) { empty++; break; }
+                    else break;
+                }
+                
+                // 根据连子数量加分
+                if (count >= 4) score += 1000;
+                else if (count === 3 && empty >= 2) score += 100;
+                else if (count === 3 && empty >= 1) score += 50;
+                else if (count === 2 && empty >= 2) score += 20;
+                else if (count === 1 && empty >= 2) score += 10;
+            }
+            
+            return score;
+        }
+
+        function checkGomokuWin(row, col) {
+            const directions = [
+                [0, 1],   // 水平
+                [1, 0],   // 垂直
+                [1, 1],   // 对角线
+                [1, -1]   // 反对角线
+            ];
+            
+            const player = gomokuBoard[row][col];
+            
+            for (const [dr, dc] of directions) {
+                let count = 1;
+                
+                // 正向检查
+                for (let i = 1; i < 5; i++) {
+                    const nr = row + dr * i;
+                    const nc = col + dc * i;
+                    if (nr < 0 || nr >= GOMOKU_SIZE || nc < 0 || nc >= GOMOKU_SIZE) break;
+                    if (gomokuBoard[nr][nc] !== player) break;
+                    count++;
+                }
+                
+                // 反向检查
+                for (let i = 1; i < 5; i++) {
+                    const nr = row - dr * i;
+                    const nc = col - dc * i;
+                    if (nr < 0 || nr >= GOMOKU_SIZE || nc < 0 || nc >= GOMOKU_SIZE) break;
+                    if (gomokuBoard[nr][nc] !== player) break;
+                    count++;
+                }
+                
+                if (count >= 5) return true;
+            }
+            
+            return false;
+        }
+
+        function updateGomokuStatus() {
+            if (!gomokuGameOver) {
+                document.getElementById('gomoku-status').textContent = gomokuPlayer === 'black' ? '黑棋回合' : '白棋回合';
+            }
+        }
+
+        function updateGomokuStats() {
+            document.getElementById('gomoku-black-wins').textContent = gomokuBlackWins;
+            document.getElementById('gomoku-white-wins').textContent = gomokuWhiteWins;
+            const total = gomokuBlackWins + gomokuWhiteWins;
+            const rate = total > 0 ? Math.round((gomokuBlackWins / total) * 100) : 0;
+            document.getElementById('gomoku-rate').textContent = rate + '%';
+        }
+
+        function resetGomoku() {
+            initGomoku();
+        }
+
+        function clearGomokuStats() {
+            gomokuBlackWins = 0;
+            gomokuWhiteWins = 0;
+            localStorage.setItem('gomokuBlackWins', '0');
+            localStorage.setItem('gomokuWhiteWins', '0');
+            updateGomokuStats();
+        }
+
+        // ==================== 围棋 ====================
+        const GO_SIZE = 19;
+        let goBoard = [];
+        let goPlayer = 'black';
+        let goGameOver = false;
+        let goBlackCaptures = 0;
+        let goWhiteCaptures = 0;
+
+        function initGo() {
+            const board = document.getElementById('go-board');
+            board.innerHTML = '';
+            board.style.gridTemplateColumns = `repeat(${GO_SIZE}, 1fr)`;
+            
+            goBoard = Array(GO_SIZE).fill(null).map(() => Array(GO_SIZE).fill(null));
+            goPlayer = 'black';
+            goGameOver = false;
+            goBlackCaptures = 0;
+            goWhiteCaptures = 0;
+            
+            for (let i = 0; i < GO_SIZE; i++) {
+                for (let j = 0; j < GO_SIZE; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'w-6 h-6 flex items-center justify-center cursor-pointer';
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    cell.addEventListener('click', () => placeGoStone(i, j));
+                    
+                    if ((i === 3 || i === 9 || i === 15) && (j === 3 || j === 9 || j === 15)) {
+                        const star = document.createElement('div');
+                        star.className = 'w-2 h-2 bg-amber-800 rounded-full';
+                        cell.appendChild(star);
+                    }
+                    
+                    board.appendChild(cell);
+                }
+            }
+            updateGoStatus();
+        }
+
+        function placeGoStone(row, col) {
+            if (goGameOver || goBoard[row][col]) return;
+            
+            goBoard[row][col] = goPlayer;
+            renderGo();
+            
+            removeCapturedStones(goPlayer);
+            
+            if (goPlayer === 'black') {
+                goPlayer = 'white';
+                updateGoStatus();
+                setTimeout(computerGoMove, 500);
+            } else {
+                goPlayer = 'black';
+                updateGoStatus();
+            }
+        }
+
+        function removeCapturedStones(player) {
+            const opponent = player === 'black' ? 'white' : 'black';
+            let captured = 0;
+            
+            for (let i = 0; i < GO_SIZE; i++) {
+                for (let j = 0; j < GO_SIZE; j++) {
+                    if (goBoard[i][j] === opponent) {
+                        const group = getGoGroup(i, j, opponent);
+                        if (getLiberties(group) === 0) {
+                            group.forEach(([r, c]) => {
+                                goBoard[r][c] = null;
+                                captured++;
+                            });
+                        }
+                    }
+                }
+            }
+            
+            if (captured > 0) {
+                if (player === 'black') {
+                    goBlackCaptures += captured;
+                } else {
+                    goWhiteCaptures += captured;
+                }
+            }
+        }
+
+        function getGoGroup(row, col, player) {
+            const group = [];
+            const visited = new Set();
+            const stack = [[row, col]];
+            
+            while (stack.length > 0) {
+                const [r, c] = stack.pop();
+                const key = `${r},${c}`;
+                
+                if (visited.has(key)) continue;
+                if (r < 0 || r >= GO_SIZE || c < 0 || c >= GO_SIZE) continue;
+                if (goBoard[r][c] !== player) continue;
+                
+                visited.add(key);
+                group.push([r, c]);
+                
+                stack.push([r-1, c]);
+                stack.push([r+1, c]);
+                stack.push([r, c-1]);
+                stack.push([r, c+1]);
+            }
+            
+            return group;
+        }
+
+        function getLiberties(group) {
+            const liberties = new Set();
+            
+            group.forEach(([r, c]) => {
+                const neighbors = [[r-1,c], [r+1,c], [r,c-1], [r,c+1]];
+                neighbors.forEach(([nr, nc]) => {
+                    if (nr >= 0 && nr < GO_SIZE && nc >= 0 && nc < GO_SIZE) {
+                        if (goBoard[nr][nc] === null) {
+                            liberties.add(`${nr},${nc}`);
+                        }
+                    }
+                });
+            });
+            
+            return liberties.size;
+        }
+
+        function computerGoMove() {
+            if (goGameOver) return;
+            
+            let bestScore = -Infinity;
+            let bestMoves = [];
+            
+            for (let i = 0; i < GO_SIZE; i++) {
+                for (let j = 0; j < GO_SIZE; j++) {
+                    if (!goBoard[i][j]) {
+                        let score = 0;
+                        
+                        if ((i >= 3 && i <= 15 && j >= 3 && j <= 15)) {
+                            score += 10;
+                        }
+                        
+                        const dist = Math.abs(i - 9) + Math.abs(j - 9);
+                        score += Math.max(0, 20 - dist);
+                        
+                        for (let di = -1; di <= 1; di++) {
+                            for (let dj = -1; dj <= 1; dj++) {
+                                const ni = i + di;
+                                const nj = j + dj;
+                                if (ni >= 0 && ni < GO_SIZE && nj >= 0 && nj < GO_SIZE) {
+                                    if (goBoard[ni][nj] === 'white') score += 5;
+                                    if (goBoard[ni][nj] === 'black') score -= 3;
+                                }
+                            }
+                        }
+                        
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestMoves = [[i, j]];
+                        } else if (score === bestScore) {
+                            bestMoves.push([i, j]);
+                        }
+                    }
+                }
+            }
+            
+            if (bestMoves.length > 0) {
+                const [r, c] = bestMoves[Math.floor(Math.random() * bestMoves.length)];
+                goBoard[r][c] = 'white';
+                renderGo();
+                removeCapturedStones('white');
+                goPlayer = 'black';
+                updateGoStatus();
+            }
+        }
+
+        function renderGo() {
+            const cells = document.getElementById('go-board').children;
+            
+            for (let i = 0; i < GO_SIZE; i++) {
+                for (let j = 0; j < GO_SIZE; j++) {
+                    const idx = i * GO_SIZE + j;
+                    const stone = goBoard[i][j];
+                    
+                    cells[idx].innerHTML = '';
+                    
+                    if (stone) {
+                        const stoneDiv = document.createElement('div');
+                        stoneDiv.className = `go-stone ${stone}`;
+                        cells[idx].appendChild(stoneDiv);
+                    } else if ((i === 3 || i === 9 || i === 15) && (j === 3 || j === 9 || j === 15)) {
+                        const star = document.createElement('div');
+                        star.className = 'w-2 h-2 bg-amber-800 rounded-full';
+                        cells[idx].appendChild(star);
+                    }
+                }
+            }
+        }
+
+        function updateGoStatus() {
+            document.getElementById('go-status').textContent = `${goPlayer === 'black' ? '黑方' : '白方'}回合 · 黑方提子: ${goBlackCaptures} · 白方提子: ${goWhiteCaptures}`;
+        }
+
+        function resetGo() {
+            initGo();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initChessCN();
+            initGomoku();
+            initGo();
+        });
+    </script>
+</body>
+</html>

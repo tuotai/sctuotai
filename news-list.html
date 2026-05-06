@@ -108,16 +108,30 @@
 
     <script>
         const displayLimit = 8;
+        const expandCount = 4;
+
+        window.categoryState = {
+            'activities': { visibleCount: 8, expanded: false },
+            'honors': { visibleCount: 8, expanded: false },
+            'research': { visibleCount: 8, expanded: false },
+            'culture': { visibleCount: 8, expanded: false }
+        };
 
         function renderList(containerId, items, categoryKey) {
             const container = document.getElementById(containerId);
-            const visibleItems = items.slice(0, displayLimit);
-            const hiddenItems = items.slice(displayLimit);
-            const hasMore = items.length > displayLimit;
+            const totalItems = items.length;
+            const initialVisible = Math.min(displayLimit, totalItems);
+            
+            window.categoryState[categoryKey].visibleCount = initialVisible;
+            window.categoryState[categoryKey].expanded = false;
+            
+            const visibleItems = items.slice(0, initialVisible);
+            const hiddenItems = items.slice(initialVisible);
+            const hasMore = totalItems > initialVisible;
 
             container.innerHTML = visibleItems.map((item, index) => {
                 return `
-                    <a href="${item.wechatUrl}" target="_blank" class="flex items-start space-x-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer group">
+                    <a href="${item.wechatUrl}" target="_blank" class="flex items-start space-x-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer group news-item-${categoryKey}">
                         <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden">
                             <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
                         </div>
@@ -132,9 +146,8 @@
 
             if (hasMore) {
                 const hiddenContent = hiddenItems.map((item, index) => {
-                    const itemIndex = displayLimit + index;
                     return `
-                        <a href="${item.wechatUrl}" target="_blank" class="flex items-start space-x-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer group more-content-${categoryKey}" style="display: none;">
+                        <a href="${item.wechatUrl}" target="_blank" class="flex items-start space-x-3 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer group news-item-${categoryKey} more-item-${categoryKey}" style="display: none;">
                             <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden">
                                 <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
                             </div>
@@ -151,7 +164,7 @@
                 
                 container.innerHTML += `
                     <div class="text-center pt-2">
-                        <button onclick="toggleMore('${categoryKey}', '${containerId}')" class="text-primary hover:text-primary/80 text-sm font-medium cursor-pointer more-btn-${categoryKey}">
+                        <button onclick="toggleMore('${categoryKey}', '${containerId}', ${totalItems})" class="text-primary hover:text-primary/80 text-sm font-medium cursor-pointer more-btn-${categoryKey}">
                             查看更多 <i class="fa fa-chevron-down ml-1"></i>
                         </button>
                     </div>
@@ -159,30 +172,40 @@
             }
         }
 
-        window.expanded = {
-            'activities': false,
-            'honors': false,
-            'research': false,
-            'culture': false
-        };
-
-        window.toggleMore = function(categoryKey, containerId) {
+        window.toggleMore = function(categoryKey, containerId, totalItems) {
             const container = document.getElementById(containerId);
-            const moreContents = container.querySelectorAll(`.more-content-${categoryKey}`);
+            const allItems = container.querySelectorAll(`.news-item-${categoryKey}`);
             const moreBtn = container.querySelector(`.more-btn-${categoryKey}`);
+            const state = window.categoryState[categoryKey];
             
-            if (window.expanded[categoryKey]) {
-                moreContents.forEach(item => {
-                    item.style.display = 'none';
+            if (state.expanded) {
+                // 收起 - 隐藏所有，只显示前8个
+                allItems.forEach((item, index) => {
+                    if (index < displayLimit) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
                 });
+                state.visibleCount = displayLimit;
+                state.expanded = false;
                 moreBtn.innerHTML = '查看更多 <i class="fa fa-chevron-down ml-1"></i>';
-                window.expanded[categoryKey] = false;
             } else {
-                moreContents.forEach(item => {
-                    item.style.display = 'flex';
+                // 展开 - 再显示4个
+                const nextCount = Math.min(state.visibleCount + expandCount, totalItems);
+                allItems.forEach((item, index) => {
+                    if (index < nextCount) {
+                        item.style.display = 'flex';
+                    }
                 });
-                moreBtn.innerHTML = '收起 <i class="fa fa-chevron-up ml-1"></i>';
-                window.expanded[categoryKey] = true;
+                state.visibleCount = nextCount;
+                
+                if (nextCount >= totalItems) {
+                    state.expanded = true;
+                    moreBtn.innerHTML = '收起 <i class="fa fa-chevron-up ml-1"></i>';
+                } else {
+                    moreBtn.innerHTML = '查看更多 <i class="fa fa-chevron-down ml-1"></i>';
+                }
             }
         };
 

@@ -17,6 +17,7 @@
             }
         }
     </script>
+    <script src="js/party-data.js"></script>
     <style>
         .navbar {
             position: fixed;
@@ -26,6 +27,12 @@
             z-index: 100;
             background: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        /* 段落首行缩进两格 */
+        .article-content p {
+            text-indent: 2em;
+            line-height: 1.8;
+            margin-bottom: 1rem;
         }
     </style>
 </head>
@@ -51,8 +58,9 @@
         <div class="container mx-auto px-6">
             <div class="max-w-4xl mx-auto">
                 <div id="activity-meta" class="flex items-center space-x-4 mb-6">
-                    <span id="activity-date" class="text-sm text-red-600 font-medium">
-                        <i class="fa fa-calendar mr-1"></i>2025-04-20
+                    <span id="activity-category" class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm"></span>
+                    <span id="activity-date" class="text-sm text-gray-500">
+                        <i class="fa fa-calendar mr-1"></i>
                     </span>
                 </div>
                 <h1 id="activity-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">党建详情</h1>
@@ -65,7 +73,7 @@
         <div class="container mx-auto px-6">
             <div class="max-w-4xl mx-auto">
                 <div id="activity-image" class="mb-8 rounded-xl overflow-hidden shadow-lg">
-                    <img src="https://picsum.photos/seed/party1/800/400" alt="活动图片" class="w-full h-64 md:h-80 object-cover">
+                    <img src="" alt="活动图片" id="activity-img" class="w-full h-64 md:h-80 object-cover">
                 </div>
                 <div id="activity-content" class="bg-white rounded-2xl shadow-lg p-8 md:p-12">
                 </div>
@@ -89,197 +97,61 @@
     </footer>
 
     <script>
-        const partyActivities = {
-            'theme-day': {
-                title: '主题党日活动',
-                icon: 'fa-flag',
-                date: '2025-04-20',
-                image: 'https://picsum.photos/seed/party1/800/400',
-                summary: '定期组织党员开展主题党日活动，深入学习党的理论知识和重要会议精神，增强党员政治意识。',
-                content: `
-                    <p class="text-gray-600 leading-relaxed mb-6">我所党支部定期组织主题党日活动，活动内容丰富形式多样，包括专题党课学习、红色教育基地参观、党史知识竞赛等多种形式。</p>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">活动内容</h3>
-                    <p class="text-gray-600 leading-relaxed mb-6">活动主要包括以下几个方面：</p>
-                    <ul class="list-disc pl-6 mb-6 text-gray-600 space-y-2">
-                        <li>专题党课学习：邀请党建专家进行专题授课</li>
-                        <li>红色教育基地参观：组织党员到革命旧址参观学习</li>
-                        <li>党史知识竞赛：举办党史知识竞赛，以赛促学</li>
-                        <li>心得交流分享：党员分享学习心得，交流感悟</li>
-                    </ul>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">活动意义</h3>
-                    <p class="text-gray-600 leading-relaxed mb-6">通过主题党日活动，进一步增强了党员的政治意识、大局意识、核心意识、看齐意识，激发了党员的责任感和使命感，为推进律所党建工作高质量发展贡献力量。</p>
-                    
-                    <p class="text-gray-600 leading-relaxed mb-6">我所将持续开展主题党日活动，不断创新活动形式，丰富活动内容，提高活动实效，为客户提供更加优质的法律服务。</p>
-                `
-            },
-            'volunteer': {
-                title: '党员志愿服务',
-                icon: 'fa-users',
-                date: '2025-04-15',
-                image: 'https://picsum.photos/seed/party2/800/400',
-                summary: '组织党员积极参与社会公益活动，为社区居民提供免费法律咨询服务，践行党员初心使命。',
-                content: `
-                    <p class="text-gray-600 leading-relaxed mb-6">我所党支部组织党员律师走进社区，开展"法律服务进社区"志愿活动，为居民提供免费法律咨询、法治宣传等服务。</p>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">服务内容</h3>
-                    <ul class="list-disc pl-6 mb-6 text-gray-600 space-y-2">
-                        <li>婚姻家庭法律咨询</li>
-                        <li>继承纠纷法律咨询</li>
-                        <li>劳动争议法律咨询</li>
-                        <li>合同纠纷法律咨询</li>
-                        <li>法治宣传资料发放</li>
-                    </ul>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">活动反响</h3>
-                    <p class="text-gray-600 leading-relaxed mb-6">活动涵盖了婚姻家庭、继承纠纷、劳动争议、合同纠纷等与群众生活密切相关的法律问题，受到社区居民的热烈欢迎和一致好评。</p>
-                    
-                    <p class="text-gray-600 leading-relaxed mb-6">我所将继续发挥党员律师的专业优势，定期开展志愿服务活动，以实际行动践行党员的初心和使命，为建设法治社会贡献力量。</p>
-                `
-            },
-            'training': {
-                title: '党建工作培训',
-                icon: 'fa-graduation-cap',
-                date: '2025-04-10',
-                image: 'https://picsum.photos/seed/party3/800/400',
-                summary: '开展党建工作培训，提升党员政治素养和业务能力，发挥党员先锋模范作用。',
-                content: `
-                    <p class="text-gray-600 leading-relaxed mb-6">我所定期举办党建工作培训班，邀请党建专家和优秀党员代表授课，内容涵盖党的理论、党史学习、党建实务等多个方面。</p>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">培训内容</h3>
-                    <ul class="list-disc pl-6 mb-6 text-gray-600 space-y-2">
-                        <li>党的基本理论：马克思列宁主义、毛泽东思想、邓小平理论</li>
-                        <li>习近平新时代中国特色社会主义思想</li>
-                        <li>党史学习教育</li>
-                        <li>党建实务操作</li>
-                        <li>党员先锋模范作用发挥</li>
-                    </ul>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">培训效果</h3>
-                    <p class="text-gray-600 leading-relaxed mb-6">通过培训，进一步提升了党员的政治素养和业务能力，增强了党员的党性修养和理论水平，为发挥党员先锋模范作用奠定了坚实基础。</p>
-                    
-                    <p class="text-gray-600 leading-relaxed mb-6">我所将持续开展党建工作培训，不断创新培训方式，提升培训实效，努力打造一支政治过硬、业务精通的党员律师队伍。</p>
-                `
-            },
-            'building': {
-                title: '党支部建设',
-                icon: 'fa-institution',
-                date: '2025-04-05',
-                image: 'https://picsum.photos/seed/party4/800/400',
-                summary: '加强党支部组织建设，完善党建工作制度，打造标准化规范化党支部。',
-                content: `
-                    <p class="text-gray-600 leading-relaxed mb-6">我所党支部始终高度重视组织建设，建立健全了党建工作制度，完善了党支部组织架构，实现了党建工作制度化、规范化、常态化。</p>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">组织建设</h3>
-                    <ul class="list-disc pl-6 mb-6 text-gray-600 space-y-2">
-                        <li>完善党支部组织架构</li>
-                        <li>建立健全党建工作制度</li>
-                        <li>严格落实"三会一课"制度</li>
-                        <li>规范党员发展程序</li>
-                        <li>加强党费收缴管理</li>
-                    </ul>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">制度落实</h3>
-                    <p class="text-gray-600 leading-relaxed mb-6">党支部严格落实"三会一课"制度，定期召开支部大会、支部委员会和党小组会，按时上好党课，确保党组织生活的严肃性和实效性。</p>
-                    
-                    <p class="text-gray-600 leading-relaxed mb-6">我所党支部将继续加强组织建设，不断提升党建工作水平，努力打造标准化规范化的示范党支部。</p>
-                `
-            },
-            'red-education': {
-                title: '红色教育实践活动',
-                icon: 'fa-book',
-                date: '2025-03-28',
-                image: 'https://picsum.photos/seed/party5/800/400',
-                summary: '组织党员赴红色教育基地开展革命传统教育，传承红色基因，赓续精神血脉。',
-                content: `
-                    <p class="text-gray-600 leading-relaxed mb-6">我所党支部组织党员赴遵义会议会址、红岩革命纪念馆等红色教育基地开展革命传统教育活动，重温党的光辉历程，感悟革命先辈的崇高精神。</p>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">活动安排</h3>
-                    <ul class="list-disc pl-6 mb-6 text-gray-600 space-y-2">
-                        <li>遵义会议会址参观学习</li>
-                        <li>红岩革命纪念馆瞻仰</li>
-                        <li>革命烈士陵园祭扫</li>
-                        <li>重温入党誓词</li>
-                    </ul>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">教育收获</h3>
-                    <p class="text-gray-600 leading-relaxed mb-6">通过红色教育活动，党员们深受教育和启发，进一步坚定了理想信念，增强了党性修养，激发了干事创业的热情和动力。</p>
-                    
-                    <p class="text-gray-600 leading-relaxed mb-6">我所将继续开展红色教育实践活动，让党员在寻访红色足迹中传承红色基因，在感悟初心使命中汲取前进力量。</p>
-                `
-            },
-            'knowledge-contest': {
-                title: '党史知识竞赛',
-                icon: 'fa-trophy',
-                date: '2025-03-20',
-                image: 'https://picsum.photos/seed/party6/800/400',
-                summary: '举办党史知识竞赛，以赛促学、以学促干，推动党史学习教育走深走实。',
-                content: `
-                    <p class="text-gray-600 leading-relaxed mb-6">我所举办了党史知识竞赛活动，竞赛内容涵盖中国共产党党史、党的二十大精神、习近平法治思想等内容，全体党员积极参与。</p>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">竞赛内容</h3>
-                    <ul class="list-disc pl-6 mb-6 text-gray-600 space-y-2">
-                        <li>中国共产党党史</li>
-                        <li>党的二十大精神</li>
-                        <li>习近平新时代中国特色社会主义思想</li>
-                        <li>习近平法治思想</li>
-                        <li>党章党规党纪</li>
-                    </ul>
-                    
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">活动效果</h3>
-                    <p class="text-gray-600 leading-relaxed mb-6">通过竞赛活动，进一步激发了党员学习党史的热情，营造了浓厚的学习氛围，达到了以赛促学、以学促干的目的。</p>
-                    
-                    <p class="text-gray-600 leading-relaxed mb-6">我所将继续创新党史学习教育形式，推动党史学习教育常态化长效化，引导党员从党的历史中汲取智慧和力量。</p>
-                `
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取URL参数（支持 id 和 activity 两种参数名）
+            const urlParams = new URLSearchParams(window.location.search);
+            const activityId = urlParams.get('id') || urlParams.get('activity');
+            
+            // 加载数据（优先从数据文件读取）
+            let partyData = [];
+            if (typeof window.partyData !== 'undefined') {
+                partyData = window.partyData;
             }
-        };
-
-        const activityIds = Object.keys(partyActivities);
-
-        function getActivityIdFromUrl() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('activity') || 'theme-day';
-        }
-
-        function loadActivityDetail() {
-            const activityId = getActivityIdFromUrl();
-            const activity = partyActivities[activityId];
-
+            
+            // 查找当前活动（支持 id 和 slug 两种方式）
+            const activity = partyData.find(item => item.id === activityId || item.slug === activityId);
+            
             if (!activity) {
-                document.getElementById('activity-title').textContent = '活动未找到';
+                document.getElementById('activity-title').textContent = '活动不存在';
+                document.getElementById('activity-content').innerHTML = '<p class="text-gray-500 text-center py-8">未找到该党建活动</p>';
+                document.getElementById('related-activities').style.display = 'none';
                 return;
             }
-
-            document.getElementById('activity-date').innerHTML = `<i class="fa fa-calendar mr-1"></i>${activity.date}`;
-            document.getElementById('activity-title').textContent = activity.title;
-            document.getElementById('activity-image').innerHTML = `<img src="${activity.image}" alt="${activity.title}" class="w-full h-64 md:h-80 object-cover">`;
-            document.getElementById('activity-content').innerHTML = `
-                <p class="text-gray-600 leading-relaxed mb-6 font-medium">${activity.summary}</p>
-                ${activity.content}
-            `;
-            document.title = activity.title + ' - 拓泰党建 - 四川拓泰律师事务所';
-
-            const relatedGrid = document.getElementById('related-grid');
-            const otherActivities = activityIds.filter(id => id !== activityId).slice(0, 3);
             
-            relatedGrid.innerHTML = otherActivities.map(id => {
-                const a = partyActivities[id];
-                return `
-                    <a href="party-building-detail.html?activity=${id}" class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-red-500/30 overflow-hidden block">
-                        <div class="h-32 bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center">
-                            <i class="fa ${a.icon} text-4xl text-white"></i>
-                        </div>
-                        <div class="p-4">
-                            <span class="text-xs text-red-600 font-medium"><i class="fa fa-calendar mr-1"></i>${a.date}</span>
-                            <h3 class="text-base font-bold text-gray-800 mt-2">${a.title}</h3>
-                        </div>
-                    </a>
-                `;
-            }).join('');
-        }
-
-        document.addEventListener('DOMContentLoaded', loadActivityDetail);
+            // 填充活动详情
+            document.getElementById('activity-title').textContent = activity.title;
+            document.getElementById('activity-date').textContent = activity.date;
+            document.getElementById('activity-category').textContent = activity.category || '党建活动';
+            document.getElementById('activity-img').src = activity.image || 'https://picsum.photos/seed/party' + activity.id + '/800/400';
+            
+            // 渲染内容（支持HTML格式和换行符）
+            let content = activity.content || activity.summary;
+            // 将换行符转换为段落
+            content = content.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br>');
+            if (!content.startsWith('<p>')) {
+                content = '<p>' + content + '</p>';
+            }
+            document.getElementById('activity-content').innerHTML = `
+                <div class="article-content">${content}</div>
+            `;
+            
+            // 渲染相关活动（排除当前活动）
+            const relatedActivities = partyData.filter(item => item.id !== activityId).slice(0, 3);
+            const relatedGrid = document.getElementById('related-grid');
+            
+            if (relatedActivities.length === 0) {
+                document.getElementById('related-activities').style.display = 'none';
+                return;
+            }
+            
+            relatedGrid.innerHTML = relatedActivities.map(item => `
+                <a href="party-building-detail.html?id=${item.id}" class="block bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <img src="${item.image || 'https://picsum.photos/seed/party-rel' + item.id + '/400/250'}" alt="${item.title}" class="w-full h-32 object-cover rounded-lg mb-4">
+                    <h3 class="font-bold text-gray-900 mb-2 hover:text-red-600 transition-colors">${item.title}</h3>
+                    <p class="text-gray-500 text-sm">${item.date}</p>
+                </a>
+            `).join('');
+        });
     </script>
 </body>
 </html>

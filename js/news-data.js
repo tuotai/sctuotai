@@ -310,6 +310,9 @@ var newsData = [
     }
 ];
 
-function getAllNews() { return newsData; }
-function getNewsById(id) { return newsData.find(n => n.id === id); }
-function getNewsByCategory(category) { return newsData.filter(n => n.category === category); }
+function getAllNews() {
+    const stored = localStorage.getItem('newsData');
+    return stored ? JSON.parse(stored) : newsData;
+}
+function getNewsById(id) { return getAllNews().find(n => n.id === id); }
+function getNewsByCategory(category) { return getAllNews().filter(n => n.category === category); }

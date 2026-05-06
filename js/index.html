@@ -369,7 +369,7 @@
             </a>
             
             <!-- 桌面导航 -->
-            <div class="hidden md:flex items-center space-x-8 ml-auto">
+            <div class="hidden md:flex items-center space-x-12">
                 <a href="#about" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">关于我们</a>
                 <a href="#consulting" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">拓泰资讯</a>
                 <a href="#services" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">专业领域</a>
@@ -377,7 +377,6 @@
                 <a href="#cases" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">案例展示</a>
                 <a href="#party-building" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">拓泰党建</a>
                 <a href="#contact" class="text-sm uppercase tracking-wider text-gray-700 hover:text-primary transition-colors">联系我们</a>
-                <a href="tools.html" class="text-sm uppercase tracking-wider bg-transparent text-gray-900 px-4 py-1.5 rounded-full border border-gray-900 hover:scale-105 transition-all font-normal">实用工具</a>
             </div>
             
             <!-- 移动端菜单按钮 -->
@@ -401,7 +400,6 @@
             <a href="#cases" class="text-lg uppercase tracking-wider text-gray-800 hover:text-primary transition-colors">案例展示</a>
             <a href="#party-building" class="text-lg uppercase tracking-wider text-gray-800 hover:text-primary transition-colors">拓泰党建</a>
             <a href="#contact" class="text-lg uppercase tracking-wider text-gray-800 hover:text-primary transition-colors">联系我们</a>
-            <a href="tools.html" class="text-lg uppercase tracking-wider bg-transparent text-gray-900 px-6 py-2 rounded-full border border-gray-900 hover:scale-105 transition-all font-normal">实用工具</a>
         </div>
     </nav>
 
@@ -549,9 +547,88 @@
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold mb-12 text-center text-gray-900">案例展示</h2>
         
-            <!-- 主容器 - 动态加载案例数据 -->
+            <!-- 主容器 - 这是正常滚动的容器 -->
             <div class="cards-container relative" id="cardsContainer">
-                <!-- 案例卡片将通过JavaScript动态渲染 -->
+                <!-- 卡片1 -->
+                <div class="sticky-container h-screen sticky top-0 flex items-center justify-center">
+                    <div class="card-content max-w-7xl w-full flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="md:w-2/5">
+                            <img src="images/事务所大楼外立面.jpg" alt="某大型企业并购重组案" class="w-full h-full object-cover">
+                        </div>
+                        <div class="md:w-3/5 p-8">
+                            <h3 class="text-2xl font-bold mb-3">某大型企业并购重组案</h3>
+                            <p class="text-gray-600 mb-4">为某大型企业提供并购重组全程法律服务，涉及金额超过10亿元，成功帮助客户完成并购，实现业务扩张。</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">企业法律</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">并购重组</span>
+                            </div>
+                            <div class="border-t pt-4">
+                                <p class="italic text-gray-600 mb-3">"专业的团队帮助我们成功完成了复杂的并购交易，为公司发展奠定了坚实基础。"</p>
+                                <div class="flex items-center">
+                                    <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/5ac76e71e50040d58ceb9c144877a4a5~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260502185431339939BE5A3081582B0B&rrcfp=f06b921b&x-expires=1780311315&x-signature=02%2Bo6cz9PXTZRSXL1rZ1LuaHNoY%3D" alt="客户" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <h4 class="font-medium">赵总</h4>
+                                        <p class="text-sm text-gray-500">集团公司CEO</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- 卡片2 -->
+                <div class="sticky-container h-screen sticky top-0 flex items-center justify-center">
+                    <div class="card-content max-w-7xl w-full flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="md:w-2/5">
+                            <img src="images/004.jpg" alt="某房地产开发项目纠纷案" class="w-full h-full object-cover">
+                        </div>
+                        <div class="md:w-3/5 p-8">
+                            <h3 class="text-2xl font-bold mb-3">某房地产开发项目纠纷案</h3>
+                            <p class="text-gray-600 mb-4">成功代理某房地产开发项目纠纷案件，涉案金额5亿元，为客户挽回经济损失3亿元。</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">房地产</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">合同纠纷</span>
+                            </div>
+                            <div class="border-t pt-4">
+                                <p class="italic text-gray-600 mb-3">"律师团队的专业能力和敬业精神令人钦佩，他们帮助我们成功解决了复杂的纠纷。"</p>
+                                <div class="flex items-center">
+                                    <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/5ac76e71e50040d58ceb9c144877a4a5~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260502185431339939BE5A3081582B0B&rrcfp=f06b921b&x-expires=1780311315&x-signature=02%2Bo6cz9PXTZRSXL1rZ1LuaHNoY%3D" alt="客户" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <h4 class="font-medium">钱总</h4>
+                                        <p class="text-sm text-gray-500">房地产公司董事长</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- 卡片3 -->
+                <div class="sticky-container h-screen sticky top-0 flex items-center justify-center">
+                    <div class="card-content max-w-7xl w-full flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="md:w-2/5">
+                            <img src="images/009.jpg" alt="某知名品牌商标侵权案" class="w-full h-full object-cover">
+                        </div>
+                        <div class="md:w-3/5 p-8">
+                            <h3 class="text-2xl font-bold mb-3">某知名品牌商标侵权案</h3>
+                            <p class="text-gray-600 mb-4">成功代理某国际知名品牌商标侵权案件，为客户赢得诉讼，保护了品牌形象和市场地位。</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">知识产权</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">商标侵权</span>
+                            </div>
+                            <div class="border-t pt-4">
+                                <p class="italic text-gray-600 mb-3">"律师团队的专业知识和诉讼经验帮助我们成功维权，保护了公司的知识产权。"</p>
+                                <div class="flex items-center">
+                                    <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/5ac76e71e50040d58ceb9c144877a4a5~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260502185431339939BE5A3081582B0B&rrcfp=f06b921b&x-expires=1780311315&x-signature=02%2Bo6cz9PXTZRSXL1rZ1LuaHNoY%3D" alt="客户" class="w-10 h-10 rounded-full mr-3">
+                                    <div>
+                                        <h4 class="font-medium">孙总</h4>
+                                        <p class="text-sm text-gray-500">品牌公司法务总监</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -746,7 +823,6 @@
 
     <script src="js/news-data.js"></script>
     <script src="js/service-data.js"></script>
-    <script src="js/case-data.js"></script>
     <script>
         function renderLatestNews() {
             const container = document.getElementById('news-container');
@@ -770,54 +846,9 @@
                             ${index < 2 ? '<span class="text-xs text-red-500 font-medium px-2 py-1 bg-red-50 rounded ml-2">置顶</span>' : ''}
                         </div>
                         <h3 class="text-base font-bold line-clamp-2">${item.title}</h3>
-                        <p class="text-gray-600 text-sm mt-1 line-clamp-2">${item.summary || item.excerpt || ''}</p>
+                        <p class="text-gray-600 text-sm mt-1 line-clamp-2 textIndent">${item.summary || item.excerpt || ''}</p>
                     </div>
                 </a>
-            `).join('');
-        }
-
-        function renderCases() {
-            const container = document.getElementById('cardsContainer');
-            if (!container) return;
-
-            const allCases = getAllCases();
-            if (!allCases || allCases.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-500 py-12">暂无案例数据</p>';
-                return;
-            }
-
-            // 按日期排序
-            const sortedCases = allCases.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            container.innerHTML = sortedCases.map(caseItem => `
-                <div class="sticky-container h-screen sticky top-0 flex items-center justify-center">
-                    <div class="card-content max-w-7xl w-full flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden">
-                        <div class="md:w-2/5">
-                            <img src="${caseItem.image || 'https://picsum.photos/seed/case/800/600'}" alt="${caseItem.title}" class="w-full h-full object-cover">
-                        </div>
-                        <div class="md:w-3/5 p-8">
-                            <h3 class="text-2xl font-bold mb-3">${caseItem.title}</h3>
-                            ${caseItem.result ? `<p class="text-green-600 font-medium mb-2">结果：${caseItem.result}</p>` : ''}
-                            <p class="text-gray-600 mb-4">${caseItem.summary || ''}</p>
-                            ${caseItem.description ? `<p class="text-gray-600 text-sm mb-4">${caseItem.description}</p>` : ''}
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                ${(caseItem.tags || []).map(tag => `<span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">${tag}</span>`).join('')}
-                            </div>
-                            <div class="border-t pt-4">
-                                ${caseItem.clientComment ? `<p class="italic text-gray-600 mb-3">"${caseItem.clientComment}"</p>` : ''}
-                                ${caseItem.clientName ? `
-                                <div class="flex items-center">
-                                    <img src="https://picsum.photos/seed/${caseItem.clientName}/100/100" alt="${caseItem.clientName}" class="w-10 h-10 rounded-full mr-3">
-                                    <div>
-                                        <h4 class="font-medium">${caseItem.clientName}</h4>
-                                        <p class="text-sm text-gray-500">${caseItem.clientTitle || ''}</p>
-                                    </div>
-                                </div>
-                                ` : ''}
-                            </div>
-                        </div>
-                    </div>
-                </div>
             `).join('');
         }
 
@@ -834,10 +865,9 @@
             });
         }
 
-        // 页面加载完成后渲染资讯和案例
+        // 页面加载完成后渲染资讯
         document.addEventListener('DOMContentLoaded', () => {
             renderLatestNews();
-            renderCases();
             initLazyLoading();
         });
 
@@ -1066,12 +1096,6 @@
             });
         });
 
-        // 引入律师数据
-        const lawyerScript = document.createElement('script');
-        lawyerScript.src = 'js/lawyer-data.js';
-        lawyerScript.onload = renderHomeLawyers;
-        document.head.appendChild(lawyerScript);
-
         // 无限滚动 - CSS动画方式
         function setupInfiniteScroll(containerId, direction = 1, speed = 1) {
             const container = document.getElementById(containerId);
@@ -1154,53 +1178,37 @@
             });
         });
 
+        // 律师卡片数据 - 用于首页滚动展示 (16个律师，分两行)
+        const homeLawyers = [
+            { id: 'lawyer-1', name: '尹东升', title: '二级律师 / 首席合伙人', image: 'https://picsum.photos/seed/1001/400/500', specialty: '企业法律服务、房地产与建筑工程' },
+            { id: 'lawyer-2', name: '吴苛政', title: '主任 / 党支部书', image: 'images/吴苛政.jpg', specialty: '公司法、民事诉讼' },
+            { id: 'lawyer-3', name: '李孟松', title: '执行主任 / 高级合伙人', image: 'https://picsum.photos/seed/1002/400/500', specialty: '公司法、民事诉讼' },
+            { id: 'lawyer-4', name: '黄礼', title: '高级合伙人', image: 'https://picsum.photos/seed/1003/400/500', specialty: '刑事辩护、企业合规' },
+            { id: 'lawyer-5', name: '张东', title: '高级合伙人', image: 'https://picsum.photos/seed/1004/400/500', specialty: '婚姻家庭、继承纠纷' },
+            { id: 'lawyer-6', name: '聂巧', title: '高级合伙人', image: 'https://picsum.photos/seed/1005/400/500', specialty: '金融证券、投融资' },
+            { id: 'lawyer-7', name: '熊艺', title: '高级合伙人', image: 'https://picsum.photos/seed/1006/400/500', specialty: '劳动争议、工伤赔偿' },
+            { id: 'lawyer-8', name: '熊浩宇', title: '业务四部部长', image: 'https://picsum.photos/seed/1007/400/500', specialty: '行政法律、行政诉讼' },
+            { id: 'lawyer-9', name: '郭义靖', title: '业务五部部长', image: 'https://picsum.photos/seed/1008/400/500', specialty: '国际贸易、跨境投资' },
+            { id: 'lawyer-10', name: '郭小林', title: '业务二部部长', image: 'https://picsum.photos/seed/1009/400/500', specialty: '合规内控、风险评估' },
+            { id: 'lawyer-11', name: '李培辉', title: '一级合伙人', image: 'https://picsum.photos/seed/1010/400/500', specialty: '专利申请、商标注册' },
+            { id: 'lawyer-12', name: '王惟', title: '一级合伙人', image: 'https://picsum.photos/seed/1011/400/500', specialty: '刑事风险防控、刑事申诉' },
+            { id: 'lawyer-13', name: '汪良军', title: '一级合伙人', image: 'https://picsum.photos/seed/1012/400/500', specialty: '土地征收、房屋拆迁' },
+            { id: 'lawyer-14', name: '王江', title: '一级合伙人', image: 'https://picsum.photos/seed/1013/400/500', specialty: '并购重组、企业合规' },
+            { id: 'lawyer-15', name: '尹茂生', title: '高级律师', image: 'https://picsum.photos/seed/1014/400/500', specialty: '婚姻家庭、民事诉讼' },
+            { id: 'lawyer-16', name: '高洋', title: '律师', image: 'https://picsum.photos/seed/1015/400/500', specialty: '知识产权、著作权保护' },
+            { id: 'lawyer-17', name: '林涛', title: '资深律师', image: 'https://picsum.photos/seed/1016/400/500', specialty: '金融证券、保险法律' }
+        ];
+
         // 渲染首页律师滚动卡片 - 两行，每行8个
         function renderHomeLawyers() {
             const trackTop = document.getElementById('lawyer-scroll-track-top');
             const trackBottom = document.getElementById('lawyer-scroll-track-bottom');
             if (!trackTop || !trackBottom) return;
             
-            let homeLawyers = [];
-            try {
-                // 优先从动态数据加载
-                const allLawyers = getAllLawyers();
-                homeLawyers = allLawyers.slice(0, 17).map(lawyer => ({
-                    id: lawyer.id,
-                    name: lawyer.name || '未命名',
-                    title: lawyer.title || '律师',
-                    image: lawyer.photo || lawyer.image || `https://picsum.photos/seed/${lawyer.id}/400/500`,
-                    specialty: (lawyer.expertise && lawyer.expertise.join('、')) || '法律服务'
-                }));
-            } catch (e) {
-                // 备用硬编码数据
-                homeLawyers = [
-                    { id: 'lawyer-1', name: '尹东升', title: '二级律师 / 首席合伙人', image: 'https://picsum.photos/seed/1001/400/500', specialty: '企业法律服务、房地产与建筑工程' },
-                    { id: 'lawyer-2', name: '吴苛政', title: '主任 / 党支部书记', image: 'images/吴苛政.jpg', specialty: '公司法、民事诉讼' },
-                    { id: 'lawyer-3', name: '李孟松', title: '执行主任 / 高级合伙人', image: 'https://picsum.photos/seed/1002/400/500', specialty: '公司法、民事诉讼' },
-                    { id: 'lawyer-4', name: '黄礼', title: '高级合伙人', image: 'https://picsum.photos/seed/1003/400/500', specialty: '刑事辩护、企业合规' },
-                    { id: 'lawyer-5', name: '张东', title: '高级合伙人', image: 'https://picsum.photos/seed/1004/400/500', specialty: '婚姻家庭、继承纠纷' },
-                    { id: 'lawyer-6', name: '聂巧', title: '高级合伙人', image: 'https://picsum.photos/seed/1005/400/500', specialty: '金融证券、投融资' },
-                    { id: 'lawyer-7', name: '熊艺', title: '高级合伙人', image: 'https://picsum.photos/seed/1006/400/500', specialty: '劳动争议、工伤赔偿' },
-                    { id: 'lawyer-8', name: '熊浩宇', title: '业务四部部长', image: 'https://picsum.photos/seed/1007/400/500', specialty: '行政法律、行政诉讼' },
-                    { id: 'lawyer-9', name: '郭义靖', title: '业务五部部长', image: 'https://picsum.photos/seed/1008/400/500', specialty: '国际贸易、跨境投资' },
-                    { id: 'lawyer-10', name: '郭小林', title: '业务二部部长', image: 'https://picsum.photos/seed/1009/400/500', specialty: '合规内控、风险评估' },
-                    { id: 'lawyer-11', name: '李培辉', title: '一级合伙人', image: 'https://picsum.photos/seed/1010/400/500', specialty: '专利申请、商标注册' },
-                    { id: 'lawyer-12', name: '王惟', title: '一级合伙人', image: 'https://picsum.photos/seed/1011/400/500', specialty: '刑事风险防控、刑事申诉' },
-                    { id: 'lawyer-13', name: '汪良军', title: '一级合伙人', image: 'https://picsum.photos/seed/1012/400/500', specialty: '土地征收、房屋拆迁' },
-                    { id: 'lawyer-14', name: '王江', title: '一级合伙人', image: 'https://picsum.photos/seed/1013/400/500', specialty: '并购重组、企业合规' },
-                    { id: 'lawyer-15', name: '尹茂生', title: '高级律师', image: 'https://picsum.photos/seed/1014/400/500', specialty: '婚姻家庭、民事诉讼' },
-                    { id: 'lawyer-16', name: '高洋', title: '律师', image: 'https://picsum.photos/seed/1015/400/500', specialty: '知识产权、著作权保护' },
-                    { id: 'lawyer-17', name: '林涛', title: '资深律师', image: 'https://picsum.photos/seed/1016/400/500', specialty: '金融证券、保险法律' }
-                ];
-            }
-            
             const topRow = homeLawyers.slice(0, 5);
             const bottomRow = homeLawyers.slice(5);
             
-            const lawyerCardHTML = (lawyer) => {
-                const allTags = (lawyer.specialty || '').split('、');
-                const tags = allTags.slice(0, 2);
-                return `
+            const lawyerCardHTML = (lawyer) => `
                 <div class="infinite-scroll-item flex-shrink-0 px-4 w-80">
                     <a href="lawyer-detail.html?lawyer=${lawyer.id}" class="block bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:border-primary/50 transition h-full">
                         <div class="relative overflow-hidden h-80">
@@ -1209,14 +1217,13 @@
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-1">${lawyer.name}</h3>
                             <p class="text-primary text-sm mb-3">${lawyer.title}</p>
-                            <div class="flex gap-x-2">
-                                ${tags.map(tag => `<span class="inline text-xs text-gray-600 px-2 py-0.5 bg-gray-100 rounded">${tag}</span>`).join('')}
-                            </div>
+                            <p class="text-gray-600 text-sm mb-4">
+                                专注于${lawyer.specialty}领域，拥有丰富的执业经验。
+                            </p>
                         </div>
                     </a>
                 </div>
-                `;
-            };
+            `;
             
             trackTop.innerHTML = topRow.map(lawyerCardHTML).join('');
             trackBottom.innerHTML = bottomRow.map(lawyerCardHTML).join('');
@@ -1225,6 +1232,8 @@
             setupInfiniteScroll('scrollContainer', 1, 1);
             setupInfiniteScroll('scrollContainerBottom', -1, 4);
         }
+
+        document.addEventListener('DOMContentLoaded', renderHomeLawyers);
     </script>
     
     <!-- 返回顶部按钮 -->

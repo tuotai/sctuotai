@@ -87,298 +87,103 @@
         </div>
     </footer>
 
+    <script src="js/service-data.js"></script>
     <script>
-        const services = {
-            'administrative-law': {
-                title: '行政法律',
-                icon: 'fa-gavel',
-                subtitle: '提供行政复议、行政诉讼、政府信息公开等法律服务，维护当事人合法权益',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">行政法律服务是我所的传统优势业务之一。我们的律师团队在行政复议、行政诉讼、政府信息公开、行政许可、行政处罚等领域拥有丰富的实践经验，能够为客户提供全方位、高质量的专业法律服务。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>行政复议代理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>行政诉讼代理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>政府信息公开申请及答复</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>行政许可与审批咨询</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>行政处罚听证代理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>行政强制措施咨询</li>
-                    </ul>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">典型案例</h3>
-                    <p class="text-gray-600 leading-relaxed">我所律师曾代理多起重大行政诉讼案件，涉及土地征收补偿、房屋拆迁安置、环保行政处罚等领域，积累了丰富的诉讼经验，为当事人争取到了合法权益。</p>
-                `
-            },
-            'corporate-business': {
-                title: '公司业务',
-                icon: 'fa-building',
-                subtitle: '涵盖公司设立、变更、并购、解散清算等全生命周期法律服务',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">公司业务是我所核心业务之一。我们的律师团队在公司治理、股权结构设计、合同管理、劳动人事等领域具有丰富的实践经验，能够为企业提供全生命周期的法律服务。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>公司设立与注册</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>股权设计与转让</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>公司治理结构优化</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>合同审查与管理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>劳动人事合规</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>公司解散与清算</li>
-                    </ul>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务优势</h3>
-                    <p class="text-gray-600 leading-relaxed">我们的律师团队既有深厚的法律功底，又熟悉企业运营的实际需求，能够将法律风险防控与商业目标有机结合，为企业创造实际价值。</p>
-                `
-            },
-            'state-owned-assets': {
-                title: '国资国企',
-                icon: 'fa-landmark',
-                subtitle: '为国有企业提供改制重组、产权交易、合规管理等专业服务',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">国资国企法律服务是我所特色业务之一。我们在国有企业混合所有制改革、国有资产转让、国有企业合规管理等领域具有丰富的实践经验。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>国有企业改制重组</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>国有资产产权交易</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>国有企业合规体系建设</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>国有资本投资运营</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>国企混改方案设计</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>国有企业常年法律顾问</li>
-                    </ul>
-                `
-            },
-            'compliance-internal-control': {
-                title: '合规内控',
-                icon: 'fa-shield',
-                subtitle: '帮助企业建立健全合规体系，防范法律风险，确保稳健运营',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">合规内控服务是企业风险防范的重要组成部分。我们的律师团队能够根据企业的实际情况和行业特点，为企业量身定制合规管理体系。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>合规体系设计与建设</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>内部控制系统完善</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>合规风险评估与排查</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>合规培训与文化建设</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>反商业贿赂合规</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>数据安全与隐私保护</li>
-                    </ul>
-                `
-            },
-            'investment-ma': {
-                title: '投资并购',
-                icon: 'fa-exchange',
-                subtitle: '提供尽职调查、交易结构设计、协议起草等一站式并购服务',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">投资并购业务是我所核心业务之一。我们的律师团队在股权并购、资产收购、上市公司重组等领域具有丰富的实践经验，能够为客户提供一站式法律服务。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>尽职调查</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>交易结构设计与优化</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>交易协议起草与谈判</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>审批备案程序</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>交割执行与整合</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>投后风险管理</li>
-                    </ul>
-                `
-            },
-            'financial-securities': {
-                title: '金融证券',
-                icon: 'fa-line-chart',
-                subtitle: '服务银行、证券、保险等金融机构，处理各类金融法律事务',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">金融证券业务是我所重点发展的业务领域。我们的律师团队在银行、保险、证券、基金等金融领域具有丰富的法律服务经验。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>银行业务法律服务</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>证券发行与上市</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>基金设立与运营</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>保险业务合规</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>互联网金融咨询</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>金融纠纷处理</li>
-                    </ul>
-                `
-            },
-            'intellectual-property': {
-                title: '知识产权',
-                icon: 'fa-copyright',
-                subtitle: '专利、商标、著作权申请与维权，知识产权战略布局咨询',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">知识产权业务是我所特色业务之一。我们拥有专利代理机构资质，能够为客户提供全方位的知识产权法律服务，包括专利、商标、著作权、商业秘密等领域的申请、转让、许可和维权服务。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>专利申请与代理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>商标注册与维权</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>著作权登记与保护</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>商业秘密保护</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>知识产权侵权诉讼</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>知识产权战略规划</li>
-                    </ul>
-                `
-            },
-            'construction-engineering': {
-                title: '建设工程',
-                icon: 'fa-home',
-                subtitle: '工程招投标、合同管理、索赔纠纷等建设领域法律服务',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">建设工程业务是我所传统优势业务之一。我们的律师团队在工程招投标、合同起草与审查、工程索赔与结算纠纷等领域具有丰富的实践经验。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>工程招投标法律服务</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>建设工程合同起草与审查</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>工程款催收与索赔</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>工程质量纠纷处理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>建设工程诉讼仲裁</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>EPC总承包法律服务</li>
-                    </ul>
-                `
-            },
-            'execution-restructuring': {
-                title: '执行重组',
-                icon: 'fa-refresh',
-                subtitle: '企业破产清算、债务重组、强制执行等法律服务',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">执行重组业务是我所特色业务之一。我们的律师团队在企业破产清算、债务重组、强制执行等领域具有丰富的实践经验，能够为客户提供专业的法律服务。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>破产清算程序代理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>破产重整与和解</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>债务重组方案设计</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>强制执行申请</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>执行异议处理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>债权人权益保护</li>
-                    </ul>
-                `
-            },
-            'financial-tax': {
-                title: '财务税收',
-                icon: 'fa-file-text',
-                subtitle: '税务筹划、税务争议解决、财务合规等专业服务',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">财务税收业务是我所特色业务之一。我们的律师团队在税务筹划、税务争议解决、财务合规等领域具有丰富的实践经验，能够为客户提供专业的法律服务。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>税务筹划与咨询</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>税务稽查应对</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>税务行政复议代理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>税务诉讼代理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>财务合规审查</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>涉税风险防控</li>
-                    </ul>
-                `
-            },
-            'criminal-defense': {
-                title: '刑事辩护',
-                icon: 'fa-balance-scale',
-                subtitle: '提供侦查、审查起诉、审判阶段的刑事辩护及法律帮助',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">刑事辩护业务是我所传统优势业务之一。我们的律师团队在刑事辩护领域具有丰富的实践经验，能够为犯罪嫌疑人、被告人提供专业的法律帮助和辩护服务。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>侦查阶段会见与辩护</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>审查起诉阶段辩护</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>一审审判阶段辩护</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>二审审判阶段辩护</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>刑事申诉与再审</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>刑事附带民事诉讼</li>
-                    </ul>
-                `
-            },
-            'cultural-tourism': {
-                title: '文化旅游',
-                icon: 'fa-plane',
-                subtitle: '文旅项目开发、景区运营、文化产业投融资等法律服务',
-                content: `
-                    <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6">文化旅游业务是我所新兴业务领域。我们的律师团队在文旅项目开发、景区运营、文化产业投融资等领域具有丰富的实践经验，能够为客户提供专业的法律服务。</p>
-                    
-                    <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
-                    <ul class="space-y-3 text-gray-600">
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>文旅项目开发咨询</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>景区运营合规管理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>文化产业投资并购</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>旅游合同纠纷处理</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>文化遗产保护法律服务</li>
-                        <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>文旅企业常年法律顾问</li>
-                    </ul>
-                `
+        // 从localStorage或service-data.js获取服务数据
+        function getServices() {
+            const stored = localStorage.getItem('serviceData');
+            if (stored) {
+                return JSON.parse(stored);
             }
-        };
+            if (typeof getAllServices === 'function') {
+                return getAllServices();
+            }
+            return [];
+        }
 
-        const serviceIds = {
-            'administrative-law': '行政法律',
-            'corporate-business': '公司业务',
-            'state-owned-assets': '国资国企',
-            'compliance-internal-control': '合规内控',
-            'investment-ma': '投资并购',
-            'financial-securities': '金融证券',
-            'intellectual-property': '知识产权',
-            'construction-engineering': '建设工程',
-            'execution-restructuring': '执行重组',
-            'financial-tax': '财务税收',
-            'criminal-defense': '刑事辩护',
-            'cultural-tourism': '文化旅游'
-        };
-
-        const serviceIdKeys = Object.keys(services);
-
+        // 获取URL参数中的服务ID
         function getServiceIdFromUrl() {
             const params = new URLSearchParams(window.location.search);
-            return params.get('service') || 'administrative-law';
+            return params.get('service') || '';
+        }
+
+        // 获取服务详情
+        function getServiceDetail(serviceId) {
+            const services = getServices();
+            // 尝试按slug查找，然后按id查找，最后按name查找
+            return services.find(s => s.slug === serviceId || s.id === serviceId || s.name === serviceId);
+        }
+
+        // 生成默认服务内容
+        function generateDefaultContent(service) {
+            return `
+                <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
+                <p class="text-gray-600 leading-relaxed mb-6">${service.description || '我们提供专业的' + service.name + '法律服务，为您的权益保驾护航。'}</p>
+                
+                <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
+                <ul class="space-y-3 text-gray-600">
+                    <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>${service.name}相关法律咨询</li>
+                    <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>${service.name}业务代理服务</li>
+                    <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>${service.name}纠纷解决</li>
+                    <li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>${service.name}相关法律文书起草</li>
+                </ul>
+                
+                <h3 class="text-xl font-bold mb-4 mt-8">服务优势</h3>
+                <p class="text-gray-600 leading-relaxed">我们的律师团队具备扎实的法学理论功底和丰富的实务经验，能够为您提供专业、高效的法律服务。</p>
+            `;
         }
 
         function loadServiceDetail() {
             const serviceId = getServiceIdFromUrl();
-            const service = services[serviceId];
+            const service = getServiceDetail(serviceId);
 
             if (!service) {
                 document.getElementById('service-title').textContent = '服务未找到';
                 return;
             }
 
-            document.getElementById('service-icon').innerHTML = `<i class="fa ${service.icon} text-4xl text-primary"></i>`;
-            document.getElementById('service-title').textContent = service.title;
-            document.getElementById('service-subtitle').textContent = service.subtitle;
-            document.getElementById('service-content').innerHTML = service.content;
-            document.title = service.title + ' - 四川拓泰律师事务所';
-
-            const relatedGrid = document.getElementById('related-grid');
-            const otherServices = serviceIdKeys.filter(id => id !== serviceId).slice(0, 3);
+            // 设置图标
+            const iconClass = service.icon || 'fa-gavel';
+            document.getElementById('service-icon').innerHTML = `<i class="fa ${iconClass} text-4xl text-primary"></i>`;
             
-            relatedGrid.innerHTML = otherServices.map(id => {
-                const s = services[id];
+            // 设置标题
+            document.getElementById('service-title').textContent = service.name;
+            document.getElementById('service-subtitle').textContent = service.description || '专业的法律服务，为您排忧解难';
+            
+            // 设置内容
+            const content = service.details ? `
+                <h2 class="text-2xl font-bold mb-6 text-primary">服务介绍</h2>
+                <p class="text-gray-600 leading-relaxed mb-6">${service.description || '我们提供专业的' + service.name + '法律服务。'}</p>
+                
+                <h3 class="text-xl font-bold mb-4 mt-8">服务范围</h3>
+                <ul class="space-y-3 text-gray-600">
+                    ${service.details.map(item => `<li class="flex items-start"><i class="fa fa-check text-primary mt-1 mr-3"></i>${item}</li>`).join('')}
+                </ul>
+            ` : generateDefaultContent(service);
+            
+            document.getElementById('service-content').innerHTML = content;
+            document.title = service.name + ' - 四川拓泰律师事务所';
+
+            // 加载相关服务推荐
+            const relatedGrid = document.getElementById('related-grid');
+            const services = getServices();
+            const otherServices = services.filter(s => s.id !== service.id).slice(0, 3);
+            
+            relatedGrid.innerHTML = otherServices.map(s => {
+                const icon = s.icon || 'fa-gavel';
                 return `
-                    <a href="service-detail.html?service=${id}" class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary/30 p-6 block">
-                        <div class="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center mb-4">
-                            <i class="fa ${s.icon} text-xl text-primary"></i>
+                    <a href="service-detail.html?service=${s.slug || s.id}" class="bg-gray-50 hover:bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group">
+                        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                            <i class="fa ${icon} text-primary"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">${s.title}</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed line-clamp-2">${s.subtitle}</p>
+                        <h3 class="font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">${s.name}</h3>
+                        <p class="text-sm text-gray-600 line-clamp-2">${s.description}</p>
                     </a>
                 `;
             }).join('');
         }
 
+        // 页面加载时执行
         document.addEventListener('DOMContentLoaded', loadServiceDetail);
     </script>
 </body>
