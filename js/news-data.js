@@ -307,12 +307,14 @@ var newsData = [
         "image": "https://picsum.photos/seed/%E3%80%90%E6%8B%93%E6%B3%B0%E5%8A%A8%E6%80%81%E3%80%91%E2%80%9C%E9%9D%92%E5%BE%8BV%E5%85%89%E2%80%9D%E6%8B%93%E6%B3%B0%E5%BF%97%E6%84%BF%E5%BE%8B%E5%B8%88%E5%9C%A8%E8%A1%8C%E5%8A%A8/800/400",
         "summary": "“青律V光”是青羊区司法局以党建为引领，依托成都市律师协会青羊分会和青羊志愿者联合会打造的党建创新项目。项目旨在引领党员律师积极参与“微网实格”，举旗帜、树品牌、强队伍、惠民生，扩大青羊法律服务的社会影响力。参与该项目的律师主要围绕法律咨询、普法宣传、纠纷调解、法律明白人培训几个方面展开工作。",
         "wechatUrl": "https://mp.weixin.qq.com/s/OYQMnPgy-N8ZwCGdyxWbLQ"
+    },
+    {
+        "id": "大哥发货",
+        "title": "大哥发货",
+        "category": "业务活动",
+        "date": "2026-05-07",
+        "image": "https://picsum.photos/seed/%E5%A4%A7%E5%93%A5%E5%8F%91%E8%B4%A7/800/400",
+        "summary": "大哥发货",
+        "wechatUrl": ""
     }
 ];
-
-function getAllNews() {
-    const stored = localStorage.getItem('newsData');
-    return stored ? JSON.parse(stored) : newsData;
-}
-function getNewsById(id) { return getAllNews().find(n => n.id === id); }
-function getNewsByCategory(category) { return getAllNews().filter(n => n.category === category); }
