@@ -341,7 +341,7 @@ var lawyerData = [
         "id": "lawyer-12",
         "name": "王惟",
         "title": "一级合伙人",
-        "photo": "https://raw.githubusercontent.com/tuotai/sctuotai/main/images/20260508232533____1.jpg",
+        "photo": "https://i.ibb.co/QjXyjg1h/1.jpg",
         "email": "wangw@sctuotai.com",
         "contact": "13800138012",
         "introduction": "长期担任多家国有企业、事业单位的法律顾问，服务对象涵盖多个行业的知名企业，曾为众多企事业单位提供常年法律顾问、知识产权和民商事争议解决等法律服务。服务单位包括：成都市金牛区司法局、中国共产党四川省委员会党校 四川行政学院、四川省医学科学院·四川省人民医院、四川交通职业技术学院、陕西延长石油集团四川销售有限公司、成都汇锦实业发展有限公司等。",
