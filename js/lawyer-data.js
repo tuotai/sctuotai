@@ -357,7 +357,7 @@ var lawyerData = [
         ],
         "education": "中国政法大学 刑法学硕士",
         "experience": [
-            "13年执业经验"
+            "15年执业经验"
         ],
         "cases": [],
         "barAssociation": [],
