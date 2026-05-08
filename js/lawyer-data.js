@@ -427,7 +427,7 @@ var lawyerData = [
     {
         "id": "lawyer-15",
         "name": "尹茂生",
-        "title": "高级律师",
+        "title": "一级合伙人",
         "photo": "https://picsum.photos/seed/1014/400/500",
         "email": "yinms@sctuotai.com",
         "contact": "13800138015",
@@ -445,9 +445,7 @@ var lawyerData = [
             "劳动争议处理"
         ],
         "education": "四川大学 法学学士",
-        "experience": [
-            "8年执业经验"
-        ],
+        "experience": [],
         "cases": [],
         "barAssociation": [],
         "socialRoles": [],
