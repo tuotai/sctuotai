@@ -341,21 +341,19 @@ var lawyerData = [
         "id": "lawyer-12",
         "name": "王惟",
         "title": "一级合伙人",
-        "photo": "https://picsum.photos/seed/1011/400/500",
+        "photo": "https://raw.githubusercontent.com/tuotai/sctuotai/main/images/20260508232533____1.jpg",
         "email": "wangw@sctuotai.com",
         "contact": "13800138012",
-        "introduction": "王惟律师，四川拓泰律师事务所一级合伙人。专注于刑事风险防控、刑事申诉领域，具有丰富的实践经验。",
+        "introduction": "长期担任多家国有企业、事业单位的法律顾问，服务对象涵盖多个行业的知名企业，曾为众多企事业单位提供常年法律顾问、知识产权和民商事争议解决等法律服务。服务单位包括：成都市金牛区司法局、中国共产党四川省委员会党校 四川行政学院、四川省医学科学院·四川省人民医院、四川交通职业技术学院、陕西延长石油集团四川销售有限公司、成都汇锦实业发展有限公司等。",
         "specialties": [
             "刑事风险防控",
             "刑事申诉"
         ],
         "expertise": [
             "刑事案件辩护",
-            "刑事风险防控",
-            "刑事申诉代理",
-            "刑事合规审查",
-            "企业反舞弊调查",
-            "职务犯罪预防"
+            "公司法律事务",
+            "知识产权",
+            "民商事争议解决"
         ],
         "education": "中国政法大学 刑法学硕士",
         "experience": [
@@ -363,7 +361,10 @@ var lawyerData = [
         ],
         "cases": [],
         "barAssociation": [],
-        "socialRoles": [],
+        "socialRoles": [
+            "成都市青羊区知识产权调解委员会副秘书长",
+            "成都市青羊区人民调解员协会人民调解员"
+        ],
         "awards": []
     },
     {
